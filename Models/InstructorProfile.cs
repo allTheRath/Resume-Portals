@@ -9,6 +9,8 @@ namespace Resume_Portal.Models
 {
     public class InstructorProfile 
     {
+        public int Id { get; set; }
+
         public string UserId { get; set; }
 
         [DataType(DataType.Text)]

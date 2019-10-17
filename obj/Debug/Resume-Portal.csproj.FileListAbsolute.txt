@@ -102,3 +102,5 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csprojAssemblyRe
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csproj.CopyComplete
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.dll
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.pdb
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.initialBuild.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csproj.GenerateResource.cache

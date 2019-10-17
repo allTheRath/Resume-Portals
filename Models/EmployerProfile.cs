@@ -8,8 +8,10 @@ namespace Resume_Portal.Models
 {
     public class EmployerProfile 
     {
-        public string UserId { get; set; }
+        public int Id { get; set; }
 
+        public string UserId { get; set; }
+        // User id of application user will be indexed.
         [DataType(DataType.Text)]
         public string AboutUs { get; set; }
 
