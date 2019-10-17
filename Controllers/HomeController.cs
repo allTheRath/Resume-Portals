@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +12,7 @@ namespace Resume_Portal.Controllers
     public class HomeController : Controller
     {
         private protected ApplicationDbContext db = new ApplicationDbContext();
+        private protected RoleHandler RoleHandler = new RoleHandler();
 
         public ActionResult Index()
         {
@@ -110,7 +113,12 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Admin()
         {
-            return View();
+            var userDetails = db.Users.ToList().Where(x => x.Online == true).ToList();
+            if(userDetails.Count() == 0)
+            {
+                userDetails = new List<ApplicationUser>();
+            }
+            return View(userDetails);
         }
 
 
@@ -130,7 +138,40 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AssignUsers()
         {
-            return View();
+            if (!User.IsInRole("Admin"))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var unassignedUsers = db.NotifyAdmins.ToList().Where(x => x.Resolved == false).ToList();
+            if (unassignedUsers.Count() == 0)
+            {
+                unassignedUsers = new List<NotifyAdmin>();
+            }
+            return View(unassignedUsers);
+        }
+
+        public ActionResult AssignUsersConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var request = db.NotifyAdmins.Find(id);
+            ViewBag.Approved = false;
+            ViewBag.RoleName = request.RoleName;
+            if (request.Resolved == false)
+            {
+                bool approved = RoleHandler.AssignUserToRole(request.UserId, request.RoleName);
+                if (approved == true)
+                {
+                    request.Resolved = true;
+                    db.SaveChanges();
+                    ViewBag.Approved = true;
+                }
+            }
+            var user = db.Users.Find(request.UserId);
+
+            return View(user);
         }
 
         /// <summary>
@@ -360,6 +401,15 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
+        /// <summary>
+        /// All activities for a single student
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MyActivities()
+        {
+            return View();
+        }
+
 
         // Below view will only be accessible to individual student 
         /// <summary>
@@ -382,6 +432,7 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
+
 
 
         protected override void Dispose(bool disposing)

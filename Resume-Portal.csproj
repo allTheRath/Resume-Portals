@@ -177,6 +177,18 @@
     <Compile Include="Migrations\201910170306577_initialBuild.Designer.cs">
       <DependentUpon>201910170306577_initialBuild.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910171444225_connectnetuserwithprofile.cs" />
+    <Compile Include="Migrations\201910171444225_connectnetuserwithprofile.Designer.cs">
+      <DependentUpon>201910171444225_connectnetuserwithprofile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910171504589_notifyAdminRequest.cs" />
+    <Compile Include="Migrations\201910171504589_notifyAdminRequest.Designer.cs">
+      <DependentUpon>201910171504589_notifyAdminRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910171756335_onlineCheckProperty.cs" />
+    <Compile Include="Migrations\201910171756335_onlineCheckProperty.Designer.cs">
+      <DependentUpon>201910171756335_onlineCheckProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -188,6 +200,7 @@
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotifyAdmin.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\ProgramUsers.cs" />
@@ -264,6 +277,9 @@
     <Content Include="Views\Home\CreateEmployer.cshtml" />
     <Content Include="Views\Home\CreateInstructor.cshtml" />
     <Content Include="Views\Home\CreateStudent.cshtml" />
+    <Content Include="Views\Home\AssignUsers.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\AssignUsersConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -284,6 +300,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201910170306577_initialBuild.resx">
       <DependentUpon>201910170306577_initialBuild.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171444225_connectnetuserwithprofile.resx">
+      <DependentUpon>201910171444225_connectnetuserwithprofile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171504589_notifyAdminRequest.resx">
+      <DependentUpon>201910171504589_notifyAdminRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171756335_onlineCheckProperty.resx">
+      <DependentUpon>201910171756335_onlineCheckProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

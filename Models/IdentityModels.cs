@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -9,6 +10,10 @@ namespace Resume_Portal.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public bool Online { get; set; }
+
+        public DateTime LastLogedIn { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -42,6 +47,8 @@ namespace Resume_Portal.Models
 
         public DbSet<Attachment> Attachments { get; set; }
 
+        public DbSet<NotifyAdmin> NotifyAdmins { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -51,5 +58,7 @@ namespace Resume_Portal.Models
         {
             return new ApplicationDbContext();
         }
+
+
     }
 }
