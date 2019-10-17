@@ -10,16 +10,12 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                @*
-                    AssignUsers | UnAssignUsers | AllStudents | AllPrograms | FindBySkills | AdminProfile
 
-
-
-
-                *@
-                @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                <li>@Html.ActionLink("Approve User", "AssignUsers", "Home")</li>
+                <li>@Html.ActionLink("Delete User", "UnAssignUsers", "Home")</li>
+                <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                <li>@Html.ActionLink("Instructors", "AllInstructors", "Home")</li>
+                <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>

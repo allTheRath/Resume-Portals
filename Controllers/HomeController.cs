@@ -162,7 +162,7 @@ namespace Resume_Portal.Controllers
 
         [HttpPost, ActionName("CreateEmployer")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateEmployerConfirmation([Bind(Include = "Id,Email,PhoneNumber,UserName,ProfilePic,ShortDiscription,AboutUs,HistoryOfCompany,ContactUs,PhoneNo,LookingForSkills")] EmployerProfile employerProfile)
+        public ActionResult CreateEmployerConfirmation([Bind(Include = "Id,AboutUs,HistoryOfCompany,ContactUs,PhoneNo,LookingForSkills")] EmployerProfile employerProfile)
         {
             if (ModelState.IsValid)
             {
@@ -211,7 +211,7 @@ namespace Resume_Portal.Controllers
 
         [HttpPost, ActionName("CreateInstructor")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateInstructorConfirm([Bind(Include = "Id,Email,PhoneNumber,UserName,ProfilePic,ShortDiscription,AboutMe,Experience,JoinedMitt,ContactInfo,ProfetionalEmail")] InstructorProfile instructorProfile)
+        public ActionResult CreateInstructorConfirm([Bind(Include = "Id,AboutMe,Experience,JoinedMitt,ContactInfo,ProfetionalEmail")] InstructorProfile instructorProfile)
         {
 
             if (ModelState.IsValid)
@@ -261,7 +261,7 @@ namespace Resume_Portal.Controllers
 
         [HttpPost, ActionName("CreateStudent")]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateStudentConfirm([Bind(Include = "Id,Email,PhoneNumber,UserName,ProfilePic,ShortDiscription,AboutMe,ContactInfo,ProfetionalEmail,SemesterNumber,StartDate,EndDate,MySkills")] StudentProfile studentProfile)
+        public ActionResult CreateStudentConfirm([Bind(Include = "Id,AboutMe,ContactInfo,ProfetionalEmail,SemesterNumber,StartDate,EndDate,MySkills")] StudentProfile studentProfile)
         {
             if (ModelState.IsValid)
             {
@@ -288,6 +288,24 @@ namespace Resume_Portal.Controllers
         // Below Views are common for more then one role.
         //Ex: Admin ,instructor and Employer can see list of student with few details of students. 
         // Employer , admin and instructors can see this.
+
+        /// <summary>
+        /// List of all Employers 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllEmployers()
+        {
+            return View();
+        }
+
+        /// <summary>
+        ///   List of all instructors
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllInstructors()
+        {
+            return View();
+        }
 
         /// <summary>
         /// All students in College ,Seperated by programs.

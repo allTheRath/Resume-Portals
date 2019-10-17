@@ -253,9 +253,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\AdminNav.cshtml" />
-    <Content Include="Views\Home\CreateEmployer.cshtml" />
-    <Content Include="Views\Home\CreateInstructor.cshtml" />
-    <Content Include="Views\Home\CreateStudent.cshtml" />
     <Content Include="Views\Home\EmployerNav.cshtml" />
     <Content Include="Views\Home\InstructorNav.cshtml" />
     <Content Include="Views\Home\ProfilePic.cshtml" />
@@ -264,6 +261,9 @@
     <Content Include="Views\Home\ResumeViewer.cshtml" />
     <Content Include="Views\Home\StudentNav.cshtml" />
     <Content Include="Views\Home\UserDirect.cshtml" />
+    <Content Include="Views\Home\CreateEmployer.cshtml" />
+    <Content Include="Views\Home\CreateInstructor.cshtml" />
+    <Content Include="Views\Home\CreateStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
