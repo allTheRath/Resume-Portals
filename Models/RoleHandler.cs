@@ -46,6 +46,20 @@ namespace Resume_Portal.Models
             }
         }
 
+        public void UpdateInvalidTry(string userEmail)
+        {
+            var userId = userManager.FindByEmail(userEmail).Id;
+            if (userId != "")
+            {// This If will never be false. Just to be sure.
+                var user = db.Users.Find(userId);
+                if(user != null)
+                {
+                    user.AccessFailedCount += 1;                 
+                    db.SaveChanges();
+                }
+            }
+        }
+
         public void UpdateUserLogOffStatus(string userId)
         {
             if (userId != "")

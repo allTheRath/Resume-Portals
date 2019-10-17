@@ -180,7 +180,43 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult UnAssignUsers()
         {
-            return View();
+            if (!User.IsInRole("Admin"))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var assignedUsers = db.NotifyAdmins.ToList().Where(x => x.Resolved == true).ToList();
+            if (assignedUsers.Count() == 0)
+            {
+                assignedUsers = new List<NotifyAdmin>();
+            }
+       
+            return View(assignedUsers);
+        }
+
+        public ActionResult UnAssignUsersConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var request = db.NotifyAdmins.Find(id);
+            ViewBag.Approved = false;
+            ViewBag.RoleName = request.RoleName;
+            string userID = request.UserId;
+            if (request.Resolved == true)
+            {
+                bool approved = RoleHandler.UnassignUserToRole(request.UserId, request.RoleName);
+                if (approved == true)
+                {
+                    db.NotifyAdmins.Remove(request);
+                    db.SaveChanges();
+                    ViewBag.Approved = true;
+                }
+            }
+            var user = db.Users.Find(userID);
+
+            return View(user);
         }
 
 

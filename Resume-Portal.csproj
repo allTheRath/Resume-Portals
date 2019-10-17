@@ -280,6 +280,9 @@
     <Content Include="Views\Home\AssignUsers.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Home\AssignUsersConfirm.cshtml" />
+    <Content Include="Views\Home\Employer.cshtml" />
+    <Content Include="Views\Home\UnAssignUsers.cshtml" />
+    <Content Include="Views\Home\UnAssignUsersConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

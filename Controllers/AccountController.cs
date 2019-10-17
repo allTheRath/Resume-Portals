@@ -89,6 +89,10 @@ namespace Resume_Portal.Controllers
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
+                    RoleHandler.UpdateInvalidTry(model.Email);
+                    //Update user loginAttempts.                    
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
