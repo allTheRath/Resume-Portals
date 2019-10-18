@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.IO;
 
 namespace Resume_Portal.Models
 {
@@ -17,5 +18,8 @@ namespace Resume_Portal.Models
         public string Duration { get; set; }
     
         public virtual ICollection<ProgramUsers> ProgramUsers { get; set; }
+    
+        
+
     }
 }

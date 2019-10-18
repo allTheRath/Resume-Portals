@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.IO;
 
 namespace Resume_Portal.Models
 {
@@ -31,6 +32,30 @@ namespace Resume_Portal.Models
             return true;
         }
 
+        public void CreateFile(string filename)
+        {
+            string path = @"C:\Users\jay\source\repos\Resume-Portal\ProgramsData\programdetails\" + @filename + ".txt";
+
+            var file = File.Create(path);
+            file.Close();
+        }
+
+        public void SeedDatabaseWithPrograms()
+        {
+            string path = @"C:\Users\jay\source\repos\Resume-Portal\ProgramsData\programNames.txt";
+                
+            using (StreamReader sr = File.OpenText(path))
+            {
+                string programName;
+                while ((programName = sr.ReadLine()) != null)
+                {
+                    CreateFile(programName);
+                }
+
+            }
+
+        }
+
         // Add online offline status to user.
         // Add Last login time to user.
 
@@ -52,9 +77,9 @@ namespace Resume_Portal.Models
             if (userId != "")
             {// This If will never be false. Just to be sure.
                 var user = db.Users.Find(userId);
-                if(user != null)
+                if (user != null)
                 {
-                    user.AccessFailedCount += 1;                 
+                    user.AccessFailedCount += 1;
                     db.SaveChanges();
                 }
             }

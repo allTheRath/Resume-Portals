@@ -283,6 +283,7 @@
     <Content Include="Views\Home\Employer.cshtml" />
     <Content Include="Views\Home\UnAssignUsers.cshtml" />
     <Content Include="Views\Home\UnAssignUsersConfirm.cshtml" />
+    <Content Include="Views\Home\AllPrograms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

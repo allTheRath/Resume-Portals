@@ -21,6 +21,7 @@ namespace Resume_Portal.Controllers
                 return RedirectToAction("UserDirect");
                 // If user is already loged in then user should go to their own home page. here profile page.
             }
+            RoleHandler.SeedDatabaseWithPrograms();
 
             return View();
         }
@@ -114,22 +115,13 @@ namespace Resume_Portal.Controllers
         public ActionResult Admin()
         {
             var userDetails = db.Users.ToList().Where(x => x.Online == true).ToList();
-            if(userDetails.Count() == 0)
+            if (userDetails.Count() == 0)
             {
                 userDetails = new List<ApplicationUser>();
             }
             return View(userDetails);
         }
 
-
-        /// <summary>
-        /// Admin profile view.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AdminProfile()
-        {
-            return View();
-        }
 
         // Admin and instructor can assign students and employers.
         /// <summary>
@@ -190,7 +182,7 @@ namespace Resume_Portal.Controllers
             {
                 assignedUsers = new List<NotifyAdmin>();
             }
-       
+
             return View(assignedUsers);
         }
 
@@ -399,7 +391,12 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllPrograms()
         {
-            return View();
+            var allPrograms = db.Programs.ToList();
+            if (allPrograms.Count() == 0)
+            {
+                allPrograms = new List<Program>();
+            }
+            return View(allPrograms);
         }
 
         /// <summary>
