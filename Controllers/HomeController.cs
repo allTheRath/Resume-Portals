@@ -1,6 +1,8 @@
-﻿using Resume_Portal.Models;
+﻿using Microsoft.AspNet.Identity;
+using Resume_Portal.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +23,7 @@ namespace Resume_Portal.Controllers
                 return RedirectToAction("UserDirect");
                 // If user is already loged in then user should go to their own home page. here profile page.
             }
-            RoleHandler.SeedDatabaseWithPrograms();
+
 
             return View();
         }
@@ -218,16 +220,54 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Employer()
         {
+            if (!User.IsInRole("Employer"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
         // Employer can see list of students or can see program home page.
         // Employer can send email to any student or instructor.
         // Student can see notification of sent email.
+        public ActionResult EditEmployer()
+        {
+            string uid = User.Identity.GetUserId();
+            EmployerProfile employerProfile = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            return View(employerProfile);
+        }
+
+        [HttpPost, ActionName("EditEmployer")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEmployerConfirmation([Bind(Include = "Id,AboutUs,HistoryOfCompany,ContactUs,PhoneNo,LookingForSkills")] EmployerProfile employerProfile)
+        {
+            if (ModelState.IsValid)
+            {
+
+                string uid = User.Identity.GetUserId();
+                EmployerProfile employerProfileExist = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+                employerProfileExist.AboutUs = employerProfile.AboutUs;
+                employerProfileExist.ContactUs = employerProfile.ContactUs;
+                employerProfileExist.HistoryOfCompany = employerProfile.HistoryOfCompany;
+                employerProfileExist.LookingForSkills = employerProfile.LookingForSkills;
+                employerProfileExist.PhoneNo = employerProfile.PhoneNo;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(employerProfile);
+        }
+
+
 
         public ActionResult CreateEmployer()
         {
+            if (!User.IsInRole("Employer"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
+
 
         [HttpPost, ActionName("CreateEmployer")]
         [ValidateAntiForgeryToken]
@@ -235,7 +275,14 @@ namespace Resume_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.EmployerProfiles.Add(employerProfile);
+
+                string uid = User.Identity.GetUserId();
+                EmployerProfile employerProfileExist = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+                employerProfileExist.AboutUs = employerProfile.AboutUs;
+                employerProfileExist.ContactUs = employerProfile.ContactUs;
+                employerProfileExist.HistoryOfCompany = employerProfile.HistoryOfCompany;
+                employerProfileExist.LookingForSkills = employerProfile.LookingForSkills;
+                employerProfileExist.PhoneNo = employerProfile.PhoneNo;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -259,7 +306,13 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult EmployerProfile()
         {
-            return View();
+            if (!User.IsInRole("Employer"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            EmployerProfile employerProfile = db.EmployerProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(employerProfile);
         }
 
 
@@ -270,11 +323,20 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Instructor()
         {
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
         public ActionResult CreateInstructor()
         {
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+
             return View();
         }
 
@@ -285,7 +347,13 @@ namespace Resume_Portal.Controllers
 
             if (ModelState.IsValid)
             {
-                db.InstructorProfiles.Add(instructorProfile);
+                string uid = User.Identity.GetUserId();
+                InstructorProfile instructorProfileExist = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                instructorProfileExist.AboutMe = instructorProfile.AboutMe;
+                instructorProfileExist.ContactInfo = instructorProfile.ContactInfo;
+                instructorProfileExist.Experience = instructorProfile.Experience;
+                instructorProfileExist.JoinedMitt = instructorProfile.JoinedMitt;
+                instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -293,6 +361,37 @@ namespace Resume_Portal.Controllers
             return View(instructorProfile);
         }
 
+        public ActionResult EditInstructor()
+        {
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            InstructorProfile instructorProfile = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(instructorProfile);
+        }
+
+        [HttpPost, ActionName("EditInstructor")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditInstructorConfirm([Bind(Include = "Id,AboutMe,Experience,JoinedMitt,ContactInfo,ProfetionalEmail")] InstructorProfile instructorProfile)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string uid = User.Identity.GetUserId();
+                InstructorProfile instructorProfileExist = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                instructorProfileExist.AboutMe = instructorProfile.AboutMe;
+                instructorProfileExist.ContactInfo = instructorProfile.ContactInfo;
+                instructorProfileExist.Experience = instructorProfile.Experience;
+                instructorProfileExist.JoinedMitt = instructorProfile.JoinedMitt;
+                instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(instructorProfile);
+        }
         // can see list of students.
         // Can see program home.
         // Can post events :: which will be displayed on program home page.
@@ -305,7 +404,13 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult InstructorProfile()
         {
-            return View();
+            if (User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            return View(instructorProfile);
         }
 
 
@@ -325,6 +430,10 @@ namespace Resume_Portal.Controllers
 
         public ActionResult CreateStudent()
         {
+            if (User.IsInRole("Student"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -334,7 +443,50 @@ namespace Resume_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StudentProfiles.Add(studentProfile);
+                string uid = User.Identity.GetUserId();
+                StudentProfile studentProfileExist = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                studentProfileExist.AboutMe = studentProfile.AboutMe;
+                studentProfileExist.ContactInfo = studentProfile.ContactInfo;
+                studentProfileExist.EndDate = studentProfile.EndDate;
+                studentProfileExist.MySkills = studentProfile.MySkills;
+                studentProfileExist.ProfessionalEmail = studentProfile.ProfessionalEmail;
+                studentProfileExist.SemesterNumber = studentProfile.SemesterNumber;
+                studentProfileExist.StartDate = studentProfile.StartDate;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(studentProfile);
+        }
+
+
+
+        public ActionResult EditStudent()
+        {
+            if (User.IsInRole("Student"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(studentProfile);
+        }
+
+        [HttpPost, ActionName("CreateStudent")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStudentConfirm([Bind(Include = "Id,AboutMe,ContactInfo,ProfetionalEmail,SemesterNumber,StartDate,EndDate,MySkills")] StudentProfile studentProfile)
+        {
+            if (ModelState.IsValid)
+            {
+                string uid = User.Identity.GetUserId();
+                StudentProfile studentProfileExist = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                studentProfileExist.AboutMe = studentProfile.AboutMe;
+                studentProfileExist.ContactInfo = studentProfile.ContactInfo;
+                studentProfileExist.EndDate = studentProfile.EndDate;
+                studentProfileExist.MySkills = studentProfile.MySkills;
+                studentProfileExist.ProfessionalEmail = studentProfile.ProfessionalEmail;
+                studentProfileExist.SemesterNumber = studentProfile.SemesterNumber;
+                studentProfileExist.StartDate = studentProfile.StartDate;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -349,7 +501,14 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult StudentProfile()
         {
-            return View();
+            if (!User.IsInRole("Student"))
+            {
+                return HttpNotFound();
+            }
+
+            string uid = User.Identity.GetUserId();
+            StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(studentProfile);
         }
 
 
@@ -364,7 +523,8 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllEmployers()
         {
-            return View();
+            var allEmployerProfiles = db.Profiles.ToList().Where(x => x.Role == "Employer").ToList();
+            return View(allEmployerProfiles);
         }
 
         /// <summary>
@@ -373,7 +533,8 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllInstructors()
         {
-            return View();
+            var allInstructors = db.Profiles.ToList().Where(x => x.Role == "Instructor").ToList();
+            return View(allInstructors);
         }
 
         /// <summary>
@@ -382,8 +543,11 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllStudents()
         {
-            return View();
+            var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student").ToList();
+            return View(allStudents);
         }
+
+
 
         /// <summary>
         /// All programs offered :: List with images and headers. A link to program discription.
@@ -406,7 +570,12 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult ProgramDetails(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Program program = db.Programs.Find(id);
+            return View(program);
         }
 
         /// <summary>
@@ -416,7 +585,23 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult StudentInProgram(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Program program = db.Programs.Find(id);
+            var allProgramUsers = db.ProgramUsers.Where(x => x.ProgramId == id);
+            List<Profile> allStudents = new List<Profile>();
+            allProgramUsers.ToList().ForEach(user =>
+            {
+                var student = db.Profiles.Where(x => x.UserId == user.UserId && x.Role == "Student").FirstOrDefault();
+                if (student != null)
+                {
+                    allStudents.Add(student);
+                }
+            });
+            // all students in given program are retrived as list of profiles.
+            return View(allStudents);
         }
 
         // Student, instructors, admins and employers can see student activities and individual

@@ -28,6 +28,9 @@
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
+                @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
+            </td>
+            <td>
                 @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
             </td>
         </tr>
