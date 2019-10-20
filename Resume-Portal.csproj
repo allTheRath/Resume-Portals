@@ -189,6 +189,10 @@
     <Compile Include="Migrations\201910171756335_onlineCheckProperty.Designer.cs">
       <DependentUpon>201910171756335_onlineCheckProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910192142117_addedprofilerole.cs" />
+    <Compile Include="Migrations\201910192142117_addedprofilerole.Designer.cs">
+      <DependentUpon>201910192142117_addedprofilerole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -289,6 +293,10 @@
     <Content Include="Views\Home\UnAssignUsers.cshtml" />
     <Content Include="Views\Home\UnAssignUsersConfirm.cshtml" />
     <Content Include="Views\Home\AllPrograms.cshtml" />
+    <Content Include="Views\Home\Instructor.cshtml" />
+    <Content Include="Views\Home\EditEmployer.cshtml" />
+    <Content Include="Views\Home\EditInstructor.cshtml" />
+    <Content Include="Views\Home\EditStudent.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -316,6 +324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910171756335_onlineCheckProperty.resx">
       <DependentUpon>201910171756335_onlineCheckProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910192142117_addedprofilerole.resx">
+      <DependentUpon>201910192142117_addedprofilerole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

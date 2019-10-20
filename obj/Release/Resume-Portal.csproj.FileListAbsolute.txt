@@ -107,3 +107,4 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.csproj.CopyCom
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.dll
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.pdb
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.onlineCheckProperty.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.addedprofilerole.resources

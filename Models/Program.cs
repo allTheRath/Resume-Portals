@@ -19,7 +19,5 @@ namespace Resume_Portal.Models
     
         public virtual ICollection<ProgramUsers> ProgramUsers { get; set; }
     
-        
-
     }
 }

@@ -17,6 +17,7 @@ namespace Resume_Portal.Models
 
         public string ShortDiscription { get; set; }
         // Just a few line discription.
-
+        public string Role { get; set; }
     }
+
 }
