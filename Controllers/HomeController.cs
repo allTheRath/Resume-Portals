@@ -297,6 +297,7 @@ namespace Resume_Portal.Controllers
         [Authorize(Roles = "Employer")]
         public ActionResult PostJob()
         {
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             return View();
         }
         [HttpPost, ActionName("PostJob")]
@@ -313,17 +314,17 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("JobDetails", new { jobId = jobExists.Id });
             }
-
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             return View();
         }
         public ActionResult JobDetails(int? jobId)
         {
-            if(jobId == null)
+            if (jobId == null)
             {
                 return HttpNotFound();
             }
             var job = db.Jobs.FirstOrDefault(j => j.Id == jobId);
-            if(job == null)
+            if (job == null)
             {
                 return HttpNotFound();
             }
@@ -361,7 +362,7 @@ namespace Resume_Portal.Controllers
             }
             string userId = User.Identity.GetUserId();
             var instructor = db.InstructorProfiles.FirstOrDefault(i => i.UserId == userId);
-            if(instructor == null)
+            if (instructor == null)
             {
                 return HttpNotFound();
             }
@@ -461,7 +462,7 @@ namespace Resume_Portal.Controllers
         {
             string userId = User.Identity.GetUserId();
             var student = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
-            if(student == null)
+            if (student == null)
             {
                 return HttpNotFound();
             }
@@ -654,6 +655,24 @@ namespace Resume_Portal.Controllers
         // profiles but student can't see other student profile.
         // This functionality will be done through nav bar.
 
+        public ActionResult AddAttachment()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult AddAttachment(HttpPostedFileBase file)
+        {
+
+            if (file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                file.SaveAs(path);
+            }
+
+            return RedirectToAction("Index");
+        }
 
         // Below are extra views .    
         /// <summary>

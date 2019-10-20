@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201910192142117_addedprofilerole.Designer.cs">
       <DependentUpon>201910192142117_addedprofilerole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910202041559_programwithjoblist.cs" />
+    <Compile Include="Migrations\201910202041559_programwithjoblist.Designer.cs">
+      <DependentUpon>201910202041559_programwithjoblist.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -297,6 +301,9 @@
     <Content Include="Views\Home\EditEmployer.cshtml" />
     <Content Include="Views\Home\EditInstructor.cshtml" />
     <Content Include="Views\Home\EditStudent.cshtml" />
+    <Content Include="Views\Home\PostJob.cshtml" />
+    <Content Include="Views\Home\JobDetails.cshtml" />
+    <Content Include="Views\Home\AddAttachment.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -327,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910192142117_addedprofilerole.resx">
       <DependentUpon>201910192142117_addedprofilerole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910202041559_programwithjoblist.resx">
+      <DependentUpon>201910202041559_programwithjoblist.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
