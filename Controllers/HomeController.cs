@@ -151,16 +151,17 @@ namespace Resume_Portal.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var request = db.NotifyAdmins.Find(id);
-            ViewBag.Approved = false;
             ViewBag.RoleName = request.RoleName;
             if (request.Resolved == false)
             {
                 bool approved = RoleHandler.AssignUserToRole(request.UserId, request.RoleName);
                 if (approved == true)
                 {
-                    request.Resolved = true;
-                    db.SaveChanges();
                     ViewBag.Approved = true;
+                }
+                else
+                {
+                    ViewBag.Approved = false;
                 }
             }
             var user = db.Users.Find(request.UserId);
@@ -457,7 +458,7 @@ namespace Resume_Portal.Controllers
         /// Student Home page
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         public ActionResult Student()
         {
             string userId = User.Identity.GetUserId();
@@ -467,7 +468,7 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             //var listOfJobs
-            return View();
+            return RedirectToAction("StudentProfile");
         }
         // Can add activities
         // Can update resume or profile
@@ -659,19 +660,34 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult AddAttachment(HttpPostedFileBase file)
         {
 
             if (file.ContentLength > 0)
             {
-                var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                file.SaveAs(path);
+                var fileextention = Path.GetExtension(file.FileName);
+                string uid = User.Identity.GetUserId();
+                if (uid != "")
+                {
+                    bool exists = Directory.Exists(Server.MapPath("~/student-resume/" + uid));
+                    if (!exists)
+                    {
+                        // if directory not exist then create it.
+                        Directory.CreateDirectory(Server.MapPath("~/student-resume/" + uid));
+                    }
+                    if (System.IO.File.Exists(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention)))
+                    {
+                        // if file exist then delete it.
+                        System.IO.File.Delete(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention));
+                    }
+                    var path = Path.Combine(Server.MapPath("~/student-resume/" + uid + "/"), "resume" + fileextention);
+                    file.SaveAs(path);
+                }
             }
 
-            return RedirectToAction("Index");
+            return View();
         }
 
         // Below are extra views .    

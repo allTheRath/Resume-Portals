@@ -304,8 +304,12 @@
     <Content Include="Views\Home\PostJob.cshtml" />
     <Content Include="Views\Home\JobDetails.cshtml" />
     <Content Include="Views\Home\AddAttachment.cshtml" />
+    <Content Include="Views\Home\StudentProfile.cshtml" />
+    <Content Include="Views\Home\Student.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="student-resume\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

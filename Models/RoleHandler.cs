@@ -74,15 +74,12 @@ namespace Resume_Portal.Models
 
         public void UpdateInvalidTry(string userEmail)
         {
-            var userId = userManager.FindByEmail(userEmail).Id;
-            if (userId != "")
+            var user = userManager.FindByEmail(userEmail);
+            if (user != null)
             {// This If will never be false. Just to be sure.
-                var user = db.Users.Find(userId);
-                if (user != null)
-                {
-                    user.AccessFailedCount += 1;
-                    db.SaveChanges();
-                }
+                user.AccessFailedCount += 1;
+                db.SaveChanges();
+
             }
         }
 
@@ -110,13 +107,15 @@ namespace Resume_Portal.Models
             profile.Role = RoleName;
             db.Profiles.Add(profile);
             db.SaveChanges();
+            bool flag = false;
             if (RoleName == "Instructor")
             {
                 InstructorProfile instructorProfile = new InstructorProfile();
                 instructorProfile.UserId = userId;
+                instructorProfile.JoinedMitt = DateTime.Now;
                 db.InstructorProfiles.Add(instructorProfile);
                 db.SaveChanges();
-
+                flag = true;
             }
             else if (RoleName == "Employer")
             {
@@ -124,15 +123,24 @@ namespace Resume_Portal.Models
                 employerProfile.UserId = userId;
                 db.EmployerProfiles.Add(employerProfile);
                 db.SaveChanges();
+                flag = true;
             }
             else if (RoleName == "Student")
             {
                 StudentProfile studentProfile = new StudentProfile();
+                studentProfile.StartDate = DateTime.Now;
+                studentProfile.EndDate = DateTime.Now;
                 studentProfile.UserId = userId;
                 db.StudentProfiles.Add(studentProfile);
                 db.SaveChanges();
+                flag = true;
             }
-
+            if (flag == true)
+            {
+                NotifyAdmin notifyAdmin = db.NotifyAdmins.Where(x => x.UserId == userId).FirstOrDefault();
+                notifyAdmin.Resolved = true;
+                db.SaveChanges();
+            }
         }
 
         private protected void RemoveProfile(string userId, string RoleName)
