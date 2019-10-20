@@ -1,5 +1,7 @@
 ﻿using Resume_Portal.Models;
 using System;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -250,6 +252,7 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult PostJob()
         {
+            
             return View();
         }
 
@@ -257,9 +260,16 @@ namespace Resume_Portal.Controllers
         /// Employer profile view ... Employer can edit the profile.  
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult EmployerProfile()
         {
-            return View();
+            var userId = User.Identity.GetUserId();
+            var employer = db.EmployerProfiles.FirstOrDefault(e => e.UserId == userId);
+            if(employer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(employer);
         }
 
 
