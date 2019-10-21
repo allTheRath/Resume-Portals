@@ -13,6 +13,8 @@ namespace Resume_Portal.Models
         [DataType(DataType.Text)]
         public string CompanyName { get; set; }
 
+        public DateTime PostedOn { get; set; }
+
         [DataType(DataType.Text)]
         public string JobDiscription { get; set; }
 

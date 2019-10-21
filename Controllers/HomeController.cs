@@ -298,6 +298,13 @@ namespace Resume_Portal.Controllers
         [Authorize(Roles = "Employer")]
         public ActionResult PostJob()
         {
+            if (ViewBag.PostConfirm != null && ViewBag.PostConfirm == true)
+            {
+                ViewBag.PostConfirm = true;
+            } else
+            {
+                ViewBag.PostConfirm = false;
+            }
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             return View();
         }
@@ -305,19 +312,22 @@ namespace Resume_Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult PostJobConfirmation([Bind(Include = "CompanyName, JobDiscription")] Job job)
         {
+            string uid = User.Identity.GetUserId();
+            job.EmployerId = uid;
+            job.PostedOn = DateTime.Now;
             if (ModelState.IsValid)
             {
-                string uid = User.Identity.GetUserId();
-                Job jobExists = db.Jobs.Where(x => x.EmployerId == uid).FirstOrDefault();
-                jobExists.CompanyName = job.CompanyName;
-                jobExists.JobDiscription = job.JobDiscription;
-                jobExists.EmployerId = uid;
+                db.Jobs.Add(job);
                 db.SaveChanges();
-                return RedirectToAction("JobDetails", new { jobId = jobExists.Id });
+                ViewBag.PostConfirm = true;
+            } else
+            {
+                ViewBag.PostConfirm = false;
             }
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             return View();
         }
+
         public ActionResult JobDetails(int? jobId)
         {
             if (jobId == null)
@@ -354,20 +364,15 @@ namespace Resume_Portal.Controllers
         /// Instructor home page
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        
         public ActionResult Instructor()
         {
-            if (!User.IsInRole("Instructor"))
-            {
-                return HttpNotFound();
-            }
-            string userId = User.Identity.GetUserId();
-            var instructor = db.InstructorProfiles.FirstOrDefault(i => i.UserId == userId);
-            if (instructor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(instructor);
+            //if (!User.IsInRole("Instructor"))
+            //{
+            //    return HttpNotFound();
+            //}
+
+            return View();
         }
 
         public ActionResult CreateInstructor()
@@ -467,8 +472,8 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
-            //var listOfJobs
-            return RedirectToAction("StudentProfile");
+            //list of programs
+            return View();
         }
         // Can add activities
         // Can update resume or profile
@@ -615,10 +620,14 @@ namespace Resume_Portal.Controllers
         public ActionResult AllPrograms()
         {
             var allPrograms = db.Programs.ToList();
+            allPrograms.ForEach(p => {
+                p.Discription = p.Discription.Substring(0, 110) + "...";
+            });
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
             }
+            
             return View(allPrograms);
         }
 

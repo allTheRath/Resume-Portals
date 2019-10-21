@@ -1,5 +1,6 @@
-﻿
-@Html.Partial("InstructorNav")
+﻿@{
+    Layout = "~/Views/Home/InstructorNav.cshtml";
+}
 @{
-    Html.RenderAction("AllPrograms", "Home")
+    Html.RenderAction("AllPrograms", "Home");
 }

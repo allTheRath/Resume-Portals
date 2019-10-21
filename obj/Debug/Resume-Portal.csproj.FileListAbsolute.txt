@@ -216,6 +216,7 @@ D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternP
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.csproj.CopyComplete
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.dll
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.pdb
+<<<<<<< HEAD
 C:\Users\Justin\Desktop\Back End\MITT Project\bin\Resume-Portal.dll.config
 C:\Users\Justin\Desktop\Back End\MITT Project\bin\Resume-Portal.dll
 C:\Users\Justin\Desktop\Back End\MITT Project\bin\Resume-Portal.pdb
@@ -328,3 +329,8 @@ C:\Users\Justin\Desktop\Back End\MITT Project\obj\Debug\Resume-Portal.csproj.Cor
 C:\Users\Justin\Desktop\Back End\MITT Project\obj\Debug\Resume-Portal.csproj.CopyComplete
 C:\Users\Justin\Desktop\Back End\MITT Project\obj\Debug\Resume-Portal.dll
 C:\Users\Justin\Desktop\Back End\MITT Project\obj\Debug\Resume-Portal.pdb
+=======
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.addedprofilerole.resources
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.programwithjoblist.resources
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.postedjobon.resources
+>>>>>>> 5578e06ae37589ebb2b4d38f82cc0791585d774c
