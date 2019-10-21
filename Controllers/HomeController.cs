@@ -620,7 +620,6 @@ namespace Resume_Portal.Controllers
         public ActionResult AllPrograms()
         {
             var allPrograms = db.Programs.ToList();
-
             allPrograms.ForEach(p => {
                 p.Discription = p.Discription.Substring(0, 110) + "...";
             });
