@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201910202041559_programwithjoblist.Designer.cs">
       <DependentUpon>201910202041559_programwithjoblist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910211558371_postedjobon.cs" />
+    <Compile Include="Migrations\201910211558371_postedjobon.Designer.cs">
+      <DependentUpon>201910211558371_postedjobon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -231,6 +235,37 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="program-images\automech.jpg" />
+    <Content Include="program-images\businessadmin.jpg" />
+    <Content Include="program-images\CADtech.jpg" />
+    <Content Include="program-images\carpentry.jpg" />
+    <Content Include="program-images\Cisco.jpg" />
+    <Content Include="program-images\Culinary.jpg" />
+    <Content Include="program-images\Cyber-defense.jpg" />
+    <Content Include="program-images\ECED.jpg" />
+    <Content Include="program-images\ElectricalApplications.jpg" />
+    <Content Include="program-images\Global-Logistics.jpg" />
+    <Content Include="program-images\Graphic-print-tech.jpg" />
+    <Content Include="program-images\Hairstyling.jpg" />
+    <Content Include="program-images\Health-care-aide.jpg" />
+    <Content Include="program-images\Hospitality-Mgmt.jpg" />
+    <Content Include="program-images\Industrial-Electronics.jpg" />
+    <Content Include="program-images\International-business.jpg" />
+    <Content Include="program-images\Leadership-and-Management.jpg" />
+    <Content Include="program-images\Medical-Office-Asst.jpg" />
+    <Content Include="program-images\Millwright.jpg" />
+    <Content Include="program-images\MITT_Tuition_popups_Carpentry.jpg" />
+    <Content Include="program-images\MITT_Tuition_popups_Electrical.jpg" />
+    <Content Include="program-images\MITT_Tuition_popups_Hotel.jpg" />
+    <Content Include="program-images\msport.jpg" />
+    <Content Include="program-images\Network-and-computer-tech.jpg" />
+    <Content Include="program-images\Network-security.jpg" />
+    <Content Include="program-images\Pharmacy-tech.jpg" />
+    <Content Include="program-images\Redesigned_Cisco_CCNA_Certifications.png" />
+    <Content Include="program-images\Rehab-Asst.jpg" />
+    <Content Include="program-images\Software-developer.jpg" />
+    <Content Include="program-images\welding.jpg" />
+    <Content Include="program-images\YourCareerStartsHere_PS.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -343,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910202041559_programwithjoblist.resx">
       <DependentUpon>201910202041559_programwithjoblist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910211558371_postedjobon.resx">
+      <DependentUpon>201910211558371_postedjobon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
