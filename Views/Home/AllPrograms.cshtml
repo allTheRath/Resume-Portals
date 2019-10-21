@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<Resume_Portal.Models.Program>
 
+<h2>List Of Programs</h2>
 
+<<<<<<< HEAD
 <div class="main-box">
 
     @foreach (var item in Model)
@@ -28,6 +30,30 @@
             </div>
 
         </div>
+=======
+<main>
+    @foreach (var item in Model)
+    {
+        <section>
+            <div>
+                <img src="~/program-images/@item.Name/pic/logo.jpg" />
+            </div>
+            <div>
+                @Html.DisplayFor(modelItem => item.Discription)
+                <div>
+                    @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
+                    @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
+                </div>
+            </div>
+        </section>
+>>>>>>> 5aa60bb849393675136d61ade53db0f750281e0c
     }
+</main>
 
+
+
+
+<<<<<<< HEAD
 </div>
+=======
+>>>>>>> 5aa60bb849393675136d61ade53db0f750281e0c
