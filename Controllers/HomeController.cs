@@ -364,13 +364,13 @@ namespace Resume_Portal.Controllers
         /// Instructor home page
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        
         public ActionResult Instructor()
         {
-            if (!User.IsInRole("Instructor"))
-            {
-                return HttpNotFound();
-            }
+            //if (!User.IsInRole("Instructor"))
+            //{
+            //    return HttpNotFound();
+            //}
 
             return View();
         }

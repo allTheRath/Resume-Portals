@@ -2,6 +2,35 @@
 
 <h2>List Of Programs</h2>
 
+<<<<<<< HEAD
+<div class="main-box">
+
+    @foreach (var item in Model)
+    {
+        <div class="flex-data">
+            <div class="flex-box">
+                <img src="~/program-images/@item.Name/pic/logo.jpg" />
+            </div>
+            <div class="flex-box">
+                <div>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Discription)
+                </div>
+                <div>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </div>
+                <div>
+                    @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
+                </div>
+                <div>
+                    @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
+                </div>
+            </div>
+
+        </div>
+=======
 <main>
     @foreach (var item in Model)
     {
@@ -17,9 +46,14 @@
                 </div>
             </div>
         </section>
+>>>>>>> 5aa60bb849393675136d61ade53db0f750281e0c
     }
 </main>
 
 
 
 
+<<<<<<< HEAD
+</div>
+=======
+>>>>>>> 5aa60bb849393675136d61ade53db0f750281e0c
