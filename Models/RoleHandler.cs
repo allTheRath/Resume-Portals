@@ -40,21 +40,21 @@ namespace Resume_Portal.Models
             file.Close();
         }
 
-        public void SeedDatabaseWithPrograms()
-        {
-            string path = @"C:\Users\jay\source\repos\Resume-Portal\ProgramsData\programNames.txt";
+        //public void SeedDatabaseWithPrograms()
+        //{
+        //    string path = @"C:\Users\jay\source\repos\Resume-Portal\ProgramsData\programNames.txt";
                 
-            using (StreamReader sr = File.OpenText(path))
-            {
-                string programName;
-                while ((programName = sr.ReadLine()) != null)
-                {
-                    CreateFile(programName);
-                }
+        //    using (StreamReader sr = File.OpenText(path))
+        //    {
+        //        string programName;
+        //        while ((programName = sr.ReadLine()) != null)
+        //        {
+        //            CreateFile(programName);
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
         // Add online offline status to user.
         // Add Last login time to user.

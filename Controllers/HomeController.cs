@@ -21,7 +21,7 @@ namespace Resume_Portal.Controllers
                 return RedirectToAction("UserDirect");
                 // If user is already loged in then user should go to their own home page. here profile page.
             }
-            RoleHandler.SeedDatabaseWithPrograms();
+            //RoleHandler.SeedDatabaseWithPrograms();
 
             return View();
         }
