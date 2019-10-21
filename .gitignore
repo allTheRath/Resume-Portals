@@ -3,3 +3,4 @@ App_Data
 bin
 .vs/
 ProgramsData
+*.mdf

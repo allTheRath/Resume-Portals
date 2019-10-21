@@ -1,6 +1,17 @@
-﻿@model Resume_Portal.Models.StudentProfile
+﻿@model Resume_Portal.Models.StudentProfileViewModels
 @Html.Partial("StudentNav")
-<div>
+<main>
+    <header>
+        <h2>@model</h2>
+    </header>
+</main>
+
+
+
+
+
+
+@*<div>
     <h4>StudentProfile</h4>
     <hr />
     <img src="@ViewBag.ImageUrl" alt="profile" />
@@ -73,5 +84,5 @@
             Html.RenderAction("AddAttachment");
         }
     </dl>
-</div>
+</div>*@
 
