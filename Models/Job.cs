@@ -18,5 +18,8 @@ namespace Resume_Portal.Models
 
         public string EmployerId { get; set; }
         public virtual EmployerProfile Employer { get; set; }
+
+        public int ProgramId { get; set; }
+        public virtual Program Program { get; set; }
     }
 }

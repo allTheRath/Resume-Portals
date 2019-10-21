@@ -1,6 +1,8 @@
-﻿using Resume_Portal.Models;
+﻿using Microsoft.AspNet.Identity;
+using Resume_Portal.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +23,7 @@ namespace Resume_Portal.Controllers
                 return RedirectToAction("UserDirect");
                 // If user is already loged in then user should go to their own home page. here profile page.
             }
-            //RoleHandler.SeedDatabaseWithPrograms();
+
 
             return View();
         }
@@ -149,16 +151,17 @@ namespace Resume_Portal.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var request = db.NotifyAdmins.Find(id);
-            ViewBag.Approved = false;
             ViewBag.RoleName = request.RoleName;
             if (request.Resolved == false)
             {
                 bool approved = RoleHandler.AssignUserToRole(request.UserId, request.RoleName);
                 if (approved == true)
                 {
-                    request.Resolved = true;
-                    db.SaveChanges();
                     ViewBag.Approved = true;
+                }
+                else
+                {
+                    ViewBag.Approved = false;
                 }
             }
             var user = db.Users.Find(request.UserId);
@@ -218,16 +221,53 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Employer()
         {
+            if (!User.IsInRole("Employer"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
         // Employer can see list of students or can see program home page.
         // Employer can send email to any student or instructor.
         // Student can see notification of sent email.
+        public ActionResult EditEmployer()
+        {
+            string uid = User.Identity.GetUserId();
+            EmployerProfile employerProfile = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            return View(employerProfile);
+        }
+
+        [HttpPost, ActionName("EditEmployer")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEmployerConfirmation([Bind(Include = "Id,AboutUs,HistoryOfCompany,ContactUs,PhoneNo,LookingForSkills")] EmployerProfile employerProfile)
+        {
+            if (ModelState.IsValid)
+            {
+
+                string uid = User.Identity.GetUserId();
+                EmployerProfile employerProfileExist = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+                employerProfileExist.AboutUs = employerProfile.AboutUs;
+                employerProfileExist.ContactUs = employerProfile.ContactUs;
+                employerProfileExist.HistoryOfCompany = employerProfile.HistoryOfCompany;
+                employerProfileExist.LookingForSkills = employerProfile.LookingForSkills;
+                employerProfileExist.PhoneNo = employerProfile.PhoneNo;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(employerProfile);
+        }
+
 
         public ActionResult CreateEmployer()
         {
+            if (!User.IsInRole("Employer"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
+
 
         [HttpPost, ActionName("CreateEmployer")]
         [ValidateAntiForgeryToken]
@@ -235,7 +275,14 @@ namespace Resume_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.EmployerProfiles.Add(employerProfile);
+
+                string uid = User.Identity.GetUserId();
+                EmployerProfile employerProfileExist = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+                employerProfileExist.AboutUs = employerProfile.AboutUs;
+                employerProfileExist.ContactUs = employerProfile.ContactUs;
+                employerProfileExist.HistoryOfCompany = employerProfile.HistoryOfCompany;
+                employerProfileExist.LookingForSkills = employerProfile.LookingForSkills;
+                employerProfileExist.PhoneNo = employerProfile.PhoneNo;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -248,10 +295,43 @@ namespace Resume_Portal.Controllers
         /// Employer can post job to a program. All students of that program will be able to see the job.
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Employer")]
         public ActionResult PostJob()
         {
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             return View();
         }
+        [HttpPost, ActionName("PostJob")]
+        [ValidateAntiForgeryToken]
+        public ActionResult PostJobConfirmation([Bind(Include = "CompanyName, JobDiscription")] Job job)
+        {
+            if (ModelState.IsValid)
+            {
+                string uid = User.Identity.GetUserId();
+                Job jobExists = db.Jobs.Where(x => x.EmployerId == uid).FirstOrDefault();
+                jobExists.CompanyName = job.CompanyName;
+                jobExists.JobDiscription = job.JobDiscription;
+                jobExists.EmployerId = uid;
+                db.SaveChanges();
+                return RedirectToAction("JobDetails", new { jobId = jobExists.Id });
+            }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
+            return View();
+        }
+        public ActionResult JobDetails(int? jobId)
+        {
+            if (jobId == null)
+            {
+                return HttpNotFound();
+            }
+            var job = db.Jobs.FirstOrDefault(j => j.Id == jobId);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
 
         /// <summary>
         /// Employer profile view ... Employer can edit the profile.  
@@ -259,7 +339,13 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult EmployerProfile()
         {
-            return View();
+            if (!User.IsInRole("Employer"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            EmployerProfile employerProfile = db.EmployerProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(employerProfile);
         }
 
 
@@ -268,13 +354,29 @@ namespace Resume_Portal.Controllers
         /// Instructor home page
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Instructor()
         {
-            return View();
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+            string userId = User.Identity.GetUserId();
+            var instructor = db.InstructorProfiles.FirstOrDefault(i => i.UserId == userId);
+            if (instructor == null)
+            {
+                return HttpNotFound();
+            }
+            return View(instructor);
         }
 
         public ActionResult CreateInstructor()
         {
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+
             return View();
         }
 
@@ -285,7 +387,13 @@ namespace Resume_Portal.Controllers
 
             if (ModelState.IsValid)
             {
-                db.InstructorProfiles.Add(instructorProfile);
+                string uid = User.Identity.GetUserId();
+                InstructorProfile instructorProfileExist = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                instructorProfileExist.AboutMe = instructorProfile.AboutMe;
+                instructorProfileExist.ContactInfo = instructorProfile.ContactInfo;
+                instructorProfileExist.Experience = instructorProfile.Experience;
+                instructorProfileExist.JoinedMitt = instructorProfile.JoinedMitt;
+                instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -293,6 +401,37 @@ namespace Resume_Portal.Controllers
             return View(instructorProfile);
         }
 
+        public ActionResult EditInstructor()
+        {
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            InstructorProfile instructorProfile = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(instructorProfile);
+        }
+
+        [HttpPost, ActionName("EditInstructor")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditInstructorConfirm([Bind(Include = "Id,AboutMe,Experience,JoinedMitt,ContactInfo,ProfetionalEmail")] InstructorProfile instructorProfile)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string uid = User.Identity.GetUserId();
+                InstructorProfile instructorProfileExist = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                instructorProfileExist.AboutMe = instructorProfile.AboutMe;
+                instructorProfileExist.ContactInfo = instructorProfile.ContactInfo;
+                instructorProfileExist.Experience = instructorProfile.Experience;
+                instructorProfileExist.JoinedMitt = instructorProfile.JoinedMitt;
+                instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(instructorProfile);
+        }
         // can see list of students.
         // Can see program home.
         // Can post events :: which will be displayed on program home page.
@@ -305,7 +444,13 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult InstructorProfile()
         {
-            return View();
+            if (User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            return View(instructorProfile);
         }
 
 
@@ -313,9 +458,17 @@ namespace Resume_Portal.Controllers
         /// Student Home page
         /// </summary>
         /// <returns></returns>
+        //[Authorize]
         public ActionResult Student()
         {
-            return View();
+            string userId = User.Identity.GetUserId();
+            var student = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            //var listOfJobs
+            return RedirectToAction("StudentProfile");
         }
         // Can add activities
         // Can update resume or profile
@@ -325,6 +478,10 @@ namespace Resume_Portal.Controllers
 
         public ActionResult CreateStudent()
         {
+            if (User.IsInRole("Student"))
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -334,7 +491,50 @@ namespace Resume_Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StudentProfiles.Add(studentProfile);
+                string uid = User.Identity.GetUserId();
+                StudentProfile studentProfileExist = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                studentProfileExist.AboutMe = studentProfile.AboutMe;
+                studentProfileExist.ContactInfo = studentProfile.ContactInfo;
+                studentProfileExist.EndDate = studentProfile.EndDate;
+                studentProfileExist.MySkills = studentProfile.MySkills;
+                studentProfileExist.ProfessionalEmail = studentProfile.ProfessionalEmail;
+                studentProfileExist.SemesterNumber = studentProfile.SemesterNumber;
+                studentProfileExist.StartDate = studentProfile.StartDate;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(studentProfile);
+        }
+
+
+
+        public ActionResult EditStudent()
+        {
+            if (User.IsInRole("Student"))
+            {
+                return HttpNotFound();
+            }
+            string uid = User.Identity.GetUserId();
+            StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(studentProfile);
+        }
+
+        [HttpPost, ActionName("CreateStudent")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStudentConfirm([Bind(Include = "Id,AboutMe,ContactInfo,ProfetionalEmail,SemesterNumber,StartDate,EndDate,MySkills")] StudentProfile studentProfile)
+        {
+            if (ModelState.IsValid)
+            {
+                string uid = User.Identity.GetUserId();
+                StudentProfile studentProfileExist = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+                studentProfileExist.AboutMe = studentProfile.AboutMe;
+                studentProfileExist.ContactInfo = studentProfile.ContactInfo;
+                studentProfileExist.EndDate = studentProfile.EndDate;
+                studentProfileExist.MySkills = studentProfile.MySkills;
+                studentProfileExist.ProfessionalEmail = studentProfile.ProfessionalEmail;
+                studentProfileExist.SemesterNumber = studentProfile.SemesterNumber;
+                studentProfileExist.StartDate = studentProfile.StartDate;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -349,7 +549,25 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult StudentProfile()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index");
+            }
+
+            string uid = User.Identity.GetUserId();
+            StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + User.Identity.Name));
+            if (exists && User.Identity.Name != "")
+            {
+                string ProfileImage = Directory.GetFiles(Server.MapPath("~/User-Profile-Pic/" + User.Identity.Name + "/"), "*.*", SearchOption.AllDirectories)[0];
+                string fileextention = Path.GetExtension(ProfileImage).ToLower();
+                ViewBag.ImageUrl = "/User-Profile-Pic/" + User.Identity.Name + "/" + "profilepic" + fileextention;
+            }
+            else
+            {
+                ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
+            }
+            return View(studentProfile);
         }
 
 
@@ -364,7 +582,8 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllEmployers()
         {
-            return View();
+            var allEmployerProfiles = db.Profiles.ToList().Where(x => x.Role == "Employer").ToList();
+            return View(allEmployerProfiles);
         }
 
         /// <summary>
@@ -373,7 +592,8 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllInstructors()
         {
-            return View();
+            var allInstructors = db.Profiles.ToList().Where(x => x.Role == "Instructor").ToList();
+            return View(allInstructors);
         }
 
         /// <summary>
@@ -382,8 +602,11 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllStudents()
         {
-            return View();
+            var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student").ToList();
+            return View(allStudents);
         }
+
+
 
         /// <summary>
         /// All programs offered :: List with images and headers. A link to program discription.
@@ -406,7 +629,12 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult ProgramDetails(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Program program = db.Programs.Find(id);
+            return View(program);
         }
 
         /// <summary>
@@ -416,12 +644,99 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult StudentInProgram(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Program program = db.Programs.Find(id);
+            var allProgramUsers = db.ProgramUsers.Where(x => x.ProgramId == id);
+            List<Profile> allStudents = new List<Profile>();
+            allProgramUsers.ToList().ForEach(user =>
+            {
+                var student = db.Profiles.Where(x => x.UserId == user.UserId && x.Role == "Student").FirstOrDefault();
+                if (student != null)
+                {
+                    allStudents.Add(student);
+                }
+            });
+            // all students in given program are retrived as list of profiles.
+            return View(allStudents);
         }
 
         // Student, instructors, admins and employers can see student activities and individual
         // profiles but student can't see other student profile.
         // This functionality will be done through nav bar.
+
+        public ActionResult Download(string uid)
+        {
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + ".pdf"));
+            string fileName = "resume.pdf";
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public ActionResult AddAttachment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddAttachment(HttpPostedFileBase file)
+        {
+
+            if (file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".pdf")
+                {
+                    string uid = User.Identity.GetUserId();
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/student-resume/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/student-resume/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/student-resume/" + uid + "/"), "resume" + fileextention);
+                        file.SaveAs(path);
+
+                    }
+                }
+                else if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    string uid = User.Identity.Name;
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/User-Profile-Pic/" + uid + "/"), "profilepic" + fileextention);
+                        file.SaveAs(path);
+
+                    }
+
+                }
+            }
+
+
+            return View();
+        }
+
 
 
         // Below are extra views .    
