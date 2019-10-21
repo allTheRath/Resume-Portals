@@ -620,10 +620,12 @@ namespace Resume_Portal.Controllers
         public ActionResult AllPrograms()
         {
             var allPrograms = db.Programs.ToList();
+            
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
             }
+            
             return View(allPrograms);
         }
 
