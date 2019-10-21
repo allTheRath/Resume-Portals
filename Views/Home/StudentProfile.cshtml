@@ -3,8 +3,16 @@
 <div>
     <h4>StudentProfile</h4>
     <hr />
+    <img src="@ViewBag.ImageUrl" alt="profile" />
     <dl class="dl-horizontal">
-
+        <dt>
+            Upload Profile Picture:
+        </dt>
+        <dd>
+            @{
+                Html.RenderAction("AddAttachment");
+            }
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.AboutMe)
         </dt>

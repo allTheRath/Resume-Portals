@@ -549,13 +549,24 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult StudentProfile()
         {
-            if (!User.IsInRole("Student"))
+            if (!User.Identity.IsAuthenticated)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
 
             string uid = User.Identity.GetUserId();
             StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + User.Identity.Name));
+            if (exists && User.Identity.Name != "")
+            {
+                string ProfileImage = Directory.GetFiles(Server.MapPath("~/User-Profile-Pic/" + User.Identity.Name + "/"), "*.*", SearchOption.AllDirectories)[0];
+                string fileextention = Path.GetExtension(ProfileImage).ToLower();
+                ViewBag.ImageUrl = "/User-Profile-Pic/" + User.Identity.Name + "/" + "profilepic" + fileextention;
+            }
+            else
+            {
+                ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
+            }
             return View(studentProfile);
         }
 
@@ -656,6 +667,15 @@ namespace Resume_Portal.Controllers
         // profiles but student can't see other student profile.
         // This functionality will be done through nav bar.
 
+        public ActionResult Download(string uid)
+        {
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + ".pdf"));
+            string fileName = "resume.pdf";
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
         public ActionResult AddAttachment()
         {
             return View();
@@ -667,28 +687,57 @@ namespace Resume_Portal.Controllers
 
             if (file.ContentLength > 0)
             {
-                var fileextention = Path.GetExtension(file.FileName);
-                string uid = User.Identity.GetUserId();
-                if (uid != "")
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".pdf")
                 {
-                    bool exists = Directory.Exists(Server.MapPath("~/student-resume/" + uid));
-                    if (!exists)
+                    string uid = User.Identity.GetUserId();
+                    if (uid != "")
                     {
-                        // if directory not exist then create it.
-                        Directory.CreateDirectory(Server.MapPath("~/student-resume/" + uid));
+                        bool exists = Directory.Exists(Server.MapPath("~/student-resume/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/student-resume/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/student-resume/" + uid + "/"), "resume" + fileextention);
+                        file.SaveAs(path);
+
                     }
-                    if (System.IO.File.Exists(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention)))
+                }
+                else if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    string uid = User.Identity.Name;
+                    if (uid != "")
                     {
-                        // if file exist then delete it.
-                        System.IO.File.Delete(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention));
+                        bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/User-Profile-Pic/" + uid + "/"), "profilepic" + fileextention);
+                        file.SaveAs(path);
+
                     }
-                    var path = Path.Combine(Server.MapPath("~/student-resume/" + uid + "/"), "resume" + fileextention);
-                    file.SaveAs(path);
+
                 }
             }
 
+
             return View();
         }
+
+
 
         // Below are extra views .    
         /// <summary>

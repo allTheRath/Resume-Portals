@@ -244,6 +244,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="User-Profile-Pic\blank\blankProfile.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -306,6 +307,7 @@
     <Content Include="Views\Home\AddAttachment.cshtml" />
     <Content Include="Views\Home\StudentProfile.cshtml" />
     <Content Include="Views\Home\Student.cshtml" />
+    <Content Include="Views\Home\Download.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="student-resume\" />
