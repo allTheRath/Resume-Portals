@@ -610,6 +610,12 @@ namespace Resume_Portal.Controllers
             var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student").ToList();
             return View(allStudents);
         }
+        //Profiles have a virtual card
+        public ActionResult ProfileCard()
+        {
+            var profiles = db.Profiles.ToList();
+            return View(profiles);
+        }
 
 
 

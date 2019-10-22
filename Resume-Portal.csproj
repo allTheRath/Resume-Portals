@@ -345,8 +345,10 @@
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
     <Content Include="Views\Home\AllStudents.cshtml" />
+    <Content Include="Views\Home\ProfileCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\images\" />
     <Folder Include="student-resume\" />
   </ItemGroup>
   <ItemGroup>
