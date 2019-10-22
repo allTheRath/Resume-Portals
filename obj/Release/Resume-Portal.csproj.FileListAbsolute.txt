@@ -110,3 +110,4 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.onl
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.addedprofilerole.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.programwithjoblist.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.postedjobon.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.addedNotification.resources

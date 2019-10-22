@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201910211558371_postedjobon.Designer.cs">
       <DependentUpon>201910211558371_postedjobon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910220119264_addedNotification.cs" />
+    <Compile Include="Migrations\201910220119264_addedNotification.Designer.cs">
+      <DependentUpon>201910220119264_addedNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -343,6 +347,7 @@
     <Content Include="Views\Home\StudentProfile.cshtml" />
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\FooterBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="student-resume\" />
@@ -381,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910211558371_postedjobon.resx">
       <DependentUpon>201910211558371_postedjobon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910220119264_addedNotification.resx">
+      <DependentUpon>201910220119264_addedNotification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

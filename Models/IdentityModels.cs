@@ -39,15 +39,20 @@ namespace Resume_Portal.Models
 
         public DbSet<EmployerProfile> EmployerProfiles { get; set; }
 
-        public DbSet<Event> Events { get; set; }
-
         public DbSet<Activity> Activities { get; set; }
 
-        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotifyStudent> NotifyStudents { get; set; }
+
+        public DbSet<NotifyEmployer> NotifyEmployers { get; set; }
+
+        public DbSet<NotifyInstructor> NotifyInstructors { get; set; }
+
+        public DbSet<NotifyAdmin> NotifyAdmins { get; set; }
 
         public DbSet<Attachment> Attachments { get; set; }
 
-        public DbSet<NotifyAdmin> NotifyAdmins { get; set; }
+        public DbSet<Event> Events { get; set; }
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

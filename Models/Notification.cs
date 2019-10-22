@@ -5,23 +5,26 @@ using System.Web;
 
 namespace Resume_Portal.Models
 {
-    public class Notification
+
+    public class NotifyStudent
     {
         public int Id { get; set; }
-
-        public string Discription { get; set; }
-
-        public IntendedUser IntendedUser { get; set; }
-
-        public string UrlPath { get; set; }
-
-        public DateTime CreatedOn { get; set; }
+        public int EmployerProfileId { get; set; }
+        public DateTime RequestedOn { get; set; }
     }
 
-    public enum IntendedUser
+    public class NotifyEmployer
     {
-        Student,
-        Instructor,
-        Employer
+        public int Id { get; set; }
+        public int StudentProfileId { get; set; }
+        public bool ResumeAvailable { get; set; }
     }
+
+    public class NotifyInstructor
+    {
+        public int Id { get; set; }
+        public int StudentProfileId { get; set; }
+        public int EmployerProfileId { get; set; }
+    }
+
 }

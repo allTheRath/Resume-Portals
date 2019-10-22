@@ -1,5 +1,9 @@
-﻿
-@Html.Partial("EmployerNav")
+﻿@model Resume_Portal.Models.Profile
+
+@Html.Partial("EmployerNav");
+
 @{
     Html.RenderAction("AllPrograms", "Home");
 }
+
+@Html.Partial("FooterBar")

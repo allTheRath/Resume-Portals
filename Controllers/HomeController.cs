@@ -109,6 +109,10 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
+        public ActionResult FooterBar()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Admin Home Page
@@ -221,11 +225,17 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Employer()
         {
-            if (!User.IsInRole("Employer"))
+            //if (!User.IsInRole("Employer"))
+            //{
+            //    return HttpNotFound();
+            //}
+            string userId = User.Identity.GetUserId();
+            var employer = db.Profiles.FirstOrDefault(s => s.UserId == userId);
+            if (employer == null)
             {
                 return HttpNotFound();
             }
-            return View();
+            return View(employer);
         }
         // Employer can see list of students or can see program home page.
         // Employer can send email to any student or instructor.
@@ -261,10 +271,10 @@ namespace Resume_Portal.Controllers
 
         public ActionResult CreateEmployer()
         {
-            if (!User.IsInRole("Employer"))
-            {
-                return HttpNotFound();
-            }
+            //if (!User.IsInRole("Employer"))
+            //{
+            //    return HttpNotFound();
+            //}
             return View();
         }
 
@@ -295,13 +305,14 @@ namespace Resume_Portal.Controllers
         /// Employer can post job to a program. All students of that program will be able to see the job.
         /// </summary>
         /// <returns></returns>
-        [Authorize(Roles = "Employer")]
+       // [Authorize(Roles = "Employer")]
         public ActionResult PostJob()
         {
             if (ViewBag.PostConfirm != null && ViewBag.PostConfirm == true)
             {
                 ViewBag.PostConfirm = true;
-            } else
+            }
+            else
             {
                 ViewBag.PostConfirm = false;
             }
@@ -320,7 +331,8 @@ namespace Resume_Portal.Controllers
                 db.Jobs.Add(job);
                 db.SaveChanges();
                 ViewBag.PostConfirm = true;
-            } else
+            }
+            else
             {
                 ViewBag.PostConfirm = false;
             }
@@ -349,10 +361,10 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult EmployerProfile()
         {
-            if (!User.IsInRole("Employer"))
-            {
-                return HttpNotFound();
-            }
+            //if (!User.IsInRole("Employer"))
+            //{
+            //    return HttpNotFound();
+            //}
             string uid = User.Identity.GetUserId();
             EmployerProfile employerProfile = db.EmployerProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
             return View(employerProfile);
@@ -364,23 +376,28 @@ namespace Resume_Portal.Controllers
         /// Instructor home page
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         public ActionResult Instructor()
         {
-            if (!User.IsInRole("Instructor"))
+            //if (!User.IsInRole("Instructor"))
+            //{
+            //    return HttpNotFound();
+            //}
+            string userId = User.Identity.GetUserId();
+            var instructor = db.Profiles.FirstOrDefault(s => s.UserId == userId);
+            if (instructor == null)
             {
                 return HttpNotFound();
             }
-
-            return View();
+            return View(instructor);
         }
 
         public ActionResult CreateInstructor()
         {
-            if (!User.IsInRole("Instructor"))
-            {
-                return HttpNotFound();
-            }
+            //if (!User.IsInRole("Instructor"))
+            //{
+            //    return HttpNotFound();
+            //}
 
             return View();
         }
@@ -449,10 +466,10 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult InstructorProfile()
         {
-            if (User.IsInRole("Instructor"))
-            {
-                return HttpNotFound();
-            }
+            //if (User.IsInRole("Instructor"))
+            //{
+            //    return HttpNotFound();
+            //}
             string uid = User.Identity.GetUserId();
             InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
             return View(instructorProfile);
@@ -467,13 +484,13 @@ namespace Resume_Portal.Controllers
         public ActionResult Student()
         {
             string userId = User.Identity.GetUserId();
-            var student = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
+            var student = db.Profiles.FirstOrDefault(s => s.UserId == userId);
             if (student == null)
             {
                 return HttpNotFound();
             }
             //list of programs
-            return View();
+            return View(student);
         }
         // Can add activities
         // Can update resume or profile
@@ -483,10 +500,10 @@ namespace Resume_Portal.Controllers
 
         public ActionResult CreateStudent()
         {
-            if (User.IsInRole("Student"))
-            {
-                return HttpNotFound();
-            }
+            //if (User.IsInRole("Student"))
+            //{
+            //    return HttpNotFound();
+            //}
             return View();
         }
 
@@ -516,10 +533,10 @@ namespace Resume_Portal.Controllers
 
         public ActionResult EditStudent()
         {
-            if (User.IsInRole("Student"))
-            {
-                return HttpNotFound();
-            }
+            //if (User.IsInRole("Student"))
+            //{
+            //    return HttpNotFound();
+            //}
             string uid = User.Identity.GetUserId();
             StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
             return View(studentProfile);
@@ -621,14 +638,15 @@ namespace Resume_Portal.Controllers
         {
             var allPrograms = db.Programs.ToList();
 
-            allPrograms.ForEach(p => {
+            allPrograms.ForEach(p =>
+            {
                 p.Discription = p.Discription.Substring(0, 110) + "...";
             });
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
             }
-            
+
             return View(allPrograms);
         }
 
