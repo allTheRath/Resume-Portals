@@ -1,51 +1,11 @@
 ﻿@model IEnumerable<Resume_Portal.Models.Program>
-@*<table class="table">
-        <tr>
-            <th>
-
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Discription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="~/program-images/@item.Name/pic/logo.jpg" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Discription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
-                </td>
-                <td>
-                    @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
-                </td>
-            </tr>
-        }
-
-    </table>*@
-
+<span>Program Name</span>
+<input type="text" id="search" name="ser" />
 <main class="main-flex">
     @foreach (var item in Model)
     {
-        <section class="flex-ele">
+        <a href=@("#"+@item.Name.ToString())><hr /></a>
+        <section class=@(@item.Name.ToString()) id="flex-ele">
             <div class="img-container">
                 <img class="img" src="~/program-images/@item.Name/pic/logo.jpg" />
             </div>
@@ -66,11 +26,31 @@
         </section>
     }
 </main>
+<p class="appendChild">
+</p>
+<script>
+    var n = document.querySelector("#search");
+    n.addEventListener("change", function (e) {
+        var x = document.querySelector("#search").value;
+        console.log(x);
+        var allPosibles = document.querySelectorAll("#flex-ele");
+        if (allPosibles != undefined) {
+            for (i = allPosibles.length - 1; i >= 0; i--) {
+                if (allPosibles[i].className.includes(x)) {
+                    console.log(allPosibles[i].className);
+                    var nodeSelect = document.querySelector("." + allPosibles[i].className.toString());
+                    nodeSelect.scrollIntoView();
+                    break;
+                }
+            }
+        }
+    });
 
+</script>
 <style>
     .main-flex {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         width: 100%;
         justify-content: space-evenly;
@@ -79,7 +59,7 @@
         font-weight: 300;
     }
 
-    .flex-ele {
+    #flex-ele {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
@@ -88,7 +68,7 @@
 
     .img-container {
         margin-right: 7px;
-        display:inline;
+        display: inline;
     }
 
     .img {
@@ -96,7 +76,7 @@
         margin-right: 4%;
         border-radius: 70%;
         overflow: hidden;
-        display:inline;
+        display: inline;
         /*max-width: 100%;
 
         overflow: hidden;
@@ -107,7 +87,7 @@
     .second {
         float: left;
         width: 40%;
-        display:inline;
+        display: inline;
         margin-top: 2em;
     }
 
@@ -117,14 +97,14 @@
         font-weight: bold;
         letter-spacing: .06em;
         margin-bottom: .5em;
-        display:inline;
+        display: inline;
     }
 
     .discription {
         margin-bottom: 1em;
         text-align: start;
-        width: inherit;
-        display:inline;
+        width: 200px;
+        display: inline;
     }
 
     .button {
@@ -143,7 +123,6 @@
         font-size: 1.8vw;
         background-color: beige;
         color: forestgreen;
-        display:inline;
+        display: inline;
     }
-
 </style>
