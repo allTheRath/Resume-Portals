@@ -344,6 +344,7 @@
     <Content Include="Views\Home\StudentProfile.cshtml" />
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\AllStudents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="student-resume\" />
