@@ -253,6 +253,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cssV2.css" />
+    <Content Include="Content\profileCardStyle.css" />
+    <Content Include="Content\responsive.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -369,6 +372,7 @@
     <Content Include="Views\Home\StudentProfile.cshtml" />
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Home\FooterBar.cshtml" />
     <Content Include="Views\Home\EmployerProfile.cshtml" />
     <Content Include="Views\Home\AllStudents.cshtml" />
@@ -382,6 +386,13 @@
   <ItemGroup>
     <Folder Include="bin\" />
     <Folder Include="Posted-Job-Resume\" />
+=======
+    <Content Include="Views\Home\AllStudents.cshtml" />
+    <Content Include="Views\Home\ProfileCard.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\images\" />
+>>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
     <Folder Include="student-resume\" />
   </ItemGroup>
   <ItemGroup>

@@ -14,4 +14,9 @@ namespace Resume_Portal.Models
         public string ProgramImagePath { get; set; }
         public Program program { get; set; }
     }
+    public class StudentProfileViewModels : ViewModels
+    {
+        public StudentProfile studentProfile { get; set; }
+        public Profile profile { get; set; }
+    }
 }

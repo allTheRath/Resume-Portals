@@ -23,7 +23,18 @@ namespace Resume_Portal
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+<<<<<<< HEAD
                       "~/Content/bootstrap.css"));
+=======
+                      "~/Content/bootstrap.css",
+                      "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/cssV2").Include(
+                      "~/Content/cssV2.css"));
+            bundles.Add(new StyleBundle("~/Content/profileCard").Include(
+                    "~/Content/bootstrap.css",
+                    "~/Content/profileCardStyle.css",
+                    "~/Content/responsive.css"));
+>>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
         }
     }
 }
