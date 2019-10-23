@@ -119,3 +119,7 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.added
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.userName.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.occupationName.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.emailProfile.resources
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.addedNotification.resources
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.userName.resources
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.occupationName.resources
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.emailProfile.resources

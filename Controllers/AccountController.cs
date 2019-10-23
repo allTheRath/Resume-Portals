@@ -147,7 +147,7 @@ namespace Resume_Portal.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-
+            r
             var allRoles = RoleHandler.GetAllRoles();
             ViewBag.SelectRole = allRoles;
             return View();
