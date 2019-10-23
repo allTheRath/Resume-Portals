@@ -419,18 +419,12 @@ namespace Resume_Portal.Controllers
         /// Instructor home page
         /// </summary>
         /// <returns></returns>
-<<<<<<< HEAD
-        //[Authorize]
-=======
-        
->>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
         public ActionResult Instructor()
         {
             //if (!User.IsInRole("Instructor"))
             //{
             //    return HttpNotFound();
             //}
-<<<<<<< HEAD
             string userId = User.Identity.GetUserId();
             var instructor = db.Profiles.FirstOrDefault(s => s.UserId == userId);
             if (instructor == null)
@@ -438,10 +432,6 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             return View(instructor);
-=======
-
-            return View();
->>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
         }
 
         public ActionResult CreateInstructor()
@@ -701,14 +691,10 @@ namespace Resume_Portal.Controllers
         public ActionResult AllPrograms()
         {
             var allPrograms = db.Programs.ToList();
-<<<<<<< HEAD
 
-
-=======
             allPrograms.ForEach(p => {
-                p.Discription = p.Discription.Substring(0, 110) + "...";
+                p.Discription = p.Discription.Substring(0, 210) + "...";
             });
->>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
