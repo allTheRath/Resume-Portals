@@ -45,11 +45,13 @@ namespace Resume_Portal.Models
 
         public virtual ICollection<Education> Educations { get; set; }
 
-        public ICollection<Experiance> Experiances { get; set; }
+        public virtual ICollection<Experiance> Experiances { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }
         // All activities related to student.
         public virtual ICollection<Attachment> Attachments { get; set; }
+
+        public virtual ICollection<EventStudent> Volenteering { get; set; }
     }
 
     public class Skill

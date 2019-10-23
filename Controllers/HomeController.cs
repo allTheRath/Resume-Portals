@@ -634,6 +634,142 @@ namespace Resume_Portal.Controllers
             return View(studentProfile);
         }
 
+        public ActionResult AddExperience()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddExperience([Bind(Include = "Id,InstituteName,Discription,Start,End")] Experiance experiance)
+        {
+            experiance.UserId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                db.Experiances.Add(experiance);
+                db.SaveChanges();
+                return RedirectToAction("StudentProfile");
+            }
+
+            return View(experiance);
+        }
+
+        public ActionResult DeleteExperience(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Experiance experiance = db.Experiances.Find(id);
+            if (experiance == null)
+            {
+                return HttpNotFound();
+            }
+            return View(experiance);
+        }
+
+        [HttpPost, ActionName("DeleteExperience")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteExperienceConfirmed(int id)
+        {
+            Experiance experiance = db.Experiances.Find(id);
+            db.Experiances.Remove(experiance);
+            db.SaveChanges();
+            return RedirectToAction("StudentProfile");
+        }
+
+
+        public ActionResult AddSkill()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSkill([Bind(Include = "Id,UserId,SkillName")] Skill skill)
+        {
+            skill.UserId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                db.Skills.Add(skill);
+                db.SaveChanges();
+                return RedirectToAction("StudentProfile");
+            }
+
+            return View(skill);
+        }
+
+
+
+        public ActionResult DeleteSkill(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Skill skill = db.Skills.Find(id);
+            if (skill == null)
+            {
+                return HttpNotFound();
+            }
+            return View(skill);
+        }
+
+        [HttpPost, ActionName("DeleteSkill")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSkillConfirmed(int id)
+        {
+            Skill skill = db.Skills.Find(id);
+            db.Skills.Remove(skill);
+            db.SaveChanges();
+            return RedirectToAction("StudentProfile");
+        }
+
+
+
+        public ActionResult AddEducation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddEducation([Bind(Include = "Id,UserId,InstituteName,Discription,Start,End")] Education education)
+        {
+            education.UserId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                db.Educations.Add(education);
+                db.SaveChanges();
+                return RedirectToAction("StudentProfile");
+            }
+
+            return View(education);
+        }
+
+        public ActionResult DeleteEducation(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Education education = db.Educations.Find(id);
+            if (education == null)
+            {
+                return HttpNotFound();
+            }
+            return View(education);
+        }
+
+        [HttpPost, ActionName("DeleteEducation")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteEducationConfirmed(int id)
+        {
+            Education education = db.Educations.Find(id);
+            db.Educations.Remove(education);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
 
         // Below Views are common for more then one role.
@@ -1086,6 +1222,66 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Create events.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PostEvent()
+        {
+            return View();
+        }
+
+        public ActionResult PostEvent([Bind(Include = "Id,EventDiscription,Date,StartTime,EndTime,Location")] Event Event)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Events.Add(Event);
+                db.SaveChanges();
+            }
+            return View();
+        }
+
+        public ActionResult AllEvents()
+        {
+            var events = db.Events.ToList().OrderByDescending(x => x.Date).ToList();
+            if (events == null)
+            {
+                events = new List<Event>();
+            }
+            return View(events);
+        }
+
+        public ActionResult Participate(int? eventId)
+        {
+            if (eventId == null)
+            {
+                return HttpNotFound();
+            }
+            Event Event = db.Events.Find(eventId);
+            if (Event.Date.Ticks < DateTime.Now.Ticks)
+            {
+                // If date is gone then can't participate.
+                return HttpNotFound();
+            }
+            string uId = User.Identity.GetUserId();
+            if (uId == "")
+            {
+                return HttpNotFound();
+            }
+            var studentProfile = db.StudentProfiles.Where(x => x.UserId == uId).FirstOrDefault();
+            EventStudent eventStudent = new EventStudent();
+            eventStudent.EventId = Event.Id;
+            eventStudent.Event = Event;
+            eventStudent.StudentProfile = studentProfile;
+            eventStudent.studentprofileId = studentProfile.Id;
+            Event.Volunteers.Add(eventStudent);
+            Event.NeededVolenteers -= 1;
+            db.SaveChanges();
+
+            return RedirectToAction("AllEvents");
+        }
+
         // Below view will only be accessible to individual student 
         /// <summary>
         /// If student has participated in any college events then employer, admin and instructor and student will be able to see that.
@@ -1095,8 +1291,24 @@ namespace Resume_Portal.Controllers
         /// 
         public ActionResult StudentParticipation(int? id)
         {
-            return View();
+            // Based on student profile id all event participated will be added.
+            StudentProfile studentProfile = db.StudentProfiles.Find(id);
+            if (studentProfile == null)
+            {
+                return View();
+            }
+            var allEventsParticipatedId = db.EventParticipatedStudents.ToList().Where(x => x.studentprofileId == id).Select(x => x.EventId).ToList().Distinct();
+            List<Event> allEventsParticipated = new List<Event>();
+            foreach (var eid in allEventsParticipatedId)
+            {
+                Event e = db.Events.Find(eid);
+                allEventsParticipated.Add(e);
+            }
+
+            return View(allEventsParticipated);
         }
+
+
 
 
         /// <summary>

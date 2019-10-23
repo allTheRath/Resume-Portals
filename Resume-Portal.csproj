@@ -388,6 +388,16 @@
     <Content Include="Views\Home\AllResumeForHelp.cshtml" />
     <Content Include="Views\Home\AddActivity.cshtml" />
     <Content Include="Views\Home\AddActivityImage.cshtml" />
+    <Content Include="Views\Home\PostEvent.cshtml" />
+    <Content Include="Views\Home\AllEvents.cshtml" />
+    <Content Include="Views\Home\Participate.cshtml" />
+    <Content Include="Views\Home\StudentParticipation.cshtml" />
+    <Content Include="Views\Home\AddExperience.cshtml" />
+    <Content Include="Views\Home\DeleteExperience.cshtml" />
+    <Content Include="Views\Home\AddSkill.cshtml" />
+    <Content Include="Views\Home\DeleteSkill.cshtml" />
+    <Content Include="Views\Home\AddEducation.cshtml" />
+    <Content Include="Views\Home\DeleteEducation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

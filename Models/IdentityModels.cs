@@ -59,6 +59,7 @@ namespace Resume_Portal.Models
 
         public DbSet<Experiance> Experiances { get; set; }
 
+        public DbSet<EventStudent> EventParticipatedStudents { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
