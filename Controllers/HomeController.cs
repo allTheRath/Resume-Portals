@@ -692,7 +692,8 @@ namespace Resume_Portal.Controllers
         {
             var allPrograms = db.Programs.ToList();
 
-            allPrograms.ForEach(p => {
+            allPrograms.ForEach(p =>
+            {
                 p.Discription = p.Discription.Substring(0, 210) + "...";
             });
             if (allPrograms.Count() == 0)
@@ -876,11 +877,13 @@ namespace Resume_Portal.Controllers
             }
         }
 
+
+
+
         public ActionResult AddAttachment()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult AddAttachment(HttpPostedFileBase file)
         {
@@ -946,8 +949,57 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult ResumeHelp()
         {
+
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ResumeHelp(HttpPostedFileBase file)
+        {
+
+            if (file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
+                {
+                    string uid = User.Identity.GetUserId();
+                    if (uid != "")
+                    {
+                        string useremail = db.Users.Find(User.Identity.GetUserId()).Email;
+                        if (useremail != "")
+                        {
+                            if (System.IO.File.Exists(Server.MapPath("~/Resume-Help/" + useremail + fileextention)))
+                            {
+                                // if file exist then delete it.
+                                System.IO.File.Delete(Server.MapPath("~/Resume-Help/" + useremail + fileextention));
+                            }
+                            var path = Path.Combine(Server.MapPath("~/Resume-Help/"), useremail + fileextention);
+                            file.SaveAs(path);
+                        }
+
+                    }
+
+                }
+            }
+
+
+            return View();
+        }
+
+        public ActionResult AllResumeForHelp()
+        {
+            var allFileNames = Directory.GetFiles(Server.MapPath("~/Resume-Help/"));
+            List<FileWithPath> FileWithPath = new List<FileWithPath>();
+            foreach (var path in allFileNames)
+            {
+                FileWithPath filewithpathinstance = new FileWithPath();
+                filewithpathinstance.fileUrl = path;
+                filewithpathinstance.FileName = Path.GetFileName(path);
+                FileWithPath.Add(filewithpathinstance);
+            }
+            return View(FileWithPath);
+        }
+
 
         /// <summary>
         /// All activities for a single student
@@ -958,6 +1010,81 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
+        public ActionResult AddActivity()
+        {
+            //if(!User.IsInRole("Student"))
+            //{
+            //    return HttpNotFound();
+            //}
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddActivity([Bind(Include = "Id,Discription,ActivityType")] Activity activity)
+        {
+
+            string uid = User.Identity.GetUserId();
+            activity.ImageUrl = TempData[uid].ToString();
+            activity.UserId = uid;
+            if (ModelState.IsValid)
+            {
+                db.Activities.Add(activity);
+                db.SaveChanges();
+            }
+
+            return View();
+        }
+
+        public ActionResult AddActivityImage()
+        {
+            string uid = User.Identity.GetUserId();
+            string url = "";
+            bool exists = Directory.Exists(Server.MapPath("~/Activity-Data/" + uid + "/"));
+            if (!exists)
+            {
+                // if directory not exist then create it.
+                Directory.CreateDirectory(Server.MapPath("~/Activity-Data/" + uid + "/"));
+                url = "~/Activity-Data/" + uid + "/" + 1;
+            }
+            else
+            {
+                var allFileNames = Directory.GetFiles("~/Activity-Data/" + uid + "/");
+                string fileName = allFileNames[allFileNames.Length - 1];
+                var number = Path.GetFileName(fileName);
+                url = "~/Activity-Data/" + uid + "/" + (Convert.ToInt32(number) + 1);
+            }
+            TempData[uid] = url;
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddActivityImage(HttpPostedFileBase file)
+        {
+            if (file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+
+                if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    string uid = User.Identity.GetUserId();
+                    if (uid != "")
+                    {
+                        if (System.IO.File.Exists(Server.MapPath("~/Activity-Data/" + uid + "/" + TempData[uid].ToString() + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/Activity-Data/" + uid + "/" + TempData[uid].ToString() + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/Activity-Data/" + uid + "/"), TempData[uid].ToString() + fileextention);
+                        file.SaveAs(path);
+
+                    }
+
+                }
+            }
+            return View();
+        }
 
         // Below view will only be accessible to individual student 
         /// <summary>
