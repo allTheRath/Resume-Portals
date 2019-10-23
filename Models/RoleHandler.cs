@@ -138,8 +138,11 @@ namespace Resume_Portal.Models
             if (flag == true)
             {
                 NotifyAdmin notifyAdmin = db.NotifyAdmins.Where(x => x.UserId == userId).FirstOrDefault();
-                notifyAdmin.Resolved = true;
-                db.SaveChanges();
+                if(notifyAdmin != null)
+                {
+                    notifyAdmin.Resolved = true;
+                    db.SaveChanges();
+                }
             }
         }
 

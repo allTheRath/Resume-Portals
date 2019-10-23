@@ -221,6 +221,10 @@
     <Compile Include="Migrations\201910231704201_EducationAndExperienceAndSkills.Designer.cs">
       <DependentUpon>201910231704201_EducationAndExperienceAndSkills.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910231928131_addChanges.cs" />
+    <Compile Include="Migrations\201910231928131_addChanges.Designer.cs">
+      <DependentUpon>201910231928131_addChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -237,6 +241,7 @@
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\ProgramUsers.cs" />
     <Compile Include="Models\RoleHandler.cs" />
+    <Compile Include="Models\SeedClass.cs" />
     <Compile Include="Models\StudentProfile.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -295,6 +300,44 @@
     <Content Include="program-images\Software-developer.jpg" />
     <Content Include="program-images\welding.jpg" />
     <Content Include="program-images\YourCareerStartsHere_PS.jpg" />
+    <Content Include="ProgramFiles\ProgramDetails\Administrative Assistant.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Auto Mechanic.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Auto Mechanics %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Carpentry.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\CCENT and CCNA Cisco Courses.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Culinary Arts &amp; Design %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Culinary Arts &amp; Design.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Cyber Defence and Clouad Administration Diploma.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Early Childhood Education Diploma.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Electrical Applications %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Electrical Applications.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\French Electrical.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Graphic and Print Technician %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Graphic and Print Technician.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Hairystyling %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Hairystyling.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Health Care Aide and Unit Clerk.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Hospitality Management Diploma.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Hotel and Hospitality Diploma.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Industrial Electronics %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Industrial Electronics.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Industrial Mechanic - Millwright.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Industrial Welding %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Industrial Welding.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Introduction to College and Work.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Medical Office Assistant.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Motorsport Technician %28High School%29.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Motorsport Technician.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Network and Computer Technology.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Network Security Diploma.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Pharmacy Technician Diploma.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Post Graduate Certificate in Human Resources Learning and Development.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Post Graduate Certificate in Internation Business.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Post Graduate Certificate in Leadership and Management.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Post Graduate Diploma Global Logistics and Supply Chain Management.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\Rehabilitation Assistant.txt" />
+    <Content Include="ProgramFiles\ProgramDetails\SoftWare Developer.txt" />
+    <Content Include="ProgramFiles\ProgramNames.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.eot" />
@@ -460,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231704201_EducationAndExperienceAndSkills.resx">
       <DependentUpon>201910231704201_EducationAndExperienceAndSkills.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231928131_addChanges.resx">
+      <DependentUpon>201910231928131_addChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

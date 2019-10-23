@@ -147,7 +147,7 @@ namespace Resume_Portal.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            r
+            
             var allRoles = RoleHandler.GetAllRoles();
             ViewBag.SelectRole = allRoles;
             return View();
@@ -171,9 +171,9 @@ namespace Resume_Portal.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     string email = model.Email;
                     RoleHandler.UserRequestedRegistration(email, SelectRole);
                     // Macking a request to admin for registration confirmation.

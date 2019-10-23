@@ -13,22 +13,22 @@ namespace Resume_Portal.Models
     {
         private Random rand = new Random();
         private RoleHandler roleHandler = new RoleHandler();
-        //public void SeedStudents(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
-        //{
-        //    var programs = db.Programs.ToList();
-        //    foreach(var program in programs)
-        //    {
-        //        List<ApplicationUser> applicationUsers = GenerateUsers(rand.Next(0,5));
-        //        foreach(var user in applicationUsers)
-        //        {
-        //            userManager.Create(user, "EntityFr@mew0rk");
-        //            roleHandler.AssignUserToRole(user.Id, "Student");
-        //            ProgramUsers programUsers = new ProgramUsers { ProgramId = program.Id, UserId = user.Id };
-        //            db.ProgramUsers.Add(programUsers);
-        //        }
-        //    }
-        //    db.SaveChanges();
-        //}
+        public void SeedStudents(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
+        {
+            var programs = db.Programs.ToList();
+            foreach (var program in programs)
+            {
+                List<ApplicationUser> applicationUsers = GenerateUsers(rand.Next(0, 5));
+                foreach (var user in applicationUsers)
+                {
+                    userManager.Create(user, "EntityFr@mew0rk");
+                    roleHandler.AssignUserToRole(user.Id, "Student");
+                    ProgramUsers programUsers = new ProgramUsers { ProgramId = program.Id, UserId = user.Id };
+                    db.ProgramUsers.Add(programUsers);
+                }
+            }
+            db.SaveChanges();
+        }
         public void SeedPrograms(ApplicationDbContext db)
         {
             string programNamesPath = @"~/ProgramFiles/ProgramNames.txt";
