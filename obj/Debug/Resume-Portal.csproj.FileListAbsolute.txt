@@ -111,6 +111,9 @@ D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternP
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.csproj.CopyComplete
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.dll
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.pdb
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.initialBuild.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.connectnetuserwithprofile.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.notifyAdminRequest.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.onlineCheckProperty.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.addedprofilerole.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.programwithjoblist.resources
@@ -119,13 +122,9 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.added
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.userName.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.occupationName.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.emailProfile.resources
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csprojAssemblyReference.cache
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.initialBuild.resources
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.connectnetuserwithprofile.resources
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.notifyAdminRequest.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.EducationAndExperienceAndSkills.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.addedskillscontrollers.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csproj.GenerateResource.cache
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.dll
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.pdb
 C:\Users\jay\source\repos\Resume-Portal\bin\Resume-Portal.dll.config
 C:\Users\jay\source\repos\Resume-Portal\bin\Resume-Portal.dll
 C:\Users\jay\source\repos\Resume-Portal\bin\Resume-Portal.pdb
@@ -227,10 +226,5 @@ C:\Users\jay\source\repos\Resume-Portal\bin\Microsoft.Owin.Security.MicrosoftAcc
 C:\Users\jay\source\repos\Resume-Portal\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\jay\source\repos\Resume-Portal\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csproj.CopyComplete
-C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.EducationAndExperienceAndSkills.resources
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.addedNotification.resources
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.userName.resources
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.occupationName.resources
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.emailProfile.resources
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.EducationAndExperienceAndSkills.resources
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume_Portal.Migrations.addChanges.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.dll
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.pdb
