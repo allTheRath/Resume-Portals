@@ -17,12 +17,10 @@ namespace Resume_Portal.Migrations
 
         protected override void Seed(Resume_Portal.Models.ApplicationDbContext context)
         {
-<<<<<<< HEAD
             //  This method will be called after migrating to the latest version.
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-=======
             //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             
@@ -39,7 +37,6 @@ namespace Resume_Portal.Migrations
             //    UserManager.Create(Admin, "EntityFr@mew0rk");
             //    UserManager.AddToRole(Admin.Id, "Admin");
             //}
->>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
         }
     }
 }

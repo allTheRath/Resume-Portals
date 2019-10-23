@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201910221940566_emailProfile.Designer.cs">
       <DependentUpon>201910221940566_emailProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910231704201_EducationAndExperienceAndSkills.cs" />
+    <Compile Include="Migrations\201910231704201_EducationAndExperienceAndSkills.Designer.cs">
+      <DependentUpon>201910231704201_EducationAndExperienceAndSkills.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -443,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910221940566_emailProfile.resx">
       <DependentUpon>201910221940566_emailProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231704201_EducationAndExperienceAndSkills.resx">
+      <DependentUpon>201910231704201_EducationAndExperienceAndSkills.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

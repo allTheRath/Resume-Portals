@@ -32,11 +32,20 @@ namespace Resume_Portal.Models
         [Required]
         public int SemesterNumber { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+
+        [DataType(DataType.Text)]
+        public string MySkills { get; set; }
+
         public virtual ICollection<Skill> Skills { get; set; }
 
-        public virtual ICollection<Experiance> Experiance { get; set; }
+        public virtual ICollection<Education> Educations { get; set; }
 
-        public virtual ICollection<Education> Education { get; set; }
+        public ICollection<Experiance> Experiances { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }
         // All activities related to student.
@@ -71,7 +80,6 @@ namespace Resume_Portal.Models
         public DateTime End { get; set; }
 
     }
-
     public class Education
     {
         public int Id { get; set; }
@@ -89,6 +97,7 @@ namespace Resume_Portal.Models
         public DateTime End { get; set; }
 
     }
+
 
 
 
@@ -130,7 +139,7 @@ namespace Resume_Portal.Models
                     studentPartialView.StudentId = student.UserId;
                     // studentPartialView.SortDiscription = student.ShortDiscription;
                     studentPartialView.ProfessionalEmail = student.ProfessionalEmail;
-                   // studentPartialView.MySkills = student.MySkills;
+                    studentPartialView.MySkills = student.MySkills;
                     StudentInfo.Add(studentPartialView);
                 }
             }
