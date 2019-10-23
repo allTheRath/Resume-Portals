@@ -51,15 +51,38 @@ namespace Resume_Portal.Models
                 db.SaveChanges();
             }
         }
-        //public void SeedInstructors()
+        //public void SeedInstructors(UserManager<ApplicationUser> userManager, ApplicationDbContext db)
         //{
 
         //}
-        //public void SeedEmployers()
-        //{
-
-        //}
-
+        public void SeedEmployers(UserManager<ApplicationUser> userManager)
+        {
+            List<ApplicationUser> applicationUsers = GenerateUsers(5);
+            foreach(var user in applicationUsers)
+            {
+                userManager.Create(user, "EntityFr@mew0rk");
+                roleHandler.AssignUserToRole(user.Id, "Employer");
+            }
+        }
+        public void SeedSkills(ApplicationDbContext db)
+        {
+            Skill skill0 = new Skill { SkillName = "Organized" };
+            Skill skill1 = new Skill { SkillName = "Proficent" };
+            Skill skill2 = new Skill { SkillName = "Multi-tasker" };
+            Skill skill3 = new Skill { SkillName = "Punctual" };
+            Skill skill4 = new Skill { SkillName = "Leadership" };
+            Skill skill5 = new Skill { SkillName = "Fast learner" };
+            Skill skill6 = new Skill { SkillName = "Teamwork" };
+            Skill skill7 = new Skill { SkillName = "Communicative" };
+            db.Skills.Add(skill0);
+            db.Skills.Add(skill1);
+            db.Skills.Add(skill2);
+            db.Skills.Add(skill3);
+            db.Skills.Add(skill4);
+            db.Skills.Add(skill5);
+            db.Skills.Add(skill6);
+            db.Skills.Add(skill7);
+        }
         public List<ApplicationUser> GenerateUsers(int howManyUsers)
         {
             List<ApplicationUser> applicationUsers = new List<ApplicationUser>();
