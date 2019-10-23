@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201910221940566_emailProfile.Designer.cs">
       <DependentUpon>201910221940566_emailProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910231704201_EducationAndExperienceAndSkills.cs" />
+    <Compile Include="Migrations\201910231704201_EducationAndExperienceAndSkills.Designer.cs">
+      <DependentUpon>201910231704201_EducationAndExperienceAndSkills.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -233,7 +237,6 @@
     <Compile Include="Models\Program.cs" />
     <Compile Include="Models\ProgramUsers.cs" />
     <Compile Include="Models\RoleHandler.cs" />
-    <Compile Include="Models\SeedClass.cs" />
     <Compile Include="Models\StudentProfile.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -292,44 +295,6 @@
     <Content Include="program-images\Software-developer.jpg" />
     <Content Include="program-images\welding.jpg" />
     <Content Include="program-images\YourCareerStartsHere_PS.jpg" />
-    <Content Include="ProgramFiles\ProgramDetails\10.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\11.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\12.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\13.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\14.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\15.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\16.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\17.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\18.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\19.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\2.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\20.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\21.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\22.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\23.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\24.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\25.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\26.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\27.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\28.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\29.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\30.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\31.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\32.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\33.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\34.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\35.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\36.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\5.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\7.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\8.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\9.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\Administrative Assistant.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\Auto Mechanic.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\Carpentry.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\Culinary Arts.txt" />
-    <Content Include="ProgramFiles\ProgramDetails\SoftWare Developer.txt" />
-    <Content Include="ProgramFiles\ProgramNames.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.eot" />
@@ -413,22 +378,37 @@
     <Content Include="Views\Home\Download.cshtml" />
     <Content Include="Views\Home\FooterBar.cshtml" />
     <Content Include="Views\Home\EmployerProfile.cshtml" />
-    <Content Include="Views\Home\AllStudents.cshtml" />
     <Content Include="Views\Home\SelectProgram.cshtml" />
     <Content Include="Views\Home\StudentInProgram.cshtml" />
     <Content Include="Views\Home\ProgramDetails.cshtml" />
     <Content Include="Views\Home\AllPostedJobOfProgram.cshtml" />
     <Content Include="Views\Home\UploadResume.cshtml" />
     <Content Include="Views\Home\AllResumeForJob.cshtml" />
+    <Content Include="Views\Home\ResumeHelp.cshtml" />
+    <Content Include="Views\Home\AllResumeForHelp.cshtml" />
+    <Content Include="Views\Home\AddActivity.cshtml" />
+    <Content Include="Views\Home\AddActivityImage.cshtml" />
+    <Content Include="Views\Home\PostEvent.cshtml" />
+    <Content Include="Views\Home\AllEvents.cshtml" />
+    <Content Include="Views\Home\Participate.cshtml" />
+    <Content Include="Views\Home\StudentParticipation.cshtml" />
+    <Content Include="Views\Home\AddExperience.cshtml" />
+    <Content Include="Views\Home\DeleteExperience.cshtml" />
+    <Content Include="Views\Home\AddSkill.cshtml" />
+    <Content Include="Views\Home\DeleteSkill.cshtml" />
+    <Content Include="Views\Home\AddEducation.cshtml" />
+    <Content Include="Views\Home\DeleteEducation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
     <Content Include="Views\Home\ProfileCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Activity-Data\" />
     <Folder Include="bin\" />
     <Folder Include="Content\images\" />
     <Folder Include="Posted-Job-Resume\" />
+    <Folder Include="Resume-Help\" />
     <Folder Include="student-resume\" />
   </ItemGroup>
   <ItemGroup>
@@ -477,6 +457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910221940566_emailProfile.resx">
       <DependentUpon>201910221940566_emailProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231704201_EducationAndExperienceAndSkills.resx">
+      <DependentUpon>201910231704201_EducationAndExperienceAndSkills.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

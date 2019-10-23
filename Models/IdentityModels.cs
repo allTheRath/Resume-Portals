@@ -53,6 +53,13 @@ namespace Resume_Portal.Models
 
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<Skill> Skills { get; set; }
+
+        public DbSet<Education> Educations { get; set; }
+
+        public DbSet<Experiance> Experiances { get; set; }
+
+        public DbSet<EventStudent> EventParticipatedStudents { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

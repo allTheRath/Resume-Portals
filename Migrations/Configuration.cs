@@ -21,11 +21,9 @@ namespace Resume_Portal.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
 
-
             //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            
             //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
+            
             //if (!RoleManager.RoleExists("Admin"))
             //{
             //    RoleManager.Create(new IdentityRole("Admin"));

@@ -8,7 +8,7 @@ using System.Web;
 namespace Resume_Portal.Models
 {
 
-    public class StudentProfile 
+    public class StudentProfile
     {
         public int Id { get; set; }
 
@@ -41,10 +41,67 @@ namespace Resume_Portal.Models
         [DataType(DataType.Text)]
         public string MySkills { get; set; }
 
+        public virtual ICollection<Skill> Skills { get; set; }
+
+        public virtual ICollection<Education> Educations { get; set; }
+
+        public virtual ICollection<Experiance> Experiances { get; set; }
+
         public virtual ICollection<Activity> Activities { get; set; }
         // All activities related to student.
         public virtual ICollection<Attachment> Attachments { get; set; }
+
+        public virtual ICollection<EventStudent> Volenteering { get; set; }
     }
+
+    public class Skill
+    {
+        public int Id { get; set; }
+
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public string SkillName { get; set; }
+    }
+
+    public class Experiance
+    {
+        public int Id { get; set; }
+
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public string InstituteName { get; set; }
+
+        public string Discription { get; set; }
+
+        public DateTime Start { get; set; }
+
+        public DateTime End { get; set; }
+
+    }
+    public class Education
+    {
+        public int Id { get; set; }
+
+        public string UserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public string InstituteName { get; set; }
+
+        public string Discription { get; set; }
+
+        public DateTime Start { get; set; }
+
+        public DateTime End { get; set; }
+
+    }
+
+
+
 
     // Partial student profile view mode for list.
     public class StudentPartialViewModel
@@ -82,7 +139,7 @@ namespace Resume_Portal.Models
                     // Only students will be retrive.
                     StudentPartialViewModel studentPartialView = new StudentPartialViewModel();
                     studentPartialView.StudentId = student.UserId;
-                   // studentPartialView.SortDiscription = student.ShortDiscription;
+                    // studentPartialView.SortDiscription = student.ShortDiscription;
                     studentPartialView.ProfessionalEmail = student.ProfessionalEmail;
                     studentPartialView.MySkills = student.MySkills;
                     StudentInfo.Add(studentPartialView);

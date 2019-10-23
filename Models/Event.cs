@@ -22,8 +22,20 @@ namespace Resume_Portal.Models
 
         public string Location { get; set; }
 
-        public ICollection<StudentProfile> Volunteers { get; set; }
+        public int NeededVolenteers { get; set; }
+        
+        public ICollection<EventStudent> Volunteers { get; set; }
 
+    }
+
+    public class EventStudent
+    {
+        public int Id { get; set; }
+
+        public int EventId { get; set; }
+        public virtual Event Event { get; set; }
+        public int studentprofileId { get; set; }
+        public virtual StudentProfile StudentProfile { get; set; }
     }
 
 }
