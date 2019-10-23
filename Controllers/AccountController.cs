@@ -12,7 +12,7 @@ using Resume_Portal.Models;
 
 namespace Resume_Portal.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

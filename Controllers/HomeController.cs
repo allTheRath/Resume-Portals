@@ -737,17 +737,136 @@ namespace Resume_Portal.Controllers
             return View(allStudents);
         }
 
+        public ActionResult AllPostedJobOfProgram(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var jobs = db.Jobs.ToList().Where(x => x.ProgramId == id);
+            if (jobs == null)
+            {
+                jobs = new List<Job>();
+            }
+
+            foreach (var job in jobs)
+            {
+                job.Employer = db.EmployerProfiles.Find(job.EmployerId);
+            }
+            return View(jobs);
+        }
+
+        public ActionResult UploadResume()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadResume(HttpPostedFileBase file, int? jobId)
+        {
+
+            if (file.ContentLength > 0 && jobId != null)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
+                {
+                    string uid = User.Identity.GetUserId();
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + User.Identity.Name + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + User.Identity.Name + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + User.Identity.Name + fileextention));
+                        file.SaveAs(path);
+                    }
+                }
+
+            }
+
+
+            return View();
+        }
+
+        public class FileWithPath
+        {
+            public string FileName { get; set; }
+            public string fileUrl { get; set; }
+        }
+
+        public ActionResult AllResumeForJob(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + id + "/"));
+            if (exists == false)
+            {
+                return HttpNotFound();
+            }
+
+            var allFileNames = Directory.GetFiles(Server.MapPath("~/Posted-Job-Resume/" + id + "/"));
+            List<FileWithPath> FileWithPath = new List<FileWithPath>();
+            foreach (var path in allFileNames)
+            {
+                FileWithPath filewithpathinstance = new FileWithPath();
+                filewithpathinstance.fileUrl = path;
+                filewithpathinstance.FileName = Path.GetFileName(path);
+                FileWithPath.Add(filewithpathinstance);
+            }
+            return View(FileWithPath);
+        }
+
+        public ActionResult DownloadPostedResume(string fileName)
+        {
+            if (Directory.Exists(fileName))
+            {
+                byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(fileName));
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
+        }
+
         // Student, instructors, admins and employers can see student activities and individual
         // profiles but student can't see other student profile.
         // This functionality will be done through nav bar.
 
         public ActionResult Download(string uid)
         {
+            bool exist = Directory.Exists(Server.MapPath("~/student-resume/" + uid + "/"));
+            if (exist != false)
+            {
+                var allFileNames = Directory.GetFiles(Server.MapPath("~/student-resume/" + uid + "/"));
+                if (allFileNames.Length > 0)
+                {
 
-            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + ".pdf"));
-            string fileName = "resume.pdf";
-
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+                    var fileName = Path.GetFileName(allFileNames[0]);
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/student-resume/" + uid + "/" + fileName));
+                    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         public ActionResult AddAttachment()
@@ -762,7 +881,7 @@ namespace Resume_Portal.Controllers
             if (file.ContentLength > 0)
             {
                 var fileextention = Path.GetExtension(file.FileName).ToLower();
-                if (fileextention == ".pdf")
+                if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
                 {
                     string uid = User.Identity.GetUserId();
                     if (uid != "")

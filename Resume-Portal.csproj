@@ -375,9 +375,13 @@
     <Content Include="Views\Home\SelectProgram.cshtml" />
     <Content Include="Views\Home\StudentInProgram.cshtml" />
     <Content Include="Views\Home\ProgramDetails.cshtml" />
+    <Content Include="Views\Home\AllPostedJobOfProgram.cshtml" />
+    <Content Include="Views\Home\UploadResume.cshtml" />
+    <Content Include="Views\Home\AllResumeForJob.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="Posted-Job-Resume\" />
     <Folder Include="student-resume\" />
   </ItemGroup>
   <ItemGroup>

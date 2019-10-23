@@ -4,7 +4,7 @@ namespace Resume_Portal.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-
+    
     internal sealed class Configuration : DbMigrationsConfiguration<Resume_Portal.Models.ApplicationDbContext>
     {
         public Configuration()
@@ -15,9 +15,9 @@ namespace Resume_Portal.Migrations
         protected override void Seed(Resume_Portal.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
         }
     }
 }
