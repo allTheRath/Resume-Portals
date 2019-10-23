@@ -15,6 +15,8 @@ namespace Resume_Portal.Models
 
         public string ProfilePic { get; set; }
 
+        public string Email { get; set; }
+
         public string ShortDiscription { get; set; }
         // Just a few line discription.
         public string Role { get; set; }

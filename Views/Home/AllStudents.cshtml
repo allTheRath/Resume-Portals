@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Resume_Portal.Models.Profile>
+
+<div class="wrapper row2">
+    <div id="container" class="clear">
+        <div id="about-us" class="clear">
+            <section id="team">
+                <div id="quote">
+                    <blockquote>
+                        <p>Program Name</p>
+                    </blockquote>
+                </div>
+                <ul class="clear">
+                    @foreach (var item in Model)
+                    {
+
+                        <li class="one_quarter first">
+                            <figure>
+                                <img src=@Html.DisplayFor(modelItem => item.ProfilePic) alt="Profile">
+                                <figcaption>
+                                    <p class="team_name">@Html.DisplayFor(modelItem => item.UserName)</p>
+                                    <p class="team_description">@Html.DisplayFor(modelItem => item.ShortDiscription)</p>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+@Styles.Render("~/Content/ListProfile.css")
+

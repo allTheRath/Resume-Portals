@@ -1,0 +1,42 @@
+﻿@model Resume_Portal.Models.Program
+<main>
+    <section class="section_content">
+
+        <div class="main_flex">
+
+            <div id="flex-ele" class="main_content @(Model.Name.ToString())">
+                <div>
+                    <h4>
+                        @Html.DisplayFor(model => model.Name)
+                    </h4>
+                </div>
+                <span>
+                    <img class="img" src="~/program-images/@Model.Name/pic/logo.jpg" />
+                </span>
+                <h5>
+                    <span>
+                        @Html.ActionLink("All Students", "StudentInProgram", new { id = Model.Id })
+                    </span>
+                </h5>
+                <span class="span_img">
+                    @Html.DisplayFor(model => model.Discription)
+                </span>
+
+
+            </div>
+
+        </div>
+    </section>
+</main>
+
+@Styles.Render("~/Content/Site.css")
+<style>
+    img {
+        width: 20vw;
+    }
+
+    h5 {
+        color: forestgreen;
+    }
+
+</style>

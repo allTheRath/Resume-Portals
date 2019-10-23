@@ -111,3 +111,6 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.add
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.programwithjoblist.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.postedjobon.resources
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.addedNotification.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.userName.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.occupationName.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume_Portal.Migrations.emailProfile.resources

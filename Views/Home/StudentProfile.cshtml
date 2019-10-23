@@ -1,77 +1,57 @@
 ﻿@model Resume_Portal.Models.StudentProfile
+@Styles.Render("~/Content/Profile.css")
 @Html.Partial("StudentNav")
+
 <div>
-    <h4>StudentProfile</h4>
-    <hr />
-    <img src="@ViewBag.ImageUrl" alt="profile" />
-    <dl class="dl-horizontal">
-        <dt>
-            Upload Profile Picture:
-        </dt>
-        <dd>
-            @{
-                Html.RenderAction("AddAttachment");
-            }
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AboutMe)
-        </dt>
+    <div class="container">
+        <div class="hero">
+            <img src="@ViewBag.ImageUrl" alt="profile" />
+            <h1 class="name"><strong>@Html.DisplayFor(model => model.MyName)</strong></h1>
+            <span class="job-title">@Html.DisplayFor(model => model.OccupationName)</span>
+            <span class="email">@Html.DisplayFor(model => model.ProfessionalEmail)</span>
+            <h4 class="lead">
+                @Html.DisplayFor(model => model.AboutMe)
+            </h4>
+        </div>
+    </div>
+    <div class="container">
 
-        <dd>
-            @Html.DisplayFor(model => model.AboutMe)
-        </dd>
+        <div class="sections">
+            <h2 class="section-title">Skills</h2>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactInfo)
-        </dt>
-
-        <dd>
+            <div class="list-card">
+                <span class="exp">
+                    @Html.DisplayFor(model => model.MySkills)
+                </span>
+            </div>
+        </div>
+    </div>
+    <section>
+        <span>
+            Currently in @Html.DisplayFor(model => model.SemesterNumber) semester!
+            Program is from @Html.DisplayFor(model => model.StartDate)  @Html.DisplayFor(model => model.EndDate)
+        </span>
+        <span>
             @Html.DisplayFor(model => model.ContactInfo)
-        </dd>
+        </span>
+    </section>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProfessionalEmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProfessionalEmail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SemesterNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SemesterNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MySkills)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MySkills)
-        </dd>
-
-        @{
-            Html.RenderAction("AddAttachment");
-        }
-    </dl>
 </div>
+@*Upload Profile Picture:
+    @{
+        Html.RenderAction("AddAttachment");
+    }
+    @Html.DisplayFor(model => model.AboutMe)
+    @Html.DisplayNameFor(model => model.StartDate)
+    @Html.DisplayFor(model => model.StartDate)
+    @Html.DisplayNameFor(model => model.EndDate)
+    @Html.DisplayNameFor(model => model.MySkills)
+
+    @{
+        Html.RenderAction("AddAttachment");
+    }*@
+
+
+
+
 

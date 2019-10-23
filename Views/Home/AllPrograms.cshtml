@@ -1,33 +1,45 @@
 ﻿@model IEnumerable<Resume_Portal.Models.Program>
-<span>Program Name</span>
-<input type="text" id="search" name="ser" />
-<main class="main-flex">
-    @foreach (var item in Model)
-    {
-        <a href=@("#"+@item.Name.ToString())><hr /></a>
-        <section class=@(@item.Name.ToString()) id="flex-ele">
-            <div class="img-container">
-                <img class="img" src="~/program-images/@item.Name/pic/logo.jpg" />
-            </div>
-            <div class="second">
-                <h3 class="name">
-                    @Html.DisplayFor(modelItem => item.Name)
-                </h3>
-                <p class="discription">
-                    @Html.DisplayFor(modelItem => item.Discription)
-                </p>
-                <button class="button">
-                    @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
-                </button>
-                <button class="button">
-                    @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
-                </button>
-            </div>
-        </section>
-    }
+
+<main>
+    <div class="push-top">
+        <span>
+            Search for Program:
+        </span>
+        <input type="text" id="search" name="ser" />
+    </div>
+    <section class="section_content">
+
+        <div class="main_flex">
+
+            @foreach (var item in Model)
+            {
+                <div id="flex-ele" class="main_content @(@item.Name.ToString())">
+                    <div>
+                        <h4>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </h4>
+                    </div>
+                    <span>
+                        <img class="img" src="~/program-images/@item.Name/pic/logo.jpg" />
+                    </span>
+                    <h5>
+                        <span>
+                            @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
+                        </span><span>
+                            @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
+                        </span>
+                    </h5>
+                    <span class="span_img">
+                        @Html.DisplayFor(modelItem => item.Discription)
+                    </span>
+
+
+                </div>
+            }
+
+        </div>
+    </section>
 </main>
-<p class="appendChild">
-</p>
 <script>
     var n = document.querySelector("#search");
     n.addEventListener("change", function (e) {
@@ -38,8 +50,7 @@
             for (i = allPosibles.length - 1; i >= 0; i--) {
                 if (allPosibles[i].className.includes(x)) {
                     console.log(allPosibles[i].className);
-                    var nodeSelect = document.querySelector("." + allPosibles[i].className.toString());
-                    nodeSelect.scrollIntoView();
+                    allPosibles[i].scrollIntoView();
                     break;
                 }
             }
@@ -47,82 +58,101 @@
     });
 
 </script>
+@Styles.Render("~/Content/Site.css")
 <style>
-    .main-flex {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        width: 100%;
-        justify-content: space-evenly;
-        align-items: center;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 300;
+    img {
+        width: 20vw;
     }
 
-    #flex-ele {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-evenly;
-    }
-
-    .img-container {
-        margin-right: 7px;
-        display: inline;
-    }
-
-    .img {
-        float: left;
-        margin-right: 4%;
-        border-radius: 70%;
-        overflow: hidden;
-        display: inline;
-        /*max-width: 100%;
-
-        overflow: hidden;
-        position: relative;*/
-        width: 100%;
-    }
-
-    .second {
-        float: left;
-        width: 40%;
-        display: inline;
-        margin-top: 2em;
-    }
-
-    .name {
-        color: #00a88d;
-        font-size: 20px;
-        font-weight: bold;
-        letter-spacing: .06em;
-        margin-bottom: .5em;
-        display: inline;
-    }
-
-    .discription {
-        margin-bottom: 1em;
-        text-align: start;
-        width: 200px;
-        display: inline;
-    }
-
-    .button {
-        position: relative;
-        /*padding: 9px 30px 8px 20px;*/
-        border: none;
-        border-width: 2px;
-        border-color: #bbd876;
-        border-style: solid;
-        border-width: 0 0 0 2px;
-        letter-spacing: .05em;
-        overflow: hidden;
-        transition: border-color .2s;
-        z-index: 0;
-        text-align: center;
-        font-size: 1.8vw;
-        background-color: beige;
+    h5 {
         color: forestgreen;
-        display: inline;
+    }
+
+    .push-top {
+        margin-top: 17vw;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-size: 10px;
+        width: 100%;
     }
 </style>
+
+@*<style>
+        .main-flex {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-evenly;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+        }
+
+        #flex-ele {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-evenly;
+        }
+
+        .img-container {
+            margin-right: 7px;
+            display: inline;
+        }
+
+        .img {
+            float: left;
+            margin-right: 4%;
+            border-radius: 70%;
+            overflow: hidden;
+            display: inline;
+            /*max-width: 100%;
+
+            overflow: hidden;
+            position: relative;*/
+            width: 100%;
+        }
+
+        .second {
+            float: left;
+            width: 40%;
+            display: inline;
+            margin-top: 2em;
+        }
+
+        .name {
+            color: #00a88d;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: .06em;
+            margin-bottom: .5em;
+            display: inline;
+        }
+
+        .discription {
+            margin-bottom: 1em;
+            text-align: start;
+            width: 200px;
+            display: inline;
+        }
+
+        .button {
+            position: relative;
+            /*padding: 9px 30px 8px 20px;*/
+            border: none;
+            border-width: 2px;
+            border-color: #bbd876;
+            border-style: solid;
+            border-width: 0 0 0 2px;
+            letter-spacing: .05em;
+            overflow: hidden;
+            transition: border-color .2s;
+            z-index: 0;
+            text-align: center;
+            font-size: 1.8vw;
+            background-color: beige;
+            color: forestgreen;
+            display: inline;
+        }
+    </style>*@
+

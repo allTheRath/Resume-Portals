@@ -14,6 +14,10 @@ namespace Resume_Portal.Models
 
         public string UserId { get; set; }
 
+        public string MyName { get; set; }
+
+        public string OccupationName { get; set; }
+
         [DataType(DataType.Text)]
         public string AboutMe { get; set; }
         // Broad Discription about me.

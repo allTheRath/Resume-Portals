@@ -205,6 +205,18 @@
     <Compile Include="Migrations\201910220119264_addedNotification.Designer.cs">
       <DependentUpon>201910220119264_addedNotification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910221721148_userName.cs" />
+    <Compile Include="Migrations\201910221721148_userName.Designer.cs">
+      <DependentUpon>201910221721148_userName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910221725227_occupationName.cs" />
+    <Compile Include="Migrations\201910221725227_occupationName.Designer.cs">
+      <DependentUpon>201910221725227_occupationName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910221940566_emailProfile.cs" />
+    <Compile Include="Migrations\201910221940566_emailProfile.Designer.cs">
+      <DependentUpon>201910221940566_emailProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -231,6 +243,12 @@
     <Content Include="App_Data\aspnet-Resume-Portal-20191016093236_log.ldf">
       <DependentUpon>aspnet-Resume-Portal-20191016093236.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\ListProfile.css" />
+    <Content Include="Content\Profile.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="font-awesome\css\font-awesome.css" />
+    <Content Include="font-awesome\css\font-awesome.min.css" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -272,6 +290,10 @@
     <Content Include="program-images\YourCareerStartsHere_PS.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="font-awesome\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -348,8 +370,14 @@
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
     <Content Include="Views\Home\FooterBar.cshtml" />
+    <Content Include="Views\Home\EmployerProfile.cshtml" />
+    <Content Include="Views\Home\AllStudents.cshtml" />
+    <Content Include="Views\Home\SelectProgram.cshtml" />
+    <Content Include="Views\Home\StudentInProgram.cshtml" />
+    <Content Include="Views\Home\ProgramDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="student-resume\" />
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +417,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910220119264_addedNotification.resx">
       <DependentUpon>201910220119264_addedNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221721148_userName.resx">
+      <DependentUpon>201910221721148_userName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221725227_occupationName.resx">
+      <DependentUpon>201910221725227_occupationName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910221940566_emailProfile.resx">
+      <DependentUpon>201910221940566_emailProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

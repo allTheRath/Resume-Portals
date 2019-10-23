@@ -216,3 +216,11 @@ D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternP
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.csproj.CopyComplete
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.dll
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V3\obj\Debug\Resume-Portal.pdb
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.onlineCheckProperty.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.addedprofilerole.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.programwithjoblist.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.postedjobon.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.addedNotification.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.userName.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.occupationName.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.emailProfile.resources

@@ -231,12 +231,29 @@ namespace Resume_Portal.Controllers
             //}
             string userId = User.Identity.GetUserId();
             var employer = db.Profiles.FirstOrDefault(s => s.UserId == userId);
-            if (employer == null)
-            {
-                return HttpNotFound();
-            }
+            //if (employer == null)
+            //{
+            //    return HttpNotFound();
+            //}
             return View(employer);
         }
+
+        /// <summary>
+        /// Employer profile view ... Employer can edit the profile.  
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EmployerProfile()
+        {
+            //if (!User.IsInRole("Employer"))
+            //{
+            //    return HttpNotFound();
+            //}
+            string uid = User.Identity.GetUserId();
+            EmployerProfile employerProfile = db.EmployerProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            return View(employerProfile);
+        }
+
+
         // Employer can see list of students or can see program home page.
         // Employer can send email to any student or instructor.
         // Student can see notification of sent email.
@@ -339,6 +356,47 @@ namespace Resume_Portal.Controllers
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             return View();
         }
+        public class ProgramSelect
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
+        public ActionResult SelectProgram()
+        {
+            var allProgramNameId = db.Programs.ToList();
+            List<ProgramSelect> programSelects = new List<ProgramSelect>();
+            foreach (var p in allProgramNameId)
+            {
+                ProgramSelect programSelect = new ProgramSelect();
+                programSelect.Id = p.Id;
+                programSelect.Name = p.Name;
+                programSelects.Add(programSelect);
+            }
+            ViewBag.ProgramId = programSelects;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SelectProgram(int Id)
+        {
+            if (Id < 0)
+            {
+                var allProgramNameId = db.Programs.ToList();
+                List<ProgramSelect> programSelects = new List<ProgramSelect>();
+                foreach (var p in allProgramNameId)
+                {
+                    ProgramSelect programSelect = new ProgramSelect();
+                    programSelect.Id = p.Id;
+                    programSelect.Name = p.Name;
+                    programSelects.Add(programSelect);
+                }
+                ViewBag.ProgramId = programSelects;
+                return View();
+            }
+
+            return RedirectToAction("AllStudents", new { Id = Id });
+        }
 
         public ActionResult JobDetails(int? jobId)
         {
@@ -354,21 +412,6 @@ namespace Resume_Portal.Controllers
             return View(job);
         }
 
-
-        /// <summary>
-        /// Employer profile view ... Employer can edit the profile.  
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult EmployerProfile()
-        {
-            //if (!User.IsInRole("Employer"))
-            //{
-            //    return HttpNotFound();
-            //}
-            string uid = User.Identity.GetUserId();
-            EmployerProfile employerProfile = db.EmployerProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
-            return View(employerProfile);
-        }
 
 
 
@@ -622,9 +665,15 @@ namespace Resume_Portal.Controllers
         /// All students in College ,Seperated by programs.
         /// </summary>
         /// <returns></returns>
-        public ActionResult AllStudents()
+        public ActionResult AllStudents(int? Id)
         {
-            var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student").ToList();
+
+            if (Id == null)
+            {
+                return HttpNotFound();
+            }
+            var allUserOfProgram = db.ProgramUsers.ToList().Where(x => x.ProgramId == Id).Select(x => x.UserId);
+            var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student" && allUserOfProgram.Contains(x.UserId)).ToList();
             return View(allStudents);
         }
 
@@ -638,10 +687,7 @@ namespace Resume_Portal.Controllers
         {
             var allPrograms = db.Programs.ToList();
 
-            allPrograms.ForEach(p =>
-            {
-                p.Discription = p.Discription.Substring(0, 110) + "...";
-            });
+
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
