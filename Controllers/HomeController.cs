@@ -1271,10 +1271,10 @@ namespace Resume_Portal.Controllers
             }
             var studentProfile = db.StudentProfiles.Where(x => x.UserId == uId).FirstOrDefault();
             EventStudent eventStudent = new EventStudent();
-            eventStudent.EventId = Event.Id;
+            eventStudent.Event_Id = Event.Id;
             eventStudent.Event = Event;
             eventStudent.StudentProfile = studentProfile;
-            eventStudent.studentprofileId = studentProfile.Id;
+            eventStudent.Student_profileId = studentProfile.Id;
             Event.Volunteers.Add(eventStudent);
             Event.NeededVolenteers -= 1;
             db.SaveChanges();
@@ -1297,7 +1297,7 @@ namespace Resume_Portal.Controllers
             {
                 return View();
             }
-            var allEventsParticipatedId = db.EventParticipatedStudents.ToList().Where(x => x.studentprofileId == id).Select(x => x.EventId).ToList().Distinct();
+            var allEventsParticipatedId = db.EventParticipatedStudents.ToList().Where(x => x.Student_profileId == id).Select(x => x.Event_Id).ToList().Distinct();
             List<Event> allEventsParticipated = new List<Event>();
             foreach (var eid in allEventsParticipatedId)
             {
