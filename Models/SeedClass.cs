@@ -18,7 +18,8 @@ namespace Resume_Portal.Models
             var programs = db.Programs.ToList();
             foreach (var program in programs)
             {
-                List<ApplicationUser> applicationUsers = GenerateUsers(rand.Next(1, 5));
+                int userCount = db.Users.Count();
+                List<ApplicationUser> applicationUsers = GenerateUsers(rand.Next(1, 5), userCount);
                 foreach (var user in applicationUsers)
                 {
                     userManager.Create(user, "EntityFr@mew0rk");
@@ -32,8 +33,8 @@ namespace Resume_Portal.Models
         }
         public void SeedPrograms(ApplicationDbContext db)
         {
-            string programNamesPath = @"C:\Users\jay\source\repos\Resume-Portal\ProgramFiles\ProgramNames.txt";
-            string programDetails = @"C:\Users\jay\source\repos\Resume-Portal\ProgramFiles\ProgramDetails\";
+            string programNamesPath = @"ProgramFiles\ProgramNames.txt";
+            string programDetails = @"ProgramFiles\ProgramDetails\";
             StringBuilder sb = new StringBuilder();
             using (StreamReader sr = File.OpenText(programNamesPath))
             {
@@ -64,7 +65,7 @@ namespace Resume_Portal.Models
 
         //}
 
-        public List<ApplicationUser> GenerateUsers(int howManyUsers)
+        public List<ApplicationUser> GenerateUsers(int howManyUsers, int userCounter)
         {
             List<ApplicationUser> applicationUsers = new List<ApplicationUser>();
 
@@ -72,7 +73,7 @@ namespace Resume_Portal.Models
             for (int i = 0; i < howManyUsers; i++)
             {
                 int nameIndex = rand.Next(0, names.Length - 1);
-                ApplicationUser user = new ApplicationUser { UserName = names[nameIndex] + "@test.com", Email = names[nameIndex] + "@test.com", LastLogedIn = DateTime.Now };
+                ApplicationUser user = new ApplicationUser { UserName = names[nameIndex] + "@test.com", Email = names[nameIndex] + "@test" + userCounter++ + " .com", LastLogedIn = DateTime.Now };
                 applicationUsers.Add(user);
             }
             return applicationUsers;

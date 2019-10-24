@@ -39,7 +39,7 @@ namespace Resume_Portal.Migrations
             }
             if(context.StudentProfiles.Count() < 5)
             {
-                //seedClass.SeedPrograms(context);
+                seedClass.SeedPrograms(context);
                 seedClass.SeedStudents(UserManager, context);
             }
 
