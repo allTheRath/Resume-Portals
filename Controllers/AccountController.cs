@@ -147,8 +147,11 @@ namespace Resume_Portal.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            r
             var allRoles = RoleHandler.GetAllRoles();
+            if (allRoles.Contains("Admin"))
+            {
+                allRoles.Remove("Admin");
+            }
             ViewBag.SelectRole = allRoles;
             return View();
         }

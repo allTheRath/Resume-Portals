@@ -228,3 +228,4 @@ C:\Users\jay\source\repos\Resume-Portal\bin\Microsoft.CodeDom.Providers.DotNetCo
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csproj.CopyComplete
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.dll
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.pdb
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csprojAssemblyReference.cache

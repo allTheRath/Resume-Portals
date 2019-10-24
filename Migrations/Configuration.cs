@@ -7,7 +7,7 @@ namespace Resume_Portal.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    
+
     internal sealed class Configuration : DbMigrationsConfiguration<Resume_Portal.Models.ApplicationDbContext>
     {
         public Configuration()
@@ -20,23 +20,29 @@ namespace Resume_Portal.Migrations
             //  This method will be called after migrating to the latest version.
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            SeedClass seedClass = new SeedClass();
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            //var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            
-            //if (!RoleManager.RoleExists("Admin"))
-            //{
-            //    RoleManager.Create(new IdentityRole("Admin"));
-            //    RoleManager.Create(new IdentityRole("Instructor"));
-            //    RoleManager.Create(new IdentityRole("Student"));
-            //    RoleManager.Create(new IdentityRole("Employer"));
-            //}
-            //if (!context.Users.Any(u => u.UserName == "Admin@test.com"))
-            //{
-            //    ApplicationUser Admin = new ApplicationUser { UserName = "Admin@test.com", Email = "Admin@test.com", LastLogedIn = DateTime.Now };
-            //    UserManager.Create(Admin, "EntityFr@mew0rk");
-            //    UserManager.AddToRole(Admin.Id, "Admin");
-            //}
+            if (!RoleManager.RoleExists("Admin"))
+            {
+                RoleManager.Create(new IdentityRole("Admin"));
+                RoleManager.Create(new IdentityRole("Instructor"));
+                RoleManager.Create(new IdentityRole("Student"));
+                RoleManager.Create(new IdentityRole("Employer"));
+            }
+            if (!context.Users.Any(u => u.UserName == "Admin@test.com"))
+            {
+                ApplicationUser Admin = new ApplicationUser { UserName = "Admin@test.com", Email = "Admin@test.com", LastLogedIn = DateTime.Now };
+                UserManager.Create(Admin, "EntityFr@mew0rk");
+                UserManager.AddToRole(Admin.Id, "Admin");
+            }
+            if(context.StudentProfiles.Count() < 5)
+            {
+                //seedClass.SeedPrograms(context);
+                seedClass.SeedStudents(UserManager, context);
+            }
+
         }
     }
 }
