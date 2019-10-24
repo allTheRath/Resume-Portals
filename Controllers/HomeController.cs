@@ -611,10 +611,12 @@ namespace Resume_Portal.Controllers
             return View(allStudents);
         }
         //Profiles have a virtual card
-        public ActionResult ProfileCard()
+        public PartialViewResult ProfileCard()
         {
-            var profiles = db.Profiles.ToList();
-            return View(profiles);
+            var userID = User.Identity.GetUserId();
+            var profile = db.Profiles.Where(x => x.UserId == userID);
+           
+            return PartialView(profile);
         }
 
 
@@ -792,6 +794,10 @@ namespace Resume_Portal.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult FindBySkills()
+        {
+            return View();
+        }
+        public ActionResult ProfilePage()
         {
             return View();
         }

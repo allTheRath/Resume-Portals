@@ -24,12 +24,24 @@ namespace Resume_Portal
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-            bundles.Add(new StyleBundle("~/Content/profileCard").Include(
-                    "~/Content/bootstrap.css",
-                    "~/Content/profileCardStyle.css",
-                    "~/Content/responsive.css",
-                    "~/Content/cssV2.css"));
+                      "~/Content/site.css",
+                      "~/Content/profileCardStyle.css",
+                      "~/Content/responsive.css",
+                      "~/Content/cssV3.css"));
+
+            bundles.Add(new StyleBundle("~/plugins/css2").Include(
+                      "~/plugins/font-awesome-4.7.0/css/font-awesome.min.css",
+                      "~/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css"
+                      ));
+
+            bundles.Add(new ScriptBundle("~/plugins/plug-ins").Include(
+                    //"~/plugins/scrollmagic/ScrollMagic.min.js",
+                    //"~/plugins/greensock/animation.gsap.min.js",
+                    //"~/plugins/greensock/ScrollToPlugin.min.js",
+                    "~/plugins/mCustomScrollbar/jquery.mCustomScrollbar.js"
+/*                    "~/plugins/parallax-js-master/parallax.min.js"*/));
+
+
         }
     }
 }
