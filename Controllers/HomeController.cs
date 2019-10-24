@@ -16,6 +16,7 @@ namespace Resume_Portal.Controllers
         private protected ApplicationDbContext db = new ApplicationDbContext();
         private protected RoleHandler RoleHandler = new RoleHandler();
 
+
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -120,11 +121,13 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Admin()
         {
+            // On landing all users that are online will be seen.
             var userDetails = db.Users.ToList().Where(x => x.Online == true).ToList();
             if (userDetails.Count() == 0)
             {
                 userDetails = new List<ApplicationUser>();
             }
+            ViewBag.Role = "Admin";
             return View(userDetails);
         }
 
@@ -145,6 +148,7 @@ namespace Resume_Portal.Controllers
             {
                 unassignedUsers = new List<NotifyAdmin>();
             }
+            ViewBag.Role = "Admin";
             return View(unassignedUsers);
         }
 
@@ -169,7 +173,7 @@ namespace Resume_Portal.Controllers
                 }
             }
             var user = db.Users.Find(request.UserId);
-
+            ViewBag.Role = "Admin";
             return View(user);
         }
 
@@ -189,7 +193,7 @@ namespace Resume_Portal.Controllers
             {
                 assignedUsers = new List<NotifyAdmin>();
             }
-
+            ViewBag.Role = "Admin";
             return View(assignedUsers);
         }
 
@@ -214,7 +218,7 @@ namespace Resume_Portal.Controllers
                 }
             }
             var user = db.Users.Find(userID);
-
+            ViewBag.Role = "Admin";
             return View(user);
         }
 
@@ -235,6 +239,7 @@ namespace Resume_Portal.Controllers
             //{
             //    return HttpNotFound();
             //}
+            ViewBag.Role = "Employer";
             return View(employer);
         }
 
