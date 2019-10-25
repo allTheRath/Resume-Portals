@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -390,7 +391,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\AdminNav.cshtml" />
     <Content Include="Views\Home\EmployerNav.cshtml" />
     <Content Include="Views\Home\InstructorNav.cshtml" />
     <Content Include="Views\Home\ProfilePic.cshtml" />
@@ -402,12 +402,12 @@
     <Content Include="Views\Home\CreateEmployer.cshtml" />
     <Content Include="Views\Home\CreateInstructor.cshtml" />
     <Content Include="Views\Home\CreateStudent.cshtml" />
-    <Content Include="Views\Home\AssignUsers.cshtml" />
-    <Content Include="Views\Home\Admin.cshtml" />
-    <Content Include="Views\Home\AssignUsersConfirm.cshtml" />
+    <Content Include="Views\Admin\AssignUsers.cshtml" />
+    <Content Include="Views\Admin\Admin.cshtml" />
+    <Content Include="Views\Admin\AssignUsersConfirm.cshtml" />
     <Content Include="Views\Home\Employer.cshtml" />
-    <Content Include="Views\Home\UnAssignUsers.cshtml" />
-    <Content Include="Views\Home\UnAssignUsersConfirm.cshtml" />
+    <Content Include="Views\Admin\UnAssignUsers.cshtml" />
+    <Content Include="Views\Admin\UnAssignUsersConfirm.cshtml" />
     <Content Include="Views\Home\AllPrograms.cshtml" />
     <Content Include="Views\Home\Instructor.cshtml" />
     <Content Include="Views\Home\EditEmployer.cshtml" />

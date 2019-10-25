@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Resume Portal</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site")
     @Scripts.Render("~/bundles/modernizr")
     <style>
         .navbar-inverse {
             background-color: #fff;
         }
+
         a:hover {
             color: forestgreen !important;
         }
@@ -26,7 +28,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img src="~/program-images/mittlogo.png" style="width:10vw !important" alt="" />
+                    <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -48,15 +50,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img src="~/program-images/mittlogo.png" style="width:10vw !important" alt="" />
+                    <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
 
-                        <li>@Html.ActionLink("Approve User", "AssignUsers", "Home")</li>
-                        <li>@Html.ActionLink("Unapprove User", "UnAssignUsers", "Home")</li>
-                        <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
-                        <li>@Html.ActionLink("Instructors", "AllInstructors", "Home")</li>
+                        <li>@Html.ActionLink("Approve User", "AssignUsers", "Admin")</li>
+                        <li>@Html.ActionLink("Unapprove User", "UnAssignUsers", "Admin")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
@@ -72,13 +72,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img src="~/program-images/mittlogo.png" style="width:10vw !important" alt="" />
+                    <img class="mittlogo" src="~/program-images/mittlogo.png"  alt="" />
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
-                        <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
-                        <li>@Html.ActionLink("My Profile", "EmployerProfile", "Home")</li>
+                        <li>@Html.ActionLink("Programs", "AllPrograms", "Program")</li>
+                        <li>@Html.ActionLink("Students", "AllStudents", "Student")</li>
+                        <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
@@ -94,26 +94,202 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img src="~/program-images/mittlogo.png" style="width:10vw !important" alt="" />
+                    <img src="~/program-images/mittlogo.png" class="mittlogo" alt="" />
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Activities", "MyActivities", "Home")</li>
-                        <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Home")</li>
-                        <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
-                        <li>@Html.ActionLink("My Profile", "StudentProfile", "Home")</li>
+                        <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
+                        <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
+                        <li>@Html.ActionLink("Employers", "AllEmployers", "Employer")</li>
+                        <li>@Html.ActionLink("My Profile", "StudentProfile", "Student")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
         }
-
-
-        <div class="container body-content">
-            @RenderBody()
-        </div>
-        <hr />
     </div>
+
+    <div class="container body-content">
+        @RenderBody()
+
+        <hr />
+        <footer class="pageFooter">
+            <hr />
+            <div class="footerWrapper">
+                <div class="container footerContainer">
+
+                    <a class="footerLogoLink" href="/">
+                        <img class="footerLogo" xlink:href="/" src="http://mitt.ca/Themes/images/logo.png" alt="MITT Logo">
+                    </a>
+
+                    <ul class="socialLinks footerSocialLinks">
+
+                        <li>
+                            <a href="https://twitter.com/MITTcanada" target="_blank">
+                                <img src="~/program-images/tw.png" class="imglink" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/MITTcanada" target="_blank">
+                                <img src="~/program-images/fb.png" class="imglink" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/mittcanada/" target="_blank">
+                                <img src="~/program-images/in.jpg" class="imglink" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/channel/UC1CpWg9k0Tup2wnx0Jnmq_Q" target="_blank">
+                                <img src="~/program-images/yt.jpg" class="imglink" />
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/edu/school?id=43035" target="_blank">
+                                <img src="~/program-images/ln.png" class="imglink" />
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </div>
+                <div>
+                    <p class="footerCopyright">© 2019 Manitoba Institute of Trades and Technology <a href="http://mitt.ca/privacy">Privacy &amp; Terms</a></p>
+                </div>
+                <!-- .container -->
+            </div>
+        </footer>
+    </div>
+
+    <style>
+        .footerCopyright {
+            text-align: center;
+            margin: auto;
+        }
+
+        .table {
+            margin-top: 30px;
+        }
+
+        .body-content {
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 100vw;
+        }
+
+        .pageFooter {
+            color: #5b6770;
+            line-height: 1.5;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            box-sizing: inherit;
+            margin: 0;
+            display: block;
+            position: relative;
+            z-index: 2;
+            background-color: #fff;
+        }
+
+        .footerWrapper {
+            padding: 20px 0;
+            background-color: #fff;
+        }
+
+        .footerContainer {
+            width: 100%;
+            margin: auto;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1680px;
+            padding: 0 2.8%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+            .footerContainer a {
+                color: #00a88e;
+                font-size: inherit;
+                text-decoration: none;
+            }
+
+        .footerSocialLinks {
+            display: flex;
+            justify-content: center;
+            float: right;
+            margin: 30px 0 10px 0;
+            list-style-type: none;
+        }
+
+            .footerSocialLinks li {
+                float: left;
+                height: 40px;
+                width: 40px;
+                margin-left: 10px;
+            }
+
+        .footerContainer p {
+            color: #5b6770;
+            font-size: inherit;
+            font-size: 14px;
+            margin: 0 0 1em 0;
+        }
+
+        .footerSocialLinks li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        a {
+            background-color: transparent;
+            color: #235209;
+        }
+
+        .footerSocialLinks li a svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        svg:not(:root) {
+            overflow: hidden;
+        }
+
+        img, svg {
+            height: auto;
+            max-width: 100%;
+        }
+
+        svg {
+            vertical-align: middle;
+        }
+
+            svg path {
+                color: white;
+            }
+
+        .footerLogo {
+            width: 40vw !important;
+            height: 14vh !important;
+        }
+
+        .imglink {
+            width: 4vw !important;
+            height: 3vh !important;
+        }
+
+        .body-content {
+            margin-top: 50px;
+        }
+
+        .mittlogo {
+            width: 135px !important;
+            margin-top: 10px;
+        }
+    </style>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

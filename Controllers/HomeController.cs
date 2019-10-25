@@ -52,7 +52,7 @@ namespace Resume_Portal.Controllers
             }
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Admin");
+                return RedirectToAction("Admin","Admin");
             }
             else if (User.IsInRole("Employer"))
             {
@@ -72,10 +72,7 @@ namespace Resume_Portal.Controllers
 
         // Below are the navigation bar for individual users.
 
-        public ActionResult AdminNav()
-        {
-            return View();
-        }
+        
 
         public ActionResult EmployerNav()
         {
@@ -115,113 +112,8 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Admin Home Page
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Admin()
-        {
-            // On landing all users that are online will be seen.
-            var userDetails = db.Users.ToList().Where(x => x.Online == true).ToList();
-            if (userDetails.Count() == 0)
-            {
-                userDetails = new List<ApplicationUser>();
-            }
-            ViewBag.Role = "Admin";
-            return View(userDetails);
-        }
-
-
-        // Admin and instructor can assign students and employers.
-        /// <summary>
-        ///  Multiple users can be assigned to appropriate roles. Filter user by requested roles roles
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AssignUsers()
-        {
-            if (!User.IsInRole("Admin"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var unassignedUsers = db.NotifyAdmins.ToList().Where(x => x.Resolved == false).ToList();
-            if (unassignedUsers.Count() == 0)
-            {
-                unassignedUsers = new List<NotifyAdmin>();
-            }
-            ViewBag.Role = "Admin";
-            return View(unassignedUsers);
-        }
-
-        public ActionResult AssignUsersConfirm(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var request = db.NotifyAdmins.Find(id);
-            ViewBag.RoleName = request.RoleName;
-            if (request.Resolved == false)
-            {
-                bool approved = RoleHandler.AssignUserToRole(request.UserId, request.RoleName);
-                if (approved == true)
-                {
-                    ViewBag.Approved = true;
-                }
-                else
-                {
-                    ViewBag.Approved = false;
-                }
-            }
-            var user = db.Users.Find(request.UserId);
-            ViewBag.Role = "Admin";
-            return View(user);
-        }
-
-        /// <summary>
-        ///  Multiple users can be un assigned to a role.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult UnAssignUsers()
-        {
-            if (!User.IsInRole("Admin"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var assignedUsers = db.NotifyAdmins.ToList().Where(x => x.Resolved == true).ToList();
-            if (assignedUsers.Count() == 0)
-            {
-                assignedUsers = new List<NotifyAdmin>();
-            }
-            ViewBag.Role = "Admin";
-            return View(assignedUsers);
-        }
-
-        public ActionResult UnAssignUsersConfirm(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var request = db.NotifyAdmins.Find(id);
-            ViewBag.Approved = false;
-            ViewBag.RoleName = request.RoleName;
-            string userID = request.UserId;
-            if (request.Resolved == true)
-            {
-                bool approved = RoleHandler.UnassignUserToRole(request.UserId, request.RoleName);
-                if (approved == true)
-                {
-                    db.NotifyAdmins.Remove(request);
-                    db.SaveChanges();
-                    ViewBag.Approved = true;
-                }
-            }
-            var user = db.Users.Find(userID);
-            ViewBag.Role = "Admin";
-            return View(user);
-        }
-
+        
+        
 
         /// <summary>
         /// Employer Home page
