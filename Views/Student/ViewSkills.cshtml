@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Resume_Portal.Models.Skill>
+
+<p>
+    @Html.ActionLink("Add Skill", "AddSkill")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SkillName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SkillName)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "DeleteSkill", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

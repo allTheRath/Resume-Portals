@@ -126,7 +126,7 @@ namespace Resume_Portal.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
 
             string uid = User.Identity.GetUserId();
@@ -143,7 +143,45 @@ namespace Resume_Portal.Controllers
                 ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
             }
             ViewBag.Role = "Student";
+
             return View(studentProfile);
+        }
+
+        public ActionResult ViewExperience()
+        {
+            string userid = User.Identity.GetUserId();
+            
+            var experiances = db.Experiances.ToList().Where(x => x.UserId == userid).ToList();
+            if (experiances == null)
+            {
+                experiances = new List<Experiance>();
+            }
+
+            return View(experiances);
+        }
+
+        public ActionResult ViewSkills()
+        {
+            string userid = User.Identity.GetUserId();
+            var skills = db.Skills.ToList().Where(x => x.UserId == userid).ToList();
+            if (skills == null)
+            {
+                skills = new List<Skill>();
+            }
+
+            return View(skills);
+        }
+
+        public ActionResult ViewEducation()
+        {
+            string userid = User.Identity.GetUserId();
+            var educations = db.Educations.ToList().Where(x => x.UserId == userid).ToList();
+            if (educations == null)
+            {
+                educations = new List<Education>();
+            }
+
+            return View(educations);
         }
 
         public ActionResult AddExperience()
