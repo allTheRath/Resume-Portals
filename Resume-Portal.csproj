@@ -174,12 +174,6 @@
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Views\Instructor\Controllers\AccountController.cs" />
-    <Compile Include="Views\Instructor\Controllers\AdminController.cs" />
-    <Compile Include="Views\Instructor\Controllers\EmployerController.cs" />
-    <Compile Include="Views\Instructor\Controllers\HomeController.cs" />
-    <Compile Include="Views\Instructor\Controllers\InstructorController.cs" />
-    <Compile Include="Views\Instructor\Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

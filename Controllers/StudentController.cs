@@ -36,6 +36,8 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Student";
+
             //list of programs
             return View(student);
         }
@@ -51,6 +53,7 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Student";
             return View();
         }
 
@@ -58,6 +61,7 @@ namespace Resume_Portal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateStudentConfirm([Bind(Include = "Id,AboutMe,ContactInfo,ProfetionalEmail,SemesterNumber,StartDate,EndDate,MySkills")] StudentProfile studentProfile)
         {
+            ViewBag.Role = "Student";
             if (ModelState.IsValid)
             {
                 string uid = User.Identity.GetUserId();
@@ -86,6 +90,8 @@ namespace Resume_Portal.Controllers
             }
             string uid = User.Identity.GetUserId();
             StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            ViewBag.Role = "Student";
+
             return View(studentProfile);
         }
 
@@ -107,7 +113,7 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Student");
             }
-
+            ViewBag.Role = "Student";
             return View(studentProfile);
         }
 
@@ -136,11 +142,13 @@ namespace Resume_Portal.Controllers
             {
                 ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
             }
+            ViewBag.Role = "Student";
             return View(studentProfile);
         }
 
         public ActionResult AddExperience()
         {
+            ViewBag.Role = "Student";
             return View();
         }
 
@@ -155,7 +163,7 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("StudentProfile");
             }
-
+            ViewBag.Role = "Student";
             return View(experiance);
         }
 
@@ -170,6 +178,7 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Student";
             return View(experiance);
         }
 
@@ -180,12 +189,14 @@ namespace Resume_Portal.Controllers
             Experiance experiance = db.Experiances.Find(id);
             db.Experiances.Remove(experiance);
             db.SaveChanges();
+            ViewBag.Role = "Student";
             return RedirectToAction("StudentProfile");
         }
 
 
         public ActionResult AddSkill()
         {
+            ViewBag.Role = "Student";
             return View();
         }
 
@@ -201,6 +212,7 @@ namespace Resume_Portal.Controllers
                 return RedirectToAction("StudentProfile");
             }
 
+            ViewBag.Role = "Student";
             return View(skill);
         }
 
@@ -217,6 +229,7 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Student";
             return View(skill);
         }
 
@@ -227,6 +240,7 @@ namespace Resume_Portal.Controllers
             Skill skill = db.Skills.Find(id);
             db.Skills.Remove(skill);
             db.SaveChanges();
+            ViewBag.Role = "Student";
             return RedirectToAction("StudentProfile");
         }
 
@@ -234,6 +248,7 @@ namespace Resume_Portal.Controllers
 
         public ActionResult AddEducation()
         {
+            ViewBag.Role = "Student";
             return View();
         }
 
@@ -248,7 +263,7 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("StudentProfile");
             }
-
+            ViewBag.Role = "Student";
             return View(education);
         }
 
@@ -263,6 +278,7 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Student";
             return View(education);
         }
 
@@ -273,7 +289,8 @@ namespace Resume_Portal.Controllers
             Education education = db.Educations.Find(id);
             db.Educations.Remove(education);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.Role = "Student";
+            return RedirectToAction("Student");
         }
 
     }

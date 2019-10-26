@@ -76,8 +76,8 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Programs", "AllPrograms", "Program")</li>
-                        <li>@Html.ActionLink("Students", "AllStudents", "Student")</li>
+                        <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
+                        <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
                         <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
@@ -100,7 +100,7 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
                         <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
-                        <li>@Html.ActionLink("Employers", "AllEmployers", "Employer")</li>
+                        <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
                         <li>@Html.ActionLink("My Profile", "StudentProfile", "Student")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
@@ -119,7 +119,7 @@
                 <div class="container footerContainer">
 
                     <a class="footerLogoLink" href="/">
-                        <img class="footerLogo" xlink:href="/" src="http://mitt.ca/Themes/images/logo.png" alt="MITT Logo">
+                        <img src="~/program-images/mittlogo.png" class="mittlogo" alt="" />
                     </a>
 
                     <ul class="socialLinks footerSocialLinks">

@@ -1,0 +1,6 @@
+student:
+	student1@gmail.com
+
+pass: 12345Jay!
+
+student2@gmail.com | student3@gmail.com | student4@gmail.com

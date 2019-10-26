@@ -37,6 +37,8 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Instructor";
+
             return View(instructor);
         }
 
@@ -46,6 +48,7 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Instructor";
 
             return View();
         }
@@ -65,8 +68,10 @@ namespace Resume_Portal.Controllers
                 instructorProfileExist.JoinedMitt = instructorProfile.JoinedMitt;
                 instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
                 db.SaveChanges();
+
                 return RedirectToAction("Instructor");
             }
+            ViewBag.Role = "Instructor";
 
             return View(instructorProfile);
         }
@@ -79,6 +84,8 @@ namespace Resume_Portal.Controllers
             }
             string uid = User.Identity.GetUserId();
             InstructorProfile instructorProfile = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            ViewBag.Role = "Instructor";
+
             return View(instructorProfile);
         }
 
@@ -97,6 +104,8 @@ namespace Resume_Portal.Controllers
                 instructorProfileExist.JoinedMitt = instructorProfile.JoinedMitt;
                 instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
                 db.SaveChanges();
+                ViewBag.Role = "Instructor";
+
                 return RedirectToAction("Instructor");
             }
 
@@ -120,6 +129,8 @@ namespace Resume_Portal.Controllers
             }
             string uid = User.Identity.GetUserId();
             InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            ViewBag.Role = "Instructor";
+
             return View(instructorProfile);
         }
 
