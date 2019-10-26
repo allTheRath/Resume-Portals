@@ -37,10 +37,35 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             ViewBag.Role = "Student";
-
+            ViewBag.ProfilePic = student.ProfilePic;
             //list of programs
             return View(student);
         }
+
+        public ActionResult EditProfile(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            Profile profile = db.Profiles.Find(id);
+
+            return View(profile);
+        }
+
+        [HttpPost, ActionName("EditProfile")]
+        public ActionResult EditProfileConfirm([Bind(Include = "Id,UserName,Email,ShortDiscription")] Profile profile)
+        {
+            Profile profileExist = db.Profiles.Find(profile.Id);
+            profileExist.Email = profile.Email;
+            profileExist.ShortDiscription = profile.ShortDiscription;
+            profileExist.UserName = profile.UserName;
+            db.SaveChanges();
+
+            return RedirectToAction("Student");
+        }
+
         // Can add activities
         // Can update resume or profile
         // Can See all employers
@@ -143,46 +168,165 @@ namespace Resume_Portal.Controllers
                 ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
             }
             ViewBag.Role = "Student";
+            string userid = User.Identity.GetUserId();
+            var education = ViewEducation(userid);
+            var experience = ViewExperience(userid);
+            var skills = ViewSkills(userid);
 
+            
             return View(studentProfile);
+
+
         }
 
-        public ActionResult ViewExperience()
+
+        public List<Experiance> ViewExperience(string userid)
         {
-            string userid = User.Identity.GetUserId();
-            
+
             var experiances = db.Experiances.ToList().Where(x => x.UserId == userid).ToList();
             if (experiances == null)
             {
                 experiances = new List<Experiance>();
             }
 
-            return View(experiances);
+            return experiances;
         }
 
-        public ActionResult ViewSkills()
+        public List<Skill> ViewSkills(string userid)
         {
-            string userid = User.Identity.GetUserId();
             var skills = db.Skills.ToList().Where(x => x.UserId == userid).ToList();
             if (skills == null)
             {
                 skills = new List<Skill>();
             }
 
-            return View(skills);
+            return skills;
         }
 
-        public ActionResult ViewEducation()
+        public List<Education> ViewEducation(string userid)
         {
-            string userid = User.Identity.GetUserId();
             var educations = db.Educations.ToList().Where(x => x.UserId == userid).ToList();
             if (educations == null)
             {
                 educations = new List<Education>();
             }
 
-            return View(educations);
+            return educations;
         }
+
+
+        public ActionResult UpdateProfilePic()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateProfilePic(HttpPostedFileBase file)
+        {
+
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    string uid = User.Identity.Name;
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/User-Profile-Pic/" + uid + "/"), "profilepic" + fileextention);
+                        file.SaveAs(path);
+                        string userid = User.Identity.GetUserId();
+                        Profile profile = db.Profiles.Where(x => x.UserId == userid).FirstOrDefault();
+                        if (profile != null)
+                        {
+                            profile.ProfilePic = "/User-Profile-Pic/" + uid + "/profilepic" + fileextention;
+                            db.SaveChanges();
+                        }
+                    }
+
+                }
+            }
+
+
+            return RedirectToAction("Student");
+        }
+
+        public ActionResult Download()
+        {
+            string uid = User.Identity.GetUserId();
+            bool exist = Directory.Exists(Server.MapPath("~/student-resume/" + uid + "/"));
+            if (exist != false)
+            {
+                var allFileNames = Directory.GetFiles(Server.MapPath("~/student-resume/" + uid + "/"));
+                if (allFileNames.Length > 0)
+                {
+
+                    var fileName = Path.GetFileName(allFileNames[0]);
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/student-resume/" + uid + "/" + fileName));
+                    return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+
+        public ActionResult UploadMyResume()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadMyResume(HttpPostedFileBase file)
+        {
+
+            if (file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
+                {
+                    string uid = User.Identity.GetUserId();
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/student-resume/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/student-resume/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/student-resume/" + uid + "/" + "resume" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/student-resume/" + uid + "/"), "resume" + fileextention);
+                        file.SaveAs(path);
+
+                    }
+                }
+            }
+
+
+            return RedirectToAction("Student");
+        }
+
+
+
 
         public ActionResult AddExperience()
         {

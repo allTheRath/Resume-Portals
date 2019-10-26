@@ -445,9 +445,9 @@
     <Content Include="Views\Student\AddEducation.cshtml" />
     <Content Include="Views\Student\DeleteEducation.cshtml" />
     <Content Include="Views\Instructor\InstructorProfile.cshtml" />
-    <Content Include="Views\Student\ViewExperience.cshtml" />
-    <Content Include="Views\Student\ViewSkills.cshtml" />
-    <Content Include="Views\Student\ViewEducation.cshtml" />
+    <Content Include="Views\Student\EditProfile.cshtml" />
+    <Content Include="Views\Student\UpdateProfilePic.cshtml" />
+    <Content Include="Views\Student\UploadMyResume.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
