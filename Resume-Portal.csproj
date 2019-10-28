@@ -432,8 +432,8 @@
     <Content Include="Views\Home\AllResumeForJob.cshtml" />
     <Content Include="Views\Home\ResumeHelp.cshtml" />
     <Content Include="Views\Home\AllResumeForHelp.cshtml" />
-    <Content Include="Views\Home\AddActivity.cshtml" />
-    <Content Include="Views\Home\AddActivityImage.cshtml" />
+    <Content Include="Views\Student\AddActivity.cshtml" />
+    <Content Include="Views\Student\AddActivityImage.cshtml" />
     <Content Include="Views\Home\PostEvent.cshtml" />
     <Content Include="Views\Home\AllEvents.cshtml" />
     <Content Include="Views\Home\Participate.cshtml" />
@@ -455,6 +455,7 @@
     <Content Include="Views\Employer\UpdateProfilePic.cshtml" />
     <Content Include="Views\Admin\UpdateProfilePic.cshtml" />
     <Content Include="Views\Instructor\EditProfile.cshtml" />
+    <Content Include="Views\Student\MyActivities.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

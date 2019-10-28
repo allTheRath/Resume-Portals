@@ -1,9 +1,9 @@
 ﻿@model Resume_Portal.Models.Activity
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("AddActivity", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Activity</h4>
         <hr />
@@ -23,9 +23,11 @@
                 @Html.ValidationMessageFor(model => model.ActivityType, "", new { @class = "text-danger" })
             </div>
         </div>
-        @{ 
-            Html.RenderAction("AddActivityImage");
-        }
+        <div>
+            <label for="file">Upload Image</label>
+            <input type="file" name="file" id="file" />
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Upload" class="btn btn-default" />
@@ -33,7 +35,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

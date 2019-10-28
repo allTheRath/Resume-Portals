@@ -477,5 +477,128 @@ namespace Resume_Portal.Controllers
             return RedirectToAction("Student");
         }
 
+
+        /// <summary>
+        /// All activities for a single student
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MyActivities()
+        {
+            var activities = db.Activities.ToList().Where(x => x.UserId == User.Identity.GetUserId());
+            if (activities == null)
+            {
+                activities = new List<Activity>();
+
+            }
+            ViewBag.Role = "Student";
+            return View(activities);
+        }
+
+        public ActionResult AddActivity()
+        {
+            if (!User.IsInRole("Student"))
+            {
+                return HttpNotFound();
+            }
+            string url = "";
+            string uid = User.Identity.GetUserId();
+            bool exists = Directory.Exists(Server.MapPath("~/Activity-Data/" + uid));
+            if (!exists)
+            {
+                // if directory not exist then create it.
+                Directory.CreateDirectory(Server.MapPath("~/Activity-Data/" + uid));
+                url = "1";
+            }
+
+            string fileName = "";
+            try
+            {
+                var allFileNames = Directory.GetFiles(Server.MapPath("~/Activity-Data/" + uid + "/"));
+                if (allFileNames != null)
+                {
+
+                    fileName = allFileNames[allFileNames.Length - 1];
+                }
+                if (fileName != "")
+                {
+                    var number = Path.GetFileNameWithoutExtension(fileName);
+                    url = (Convert.ToInt32(number) + 1).ToString();
+                }
+                else
+                {
+                    url = "1";
+                }
+
+            }
+            catch (Exception)
+            {
+                url = "1";
+
+            }
+
+            ViewBag.Role = "Student";
+            TempData.Add(uid, url);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddActivity([Bind(Include = "Id,Discription,ActivityType")] Activity activity, HttpPostedFileBase file)
+        {
+
+            string uid = User.Identity.GetUserId();
+            activity.UserId = uid;
+
+            
+            if (file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+
+                if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    if (uid != "")
+                    {
+                        var path = Path.Combine(Server.MapPath("~/Activity-Data/" + uid + "/"), TempData[uid].ToString() + fileextention);
+                        file.SaveAs(path);
+                        activity.ImageUrl = "/Activity-Data/" + uid + "/" + TempData[uid].ToString() + fileextention;
+                    }
+
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Activities.Add(activity);
+                db.SaveChanges();
+            }
+            ViewBag.Role = "Student";
+            return View();
+
+        }
+
+        public ActionResult DeleteActivity(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Student");
+            }
+
+
+            Activity activity = db.Activities.Find(id);
+            if (activity == null)
+            {
+                return RedirectToAction("Student");
+            }
+
+            if (activity.UserId != User.Identity.GetUserId())
+            {
+                return RedirectToAction("Student");
+            }
+            System.IO.File.Delete(Server.MapPath(activity.ImageUrl));
+            db.Activities.Remove(activity);
+            db.SaveChanges();
+
+            return RedirectToAction("MyActivities");
+        }
+
     }
 }
