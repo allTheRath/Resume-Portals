@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.IO;
 using System.Text;
+using Glimpse.AspNet.Tab;
 
 namespace Resume_Portal.Models
 {
@@ -32,14 +33,15 @@ namespace Resume_Portal.Models
         }
         public void SeedPrograms(ApplicationDbContext db)
         {
-            string programNamesPath = @"C:\Users\jay\source\repos\Resume-Portal\ProgramFiles\ProgramNames.txt";
-            string programDetails = @"C:\Users\jay\source\repos\Resume-Portal\ProgramFiles\ProgramDetails\";
+            string programNamesPath = "~\\..\\ProgramFiles\\ProgramNames.txt";
+            string programDetails = "~\\..\\ProgramFiles\\ProgramDetails\\";
             StringBuilder sb = new StringBuilder();
             using (StreamReader sr = File.OpenText(programNamesPath))
             {
                 string fileName = null;
                 while ((fileName = sr.ReadLine()) != null)
                 {
+                    
                     if (File.Exists(programDetails + fileName + ".txt"))
                     {
                         string returnedResult = File.ReadAllText(programDetails + fileName + ".txt");
