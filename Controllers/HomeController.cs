@@ -71,10 +71,45 @@ namespace Resume_Portal.Controllers
         }
 
         // Below are the navigation bar for individual users.
+        //Profile Card controller code.
+        public ActionResult ProfileCard()
+        {
+            string userId = User.Identity.GetUserId();
+            var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProfilePic = profile.ProfilePic;
+            return View(profile);
+        }
 
-        
+        public ActionResult SelectNavBar()
+        {
+            string userId = User.Identity.GetUserId();
+            var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
+            if(profile.Role == "Admin")
+            {
+                return RedirectToAction("AdminNav", "Admin");
+            }
+            else if (profile.Role == "Student")
+            {
+                return RedirectToAction("StudentNav", "Student");
+            }
+            else if (profile.Role == "Instructor")
+            {
+                return RedirectToAction("InstructorNav", "Instructor");
+            }
+            else if (profile.Role == "Employer")
+            {
+                return RedirectToAction("EmployerNav", "Employer");
+            }
+            else
+            {
+                return RedirectToAction("NavBar", "Home");
+            }
+        }
 
-        
 
         public ActionResult ProfilePic()
         {
@@ -206,12 +241,6 @@ namespace Resume_Portal.Controllers
             var allUserOfProgram = db.ProgramUsers.ToList().Where(x => x.ProgramId == Id).Select(x => x.UserId);
             var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student" && allUserOfProgram.Contains(x.UserId)).ToList();
             return View(allStudents);
-        }
-        //Profiles have a virtual card
-        public ActionResult ProfileCard()
-        {
-            var profiles = db.Profiles.ToList();
-            return View(profiles);
         }
 
 

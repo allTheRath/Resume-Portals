@@ -29,7 +29,6 @@ namespace Resume_Portal
                       "~/Content/cssV2.css"));
             bundles.Add(new StyleBundle("~/Content/profileCard").Include(
                     "~/Content/bootstrap.css"));
-
         }
     }
 }

@@ -149,6 +149,7 @@ namespace Resume_Portal.Controllers
         /// Each student profile consist of only their details.
         /// </summary>
         /// <returns></returns>
+        [ActionName("About")]
         public ActionResult StudentProfile()
         {
             if (!User.Identity.IsAuthenticated)
@@ -174,7 +175,6 @@ namespace Resume_Portal.Controllers
 
 
         }
-
 
         public ActionResult ViewExperience()
         {

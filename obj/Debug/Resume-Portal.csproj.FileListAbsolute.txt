@@ -329,7 +329,6 @@ D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternP
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\bin\Microsoft.Owin.Security.OAuth.xml
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\obj\Debug\Resume-Portal.csprojAssemblyReference.cache
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\obj\Debug\Resume_Portal.Migrations.initialBuild.resources
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\obj\Debug\Resume_Portal.Migrations.connectnetuserwithprofile.resources
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\obj\Debug\Resume_Portal.Migrations.notifyAdminRequest.resources
@@ -350,3 +349,4 @@ D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternP
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\obj\Debug\Resume-Portal.pdb
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\bin\Glimpse.AspNet.dll
 D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\bin\Glimpse.Core.dll
+D:\School Documents\C# assignments\ASP.NetAssignments\Login asp apps\MittInternPortal\V7\obj\Debug\Resume-Portal.csprojAssemblyReference.cache
