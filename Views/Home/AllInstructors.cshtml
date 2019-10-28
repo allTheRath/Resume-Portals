@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Resume_Portal.Models.Program>
+﻿
+@model IEnumerable<Resume_Portal.Models.Profile>
 @Styles.Render("~/Content/Site.css")
 <main>
     <div class="push-top">
         <span>
-            Search for Program:
+            Search for Instructor:
         </span>
         <input type="text" id="search" name="ser" />
     </div>
@@ -13,24 +14,22 @@
 
             @foreach (var item in Model)
             {
-                <div id="flex-ele" class="main_content @(@item.Name.ToString())">
+                <div id="flex-ele" class="main_content @(@item.UserName.ToString())">
                     <div>
                         <h4>
-                            @Html.DisplayFor(modelItem => item.Name)
+                            @Html.DisplayFor(modelItem => item.UserName)
                         </h4>
                     </div>
                     <span>
-                        <img class="img" src="@item.ImageUrl" />
+                        <img class="img" src="@item.ProfilePic" />
                     </span>
                     <h5>
                         <span>
-                            @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
-                        </span><span>
-                            @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
+                            @Html.ActionLink("Details", "InstructorProfile", "Instructor", new { id = item.UserId })
                         </span>
                     </h5>
                     <span class="span_img">
-                        @Html.DisplayFor(modelItem => item.Discription)
+                        @Html.DisplayFor(modelItem => item.ShortDiscription)
                     </span>
 
 
@@ -163,52 +162,3 @@
         display: inline;
     }
 </style>
-
-@*<h2>List Of Programs</h2>
-
-    <div class="main-box">
-
-        @foreach (var item in Model)
-        {
-            <div class="flex-data">
-                <div class="flex-box">
-                    <img src="~/program-images/@item.Name/pic/logo.jpg" />
-                </div>
-                <div class="flex-box">
-                    <div>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </div>
-                    <div>
-                        @Html.DisplayFor(modelItem => item.Discription)
-                    </div>
-                    <div>
-                        @Html.DisplayFor(modelItem => item.Duration)
-                    </div>
-                    <div>
-                        @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
-                    </div>
-                    <div>
-                        @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
-                    </div>
-                </div>
-
-            </div>
-        }
-    </div>*@
-@*<main>
-        @foreach (var item in Model)
-        {
-            <section>
-                <div>
-                    <img src="~/program-images/@item.Name/pic/logo.jpg" />
-                </div>
-                <div>
-                    @Html.DisplayFor(modelItem => item.Discription)
-                    <div>
-                        @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
-                        @Html.ActionLink("All Students", "StudentInProgram", new { id = item.Id })
-                    </div>
-                </div>
-            </section>
-    </main>*@
-

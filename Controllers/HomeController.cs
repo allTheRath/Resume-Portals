@@ -175,6 +175,14 @@ namespace Resume_Portal.Controllers
         public ActionResult AllEmployers()
         {
             var allEmployerProfiles = db.Profiles.ToList().Where(x => x.Role == "Employer").ToList();
+            foreach (var i in allEmployerProfiles)
+            {
+                if(i.ProfilePic == null || i.ProfilePic == "")
+                {
+                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                }
+            }
+            db.SaveChanges();
             return View(allEmployerProfiles);
         }
 
@@ -184,7 +192,18 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllInstructors()
         {
+            string uid = User.Identity.GetUserId();
+
             var allInstructors = db.Profiles.ToList().Where(x => x.Role == "Instructor").ToList();
+            ViewBag.Role = RoleHandler.GetUserRole(uid);
+            foreach (var i in allInstructors)
+            {
+                if (i.ProfilePic == null || i.ProfilePic == "")
+                {
+                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                }
+            }
+            db.SaveChanges();
             return View(allInstructors);
         }
 
@@ -194,6 +213,7 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllStudents(int? Id)
         {
+            string uid = User.Identity.GetUserId();
 
             if (Id == null)
             {
@@ -201,6 +221,17 @@ namespace Resume_Portal.Controllers
             }
             var allUserOfProgram = db.ProgramUsers.ToList().Where(x => x.ProgramId == Id).Select(x => x.UserId);
             var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student" && allUserOfProgram.Contains(x.UserId)).ToList();
+            ViewBag.Role = RoleHandler.GetUserRole(uid);
+
+            foreach (var i in allStudents)
+            {
+                if (i.ProfilePic == null || i.ProfilePic == "")
+                {
+                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                }
+            }
+            db.SaveChanges();
+
             return View(allStudents);
         }
         //Profiles have a virtual card
@@ -218,6 +249,7 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllPrograms()
         {
+            string uid = User.Identity.GetUserId();
             var allPrograms = db.Programs.ToList();
 
             allPrograms.ForEach(p =>
@@ -226,9 +258,10 @@ namespace Resume_Portal.Controllers
                 if (System.IO.File.Exists(Server.MapPath("~/program-images/" + p.Name + "/pic/logo.jpg")))
                 {
                     p.ImageUrl = "/program-images/" + p.Name + "/pic/logo.jpg";
-                } else
+                }
+                else
                 {
-                    p.ImageUrl = "/program-images/" + "Hospitality Management Diploma"+ "/pic/logo.jpg";
+                    p.ImageUrl = "/program-images/" + "Hospitality Management Diploma" + "/pic/logo.jpg";
                 }
                 p.Discription = p.Discription.Substring(0, 450);
             });
@@ -238,6 +271,7 @@ namespace Resume_Portal.Controllers
                 allPrograms = new List<Program>();
             }
 
+            ViewBag.Role = RoleHandler.GetUserRole(uid);
             return View(allPrograms);
         }
 

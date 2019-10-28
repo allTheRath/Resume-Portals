@@ -82,6 +82,8 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
+                        <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                        <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
                         <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                         <li>@Html.ActionLink("Posted-Jobs", "MyPostedJobs", "Employer")</li>
                         <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
@@ -109,6 +111,7 @@
                         <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
                         <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
                         <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                        <li>@Html.ActionLink("Instructors", "AllInstructors", "Home")</li>
                         <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                         <li>@Html.ActionLink("My Profile", "StudentProfile", "Student")</li>
                     </ul>
@@ -134,6 +137,8 @@
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
                             <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
+                            <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                            <li>@Html.ActionLink("Instructors", "AllInstructors", "Home")</li>
                             <li>@Html.ActionLink("My Profile", "InstructorProfile", "Instructor")</li>
                         </ul>
                         @Html.Partial("_LoginPartial")

@@ -1,31 +1,166 @@
-﻿@model IEnumerable<Resume_Portal.Models.Profile>
-
-<div class="wrapper row2">
-    <div id="container" class="clear">
-        <div id="about-us" class="clear">
-            <section id="team">
-                <div id="quote">
-                    <blockquote>
-                        <p>Program Name</p>
-                    </blockquote>
-                </div>
-                <ul class="clear">
-                    @foreach (var item in Model)
-                    {
-
-                        <li class="one_quarter first">
-                            <figure>
-                                <img src="@item.ProfilePic" alt="Profile">
-                                <figcaption>
-                                    <p class="team_name">@Html.DisplayFor(modelItem => item.UserName)</p>
-                                    <p class="team_description">@Html.DisplayFor(modelItem => item.ShortDiscription)</p>
-                                </figcaption>
-                            </figure>
-                        </li>
-                    }
-                </ul>
-            </section>
-        </div>
+﻿
+@model IEnumerable<Resume_Portal.Models.Profile>
+@Styles.Render("~/Content/Site.css")
+<main>
+    <div class="push-top">
+        <span>
+            Search for Student:
+        </span>
+        <input type="text" id="search" name="ser" />
     </div>
-</div>
-@Styles.Render("~/Content/ListProfile.css")
+    <section class="section_content">
+
+        <div class="main_flex">
+
+            @foreach (var item in Model)
+            {
+                <div id="flex-ele" class="main_content @(@item.UserName.ToString())">
+                    <div>
+                        <h4>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </h4>
+                    </div>
+                    <span>
+                        <img class="img" src="@item.ProfilePic" />
+                    </span>
+                    <h5>
+                        <span>
+                            @Html.ActionLink("Details", "StudentProfile","Student", new { id = item.UserId})
+                        </span><span>
+                            @Html.ActionLink("Request Resume", "RequestResume","Home", new { id = item.UserId})
+                        </span>
+                    </h5>
+                    <span class="span_img">
+                        @Html.DisplayFor(modelItem => item.ShortDiscription)
+                    </span>
+
+
+                </div>
+            }
+
+        </div>
+    </section>
+</main>
+<script>
+    var n = document.querySelector("#search");
+    n.addEventListener("change", function (e) {
+        var x = document.querySelector("#search").value;
+        console.log(x);
+        var allPosibles = document.querySelectorAll("#flex-ele");
+        if (allPosibles != undefined) {
+            for (i = allPosibles.length - 1; i >= 0; i--) {
+                if (allPosibles[i].className.includes(x)) {
+                    console.log(allPosibles[i].className);
+                    allPosibles[i].scrollIntoView();
+                    break;
+                }
+            }
+        }
+    });
+
+</script>
+
+<style>
+    img {
+        width: 20vw;
+    }
+
+    h5 {
+        color: forestgreen;
+    }
+
+    .push-top {
+        margin-top: 10%;
+        /* margin-left: 100px; */
+        text-align: end;
+        font-size: 100px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        width: 100%;
+        color: #00a88d;
+        font-size: 20px;
+        font-weight: lighter;
+        letter-spacing: .06em;
+        margin-bottom: .5em;
+    }
+</style>
+
+<style>
+    .main-flex {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+    }
+
+    #flex-ele {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 40%;
+        justify-content: space-evenly;
+    }
+
+    .img-container {
+        margin-right: 7px;
+        display: inline;
+    }
+
+    .img {
+        float: left;
+        margin-right: 4%;
+        border-radius: 70%;
+        overflow: hidden;
+        display: inline;
+        /*max-width: 100%;
+
+            overflow: hidden;
+            position: relative;*/
+        width: 100%;
+    }
+
+    .second {
+        float: left;
+        width: 40%;
+        display: inline;
+        margin-top: 2em;
+    }
+
+    .name {
+        color: #00a88d;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: .06em;
+        margin-bottom: .5em;
+        display: inline;
+    }
+
+    .discription {
+        margin-bottom: 1em;
+        text-align: start;
+        width: 200px;
+        display: inline;
+    }
+
+    .button {
+        position: relative;
+        /*padding: 9px 30px 8px 20px;*/
+        border: none;
+        border-width: 2px;
+        border-color: #bbd876;
+        border-style: solid;
+        border-width: 0 0 0 2px;
+        letter-spacing: .05em;
+        overflow: hidden;
+        transition: border-color .2s;
+        z-index: 0;
+        text-align: center;
+        font-size: 1.8vw;
+        background-color: beige;
+        color: forestgreen;
+        display: inline;
+    }
+</style>

@@ -33,6 +33,16 @@ namespace Resume_Portal.Models
             return true;
         }
 
+        public string GetUserRole(string userId)
+        {
+            var roles = userManager.GetRoles(userId);
+            if(roles == null)
+            {
+                return "";
+            }
+            return roles[0];
+        }
+
         public void CreateFile(string filename)
         {
             string path = @"C:\Users\jay\source\repos\Resume-Portal\ProgramsData\programdetails\" + @filename + ".txt";
