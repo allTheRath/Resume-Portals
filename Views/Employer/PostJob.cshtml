@@ -1,5 +1,11 @@
 ﻿@model Resume_Portal.Models.Job
-
+@if(ViewBag.PostConfirm != null)
+{
+    if(ViewBag.PostConfirm == true)
+    {
+        <h4>Job Post Confirm!</h4>
+    }
+}
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()

@@ -456,6 +456,8 @@
     <Content Include="Views\Admin\UpdateProfilePic.cshtml" />
     <Content Include="Views\Instructor\EditProfile.cshtml" />
     <Content Include="Views\Student\MyActivities.cshtml" />
+    <Content Include="Views\Employer\EditProfile.cshtml" />
+    <Content Include="Views\Employer\MyPostedJobs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

@@ -103,7 +103,7 @@ namespace Resume_Portal.Models
             profile.UserId = userId;
             profile.UserName = db.Users.Find(userId).UserName;
             profile.ShortDiscription = "";
-            profile.ProfilePic = "~/User-Profile-Pic/blank/blankProfile.png";
+            profile.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
             profile.Role = RoleName;
             db.Profiles.Add(profile);
             db.SaveChanges();
