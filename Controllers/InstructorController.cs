@@ -38,9 +38,90 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             ViewBag.Role = "Instructor";
-
+            if(instructor.ProfilePic == "")
+            {
+                instructor.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                db.SaveChanges();
+            }
+            ViewBag.ProfilePic = instructor.ProfilePic;
             return View(instructor);
         }
+
+
+
+        public ActionResult EditProfile(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            Profile profile = db.Profiles.Find(id);
+
+            ViewBag.Role = "Instructor";
+            return View(profile);
+        }
+
+        [HttpPost, ActionName("EditProfile")]
+        public ActionResult EditProfileConfirm([Bind(Include = "Id,UserName,Email,ShortDiscription")] Profile profile)
+        {
+            Profile profileExist = db.Profiles.Find(profile.Id);
+            profileExist.Email = profile.Email;
+            profileExist.ShortDiscription = profile.ShortDiscription;
+            profileExist.UserName = profile.UserName;
+            db.SaveChanges();
+            ViewBag.Role = "Instructor";
+
+            return RedirectToAction("Instructor");
+        }
+
+
+        public ActionResult UpdateProfilePic()
+        {
+            ViewBag.Role = "Instructor";
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateProfilePic(HttpPostedFileBase file)
+        {
+
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    string uid = User.Identity.Name;
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/User-Profile-Pic/" + uid + "/"), "profilepic" + fileextention);
+                        file.SaveAs(path);
+                        string userid = User.Identity.GetUserId();
+                        Profile profile = db.Profiles.Where(x => x.UserId == userid).FirstOrDefault();
+                        if (profile != null)
+                        {
+                            profile.ProfilePic = "/User-Profile-Pic/" + uid + "/profilepic" + fileextention;
+                            db.SaveChanges();
+                        }
+                    }
+
+                }
+            }
+
+            ViewBag.Role = "Instructor";
+            return RedirectToAction("Instructor");
+        }
+
 
         public ActionResult CreateInstructor()
         {
@@ -85,7 +166,7 @@ namespace Resume_Portal.Controllers
             string uid = User.Identity.GetUserId();
             InstructorProfile instructorProfile = db.InstructorProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
             ViewBag.Role = "Instructor";
-
+            ViewBag.ProfilePic = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault().ProfilePic;
             return View(instructorProfile);
         }
 
@@ -105,6 +186,7 @@ namespace Resume_Portal.Controllers
                 instructorProfileExist.ProfetionalEmail = instructorProfile.ProfetionalEmail;
                 db.SaveChanges();
                 ViewBag.Role = "Instructor";
+                ViewBag.ProfilePic = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault().ProfilePic;
 
                 return RedirectToAction("Instructor");
             }
@@ -123,14 +205,14 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult InstructorProfile()
         {
-            if (User.IsInRole("Instructor"))
+            if (!User.IsInRole("Instructor"))
             {
                 return HttpNotFound();
             }
             string uid = User.Identity.GetUserId();
             InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
             ViewBag.Role = "Instructor";
-
+            ViewBag.ProfilePic = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault().ProfilePic;
             return View(instructorProfile);
         }
 

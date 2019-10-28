@@ -51,6 +51,7 @@ namespace Resume_Portal.Controllers
 
             Profile profile = db.Profiles.Find(id);
 
+            ViewBag.Role = "Student";
             return View(profile);
         }
 
@@ -62,6 +63,7 @@ namespace Resume_Portal.Controllers
             profileExist.ShortDiscription = profile.ShortDiscription;
             profileExist.UserName = profile.UserName;
             db.SaveChanges();
+            ViewBag.Role = "Student";
 
             return RedirectToAction("Student");
         }
@@ -168,55 +170,55 @@ namespace Resume_Portal.Controllers
                 ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
             }
             ViewBag.Role = "Student";
-            string userid = User.Identity.GetUserId();
-            var education = ViewEducation(userid);
-            var experience = ViewExperience(userid);
-            var skills = ViewSkills(userid);
-
-            
             return View(studentProfile);
 
 
         }
 
 
-        public List<Experiance> ViewExperience(string userid)
+        public ActionResult ViewExperience()
         {
-
+            string userid = User.Identity.GetUserId();
             var experiances = db.Experiances.ToList().Where(x => x.UserId == userid).ToList();
             if (experiances == null)
             {
                 experiances = new List<Experiance>();
             }
+            ViewBag.Role = "Student";
 
-            return experiances;
+            return View(experiances);
         }
 
-        public List<Skill> ViewSkills(string userid)
+        public ActionResult ViewSkills()
         {
+            string userid = User.Identity.GetUserId();
             var skills = db.Skills.ToList().Where(x => x.UserId == userid).ToList();
             if (skills == null)
             {
                 skills = new List<Skill>();
             }
+            ViewBag.Role = "Student";
 
-            return skills;
+            return View(skills);
         }
 
-        public List<Education> ViewEducation(string userid)
+        public ActionResult ViewEducation()
         {
+            string userid = User.Identity.GetUserId();
             var educations = db.Educations.ToList().Where(x => x.UserId == userid).ToList();
             if (educations == null)
             {
                 educations = new List<Education>();
             }
+            ViewBag.Role = "Student";
 
-            return educations;
+            return View(educations);
         }
 
 
         public ActionResult UpdateProfilePic()
         {
+
             return View();
         }
         [HttpPost]

@@ -448,6 +448,13 @@
     <Content Include="Views\Student\EditProfile.cshtml" />
     <Content Include="Views\Student\UpdateProfilePic.cshtml" />
     <Content Include="Views\Student\UploadMyResume.cshtml" />
+    <Content Include="Views\Student\ViewExperience.cshtml" />
+    <Content Include="Views\Student\ViewSkills.cshtml" />
+    <Content Include="Views\Student\ViewEducation.cshtml" />
+    <Content Include="Views\Instructor\UpdateProfilePic.cshtml" />
+    <Content Include="Views\Employer\UpdateProfilePic.cshtml" />
+    <Content Include="Views\Admin\UpdateProfilePic.cshtml" />
+    <Content Include="Views\Instructor\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

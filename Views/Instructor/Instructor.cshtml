@@ -1,13 +1,39 @@
-<<<<<<< HEAD
-﻿@model Resume_Portal.Models.Profile
+@model Resume_Portal.Models.Profile
+<img src="@ViewBag.ProfilePic" class="profilepic" />
+<span>
+    @Html.ActionLink("Update Pic", "UpdateProfilePic")
+</span>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
 
-@Html.Partial("InstructorNav")
-=======
-﻿@{
-    Layout = "~/Views/Home/InstructorNav.cshtml";
-}
->>>>>>> aeac4b5a28625e17321c66332e497c149cd6f953
-@{
-    Html.RenderAction("AllPrograms", "Home");
-}
-@Html.Partial("FooterBar")
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDiscription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDiscription)
+        </dd>
+        <dt>
+            Edit Profile
+        </dt>
+        <dd>
+            @Html.ActionLink("Edit", "EditProfile", new { id = Model.Id })
+        </dd>
+    </dl>
+
+</div>

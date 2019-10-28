@@ -18,21 +18,27 @@
             <h2 class="section-title">Skills</h2>
             
             <div class="list-card">
-                
+                @{ 
+                    Html.RenderAction("ViewSkills");
+                }
             </div>
         </div>
         <div class="sections">
             <h2 class="section-title">Education</h2>
 
             <div class="list-card">
-                
+                @{
+                    Html.RenderAction("ViewEducation");
+                }
             </div>
         </div>
         <div class="sections">
             <h2 class="section-title">Experience</h2>
 
             <div class="list-card">
-                
+                @{
+                    Html.RenderAction("ViewExperience");
+                }
             </div>
         </div>
     </div>
