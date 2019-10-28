@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201910231911037_addedskillscontrollers.Designer.cs">
       <DependentUpon>201910231911037_addedskillscontrollers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910281730374_programimageurladded.cs" />
+    <Compile Include="Migrations\201910281730374_programimageurladded.Designer.cs">
+      <DependentUpon>201910281730374_programimageurladded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -523,6 +527,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231911037_addedskillscontrollers.resx">
       <DependentUpon>201910231911037_addedskillscontrollers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910281730374_programimageurladded.resx">
+      <DependentUpon>201910281730374_programimageurladded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

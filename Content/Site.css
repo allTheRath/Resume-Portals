@@ -83,7 +83,7 @@ span > img {
 }
 
 .span_img {
-    text-align: right;
+    text-align: left;
 }
 
 @media screen and (min-width: 880px) {
@@ -314,9 +314,9 @@ h2 {
         font-size: 68%;
     }
 
-    
-    .footerSocialLinks{
-        padding-left:0px;
+
+    .footerSocialLinks {
+        padding-left: 0px;
     }
 
     #gray {
@@ -395,13 +395,38 @@ h2 {
         padding-bottom: 28px;
     }
 }
+
 a svg {
     margin-top: -11px !important;
     margin-left: -11px !important;
 }
+
+.navbar-nav > li > a {
+    color: #00a88d !important;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 800px) {
+    #flex-ele {
+        margin-left: 105px;
+        width: 100vw !important;
+        font-size: x-large;
+    }
+    .span_img {
+        width: 165vw !important;
+    }
+
+    .navbar-nav > li > a {
+        font-size: 20px !important;
+        }
+    
+    .container {
+        margin-left: 0px !important;
+    }
+}
+
 @media screen and (max-width: 880px) {
-    
-    
+
     .green {
         font-size: 98%;
     }

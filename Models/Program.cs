@@ -17,6 +17,8 @@ namespace Resume_Portal.Models
 
         public string Duration { get; set; }
     
+        public string ImageUrl { get; set; }
+
         public virtual ICollection<ProgramUsers> ProgramUsers { get; set; }
 
         public virtual ICollection<Job> PostedJobs { get; set; }

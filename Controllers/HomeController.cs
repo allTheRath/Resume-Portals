@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,7 +53,7 @@ namespace Resume_Portal.Controllers
             }
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Admin","Admin");
+                return RedirectToAction("Admin", "Admin");
             }
             else if (User.IsInRole("Employer"))
             {
@@ -60,11 +61,11 @@ namespace Resume_Portal.Controllers
             }
             else if (User.IsInRole("Instructor"))
             {
-                return RedirectToAction("Instructor","Instructor");
+                return RedirectToAction("Instructor", "Instructor");
             }
             else if (User.IsInRole("Student"))
             {
-                return RedirectToAction("Student","Student");
+                return RedirectToAction("Student", "Student");
             }
 
             return View();
@@ -72,9 +73,9 @@ namespace Resume_Portal.Controllers
 
         // Below are the navigation bar for individual users.
 
-        
 
-        
+
+
 
         public ActionResult ProfilePic()
         {
@@ -101,10 +102,10 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
-        
-        
 
-        
+
+
+
 
         public class ProgramSelect
         {
@@ -161,11 +162,6 @@ namespace Resume_Portal.Controllers
             }
             return View(job);
         }
-
-
-
-
-        
 
 
         // Below Views are common for more then one role.
@@ -226,8 +222,17 @@ namespace Resume_Portal.Controllers
 
             allPrograms.ForEach(p =>
             {
-                p.Discription = p.Discription.Substring(0, 210) + "...";
+
+                if (System.IO.File.Exists(Server.MapPath("~/program-images/" + p.Name + "/pic/logo.jpg")))
+                {
+                    p.ImageUrl = "/program-images/" + p.Name + "/pic/logo.jpg";
+                } else
+                {
+                    p.ImageUrl = "/program-images/" + "Hospitality Management Diploma"+ "/pic/logo.jpg";
+                }
+                p.Discription = p.Discription.Substring(0, 450);
             });
+            db.SaveChanges();
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
