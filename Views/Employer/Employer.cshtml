@@ -1,2 +1,42 @@
 ﻿@model Resume_Portal.Models.Profile
+<img src="@ViewBag.ProfilePic" class="profilepic" />
+<span>
+    @Html.ActionLink("Update Pic", "UpdateProfilePic")
+</span>
+<span>
+    @Html.ActionLink("Post Job", "PostJob")
+</span>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDiscription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDiscription)
+        </dd>
+        <dt>
+            Edit Profile
+        </dt>
+        <dd>
+            @Html.ActionLink("Edit", "EditProfile", new { id = Model.Id })
+        </dd>
+    </dl>
+
+</div>

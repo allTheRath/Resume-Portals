@@ -40,8 +40,89 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             ViewBag.Role = "Employer";
+            if (employer.ProfilePic == null || employer.ProfilePic == "")
+            {
+                employer.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                db.SaveChanges();
+            }
+
+            ViewBag.ProfilePic = employer.ProfilePic;
             return View(employer);
         }
+
+        public ActionResult EditProfile(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            Profile profile = db.Profiles.Find(id);
+
+            ViewBag.Role = "Employer";
+            return View(profile);
+        }
+
+        [HttpPost, ActionName("EditProfile")]
+        public ActionResult EditProfileConfirm([Bind(Include = "Id,UserName,Email,ShortDiscription")] Profile profile)
+        {
+            Profile profileExist = db.Profiles.Find(profile.Id);
+            profileExist.Email = profile.Email;
+            profileExist.ShortDiscription = profile.ShortDiscription;
+            profileExist.UserName = profile.UserName;
+            db.SaveChanges();
+            ViewBag.Role = "Employer";
+
+            return RedirectToAction("Employer");
+        }
+
+
+        public ActionResult UpdateProfilePic()
+        {
+            ViewBag.Role = "Employer";
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateProfilePic(HttpPostedFileBase file)
+        {
+
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                if (fileextention == ".jpg" || fileextention == ".jpeg" || fileextention == ".bmp" || fileextention == ".png")
+                {
+                    string uid = User.Identity.Name;
+                    if (uid != "")
+                    {
+                        bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/User-Profile-Pic/" + uid));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/User-Profile-Pic/" + uid + "/" + "profilepic" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/User-Profile-Pic/" + uid + "/"), "profilepic" + fileextention);
+                        file.SaveAs(path);
+                        string userid = User.Identity.GetUserId();
+                        Profile profile = db.Profiles.Where(x => x.UserId == userid).FirstOrDefault();
+                        if (profile != null)
+                        {
+                            profile.ProfilePic = "/User-Profile-Pic/" + uid + "/profilepic" + fileextention;
+                            db.SaveChanges();
+                        }
+                    }
+
+                }
+            }
+
+            ViewBag.Role = "Employer";
+            return RedirectToAction("Employer");
+        }
+
 
         /// <summary>
         /// Employer profile view ... Employer can edit the profile.  
@@ -55,6 +136,11 @@ namespace Resume_Portal.Controllers
             }
             string uid = User.Identity.GetUserId();
             EmployerProfile employerProfile = db.EmployerProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            ViewBag.Role = "Employer";
+            Profile p = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault();
+            string extention = Path.GetExtension(Server.MapPath(p.ProfilePic));
+            string directoryName = db.Users.Find(uid).UserName;
+            ViewBag.ProfilePic = "/User-Profile-Pic/" + directoryName + "/profilepic" + extention;
             return View(employerProfile);
         }
 
@@ -65,6 +151,11 @@ namespace Resume_Portal.Controllers
         {
             string uid = User.Identity.GetUserId();
             EmployerProfile employerProfile = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            ViewBag.Role = "Employer";
+            Profile p = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault();
+            string extention = Path.GetExtension(Server.MapPath(p.ProfilePic));
+            string directoryName = db.Users.Find(uid).UserName;
+            ViewBag.ProfilePic = "/User-Profile-Pic/" + directoryName + "/profilepic" + extention;
             return View(employerProfile);
         }
 
@@ -85,7 +176,7 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Employer");
             }
-
+            ViewBag.Role = "Employer";
             return View(employerProfile);
         }
 
@@ -96,6 +187,12 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Role = "Employer";
+            string uid = User.Identity.GetUserId();
+            Profile p = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault();
+            string extention = Path.GetExtension(Server.MapPath(p.ProfilePic));
+            string directoryName = db.Users.Find(uid).UserName;
+            ViewBag.ProfilePic = "/User-Profile-Pic/" + directoryName + "/profilepic" + extention;
             return View();
         }
 
@@ -117,7 +214,7 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Employer");
             }
-
+            ViewBag.Role = "Employer";
             return View(employerProfile);
         }
 
@@ -138,11 +235,13 @@ namespace Resume_Portal.Controllers
                 ViewBag.PostConfirm = false;
             }
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
+            ViewBag.Role = "Employer";
+
             return View();
         }
         [HttpPost, ActionName("PostJob")]
         [ValidateAntiForgeryToken]
-        public ActionResult PostJobConfirmation([Bind(Include = "CompanyName, JobDiscription")] Job job)
+        public ActionResult PostJobConfirmation([Bind(Include = "CompanyName, JobDiscription, ProgramId")] Job job)
         {
             string uid = User.Identity.GetUserId();
             job.EmployerId = uid;
@@ -158,9 +257,19 @@ namespace Resume_Portal.Controllers
                 ViewBag.PostConfirm = false;
             }
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
+            ViewBag.Role = "Employer";
             return View();
         }
 
+        public ActionResult MyPostedJobs()
+        {
+            var jobs = db.Jobs.ToList().Where(x => x.EmployerId == User.Identity.GetUserId());
+            if (jobs == null)
+            {
+                jobs = new List<Job>();
+            }
 
+            return View(jobs);
+        }
     }
 }

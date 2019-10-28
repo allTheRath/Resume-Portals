@@ -1,52 +1,59 @@
 ﻿@model Resume_Portal.Models.EmployerProfile
 
-<div>
-    <h4>
-        @Html.ActionLink("Update Profile", "EditEmployer")
-    </h4>
-    <hr />
-    <dl class="dl-horizontal">
- 
-        <dt>
-            @Html.DisplayNameFor(model => model.AboutUs)
-        </dt>
+    <div>
+        <img src="@ViewBag.ProfilePic" class="profilepic" />
+        <span>
+            @Html.ActionLink("Update Pic", "UpdateProfilePic")
+        </span>
+        <h4>
+            @Html.ActionLink("Update Profile", "EditEmployer")
+        </h4>
+        <h4>
+            @Html.ActionLink("Post Job", "PostJob")
+        </h4>
+        <hr />
+        <dl class="dl-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.AboutUs)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AboutUs)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HistoryOfCompany)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AboutUs)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.HistoryOfCompany)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.HistoryOfCompany)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactUs)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HistoryOfCompany)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ContactUs)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ContactUs)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNo)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ContactUs)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNo)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNo)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LookingForSkills)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNo)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LookingForSkills)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.LookingForSkills)
+            </dt>
 
-    </dl>
-</div>
+            <dd>
+                @Html.DisplayFor(model => model.LookingForSkills)
+            </dd>
+
+        </dl>
+    </div>
 
