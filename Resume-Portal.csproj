@@ -551,6 +551,14 @@
     <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_variables.scss" />
     <Content Include="Views\Shared\ProfilePage.cshtml" />
     <Content Include="Views\Student\About.cshtml" />
+    <Content Include="Views\Admin\AdminNav.cshtml" />
+    <Content Include="Views\Home\NavBar.cshtml" />
+    <Content Include="Views\Student\ProfileView.cshtml" />
+    <Content Include="Views\Employer\EmployerDetails.cshtml" />
+    <Content Include="Views\Instructor\InstructorDetails.cshtml" />
+    <Content Include="Views\Student\StudentDetails.cshtml" />
+    <Content Include="Views\Instructor\ProfileView.cshtml" />
+    <Content Include="Views\Employer\ProfileView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

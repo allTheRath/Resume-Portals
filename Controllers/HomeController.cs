@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Resume_Portal.Models;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,7 @@ namespace Resume_Portal.Controllers
     {
         private protected ApplicationDbContext db = new ApplicationDbContext();
         private protected RoleHandler RoleHandler = new RoleHandler();
-
-
+        private protected UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -90,24 +90,67 @@ namespace Resume_Portal.Controllers
             var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
             if(profile.Role == "Admin")
             {
-                return RedirectToAction("AdminNav", "Admin");
+                ViewBag.Role = "Admin";
             }
             else if (profile.Role == "Student")
             {
-                return RedirectToAction("StudentNav", "Student");
+                ViewBag.Role = "Student";
             }
             else if (profile.Role == "Instructor")
             {
-                return RedirectToAction("InstructorNav", "Instructor");
+                ViewBag.Role = "Instructor";
             }
             else if (profile.Role == "Employer")
             {
-                return RedirectToAction("EmployerNav", "Employer");
+                ViewBag.Role = "Employer";
             }
             else
             {
-                return RedirectToAction("NavBar", "Home");
+                ViewBag.Role = null;
             }
+            return View();
+        }
+
+        public ActionResult SelectProfile(string selectedUserId)
+        {
+            string userId = User.Identity.GetUserId();
+            if (!string.IsNullOrEmpty(selectedUserId))
+            {
+                userId = selectedUserId;
+            }
+            if(userManager.IsInRole(userId,"Student"))
+            {
+                var profile = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
+                if(profile == null)
+                {
+                    return HttpNotFound();
+                }
+                return RedirectToAction("StudentDetails", "Student", new { userId = userId });
+            }
+            else if(userManager.IsInRole(userId, "Instructor"))
+            {
+                var profile = db.InstructorProfiles.FirstOrDefault(s => s.UserId == userId);
+                if (profile == null)
+                {
+                    return HttpNotFound();
+                }
+                return RedirectToAction("StudentDetails", "Student", new { userId = userId });
+            }
+            else if(userManager.IsInRole(userId, "Employer"))
+            {
+                var profile = db.EmployerProfiles.FirstOrDefault(s => s.UserId == userId);
+                if (profile == null)
+                {
+                    return HttpNotFound();
+                }
+                return RedirectToAction("EmployerDetails", "Employer", new { userId = userId });
+            }
+            return View();
+        }
+
+        public ActionResult NavBar()
+        {
+            return View();
         }
 
 

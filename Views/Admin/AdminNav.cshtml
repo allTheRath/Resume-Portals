@@ -5,16 +5,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a href="~/Student/Student">
+        <a href="~/Admin/Admin">
             <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
         </a>
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-            <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
-            <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
-            <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
-            <li>@Html.ActionLink("My Profile", "StudentProfile", "Student")</li>
+
+            <li>@Html.ActionLink("Approve User", "AssignUsers", "Admin")</li>
+            <li>@Html.ActionLink("Unapprove User", "UnAssignUsers", "Admin")</li>
         </ul>
         @Html.Partial("_LoginPartial")
     </div>

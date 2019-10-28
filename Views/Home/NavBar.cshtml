@@ -1,0 +1,126 @@
+﻿@{ 
+    Layout = null;
+}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    @if (ViewBag.Role == null)
+    {
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+
+    }
+    else if (ViewBag.Role == "Admin")
+    {
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="~/Admin/Admin">
+                    <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <li>@Html.ActionLink("Approve User", "AssignUsers", "Admin")</li>
+                    <li>@Html.ActionLink("Unapprove User", "UnAssignUsers", "Admin")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+
+    }
+    else if (ViewBag.Role == "Employer")
+    {
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="~/Employer/Employer">
+                    <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
+                    <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
+                    <li>@Html.ActionLink("Posted-Jobs", "MyPostedJobs", "Employer")</li>
+                    <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+
+    }
+    else if (ViewBag.Role == "Student")
+    {
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="~/Student/Student">
+                    <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
+                    <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
+                    <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                    <li>@Html.ActionLink("My Profile", "StudentProfile", "Student")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    }
+    else if (ViewBag.Role == "Instructor")
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="~/Instructor/Instructor">
+                        <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
+                        <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
+                        <li>@Html.ActionLink("My Profile", "InstructorProfile", "Instructor")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

@@ -1,20 +1,21 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Resume Portal", "Employer", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Post Jobs", "PostJob", "Home")</li>
-                <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
-                <li>@Html.ActionLink("My Profile", "EmployerProfile", "Home")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
+﻿<div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="~/Employer/Employer">
+            <img class="mittlogo" src="~/program-images/mittlogo.png" alt="" />
+        </a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
+            <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
+            <li>@Html.ActionLink("Posted-Jobs", "MyPostedJobs", "Employer")</li>
+            <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
+        </ul>
+        @Html.Partial("_LoginPartial")
     </div>
 </div>

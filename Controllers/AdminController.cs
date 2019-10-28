@@ -13,11 +13,11 @@ namespace Resume_Portal.Controllers
         private protected ApplicationDbContext db = new ApplicationDbContext();
         private protected RoleHandler RoleHandler = new RoleHandler();
 
-     
-        //public ActionResult AdminNav()
-        //{
-        //    return View();
-        //}
+
+        public ActionResult AdminNav()
+        {
+            return View();
+        }
         /// <summary>
         /// Admin Home Page
         /// </summary>

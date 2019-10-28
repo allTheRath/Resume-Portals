@@ -1,0 +1,33 @@
+﻿@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/bootstrap-4.1.2/bootstrap.min.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Scripts/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/responsive.css">
+}
+
+<div class="content_container">
+    <div class="main_content_outer d-flex flex-xl-row flex-column align-items-start justify-content-start">
+
+        <!-- General Information -->
+        @Html.Action("ProfileCard", "Home")
+
+        <!-- Main Content -->
+
+        @Html.Partial("StudentDetails")
+
+    </div>
+</div>
+<script src="~/Scripts/js/jquery-3.2.1.min.js"></script>
+<script src="~/Content/styles/bootstrap-4.1.2/popper.js"></script>
+<script src="~/Content/styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+<script src="~/Scripts/plugins/greensock/TweenMax.min.js"></script>
+<script src="~/Scripts/plugins/greensock/TimelineMax.min.js"></script>
+<script src="~/Scripts/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="~/Scripts/plugins/greensock/animation.gsap.min.js"></script>
+<script src="~/Scripts/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="~/Scripts/plugins/progressbar/progressbar.js"></script>
+<script src="~/Scripts/plugins/mCustomScrollbar/jquery.mCustomScrollbar.js"></script>
+<script src="~/Scripts/plugins/easing/easing.js"></script>
+<script src="~/Scripts/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="~/Scripts/js/custom.js"></script>

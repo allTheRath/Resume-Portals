@@ -18,10 +18,10 @@ namespace Resume_Portal.Controllers
         private protected RoleHandler RoleHandler = new RoleHandler();
 
         // GET: Employer
-        //public ActionResult EmployerNav()
-        //{
-        //    return View();
-        //}
+        public ActionResult EmployerNav()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Employer Home page
@@ -128,6 +128,10 @@ namespace Resume_Portal.Controllers
         /// Employer profile view ... Employer can edit the profile.  
         /// </summary>
         /// <returns></returns>
+        public ActionResult ProfileView()
+        {
+            return View();
+        }
         public ActionResult EmployerProfile()
         {
             if (!User.IsInRole("Employer"))

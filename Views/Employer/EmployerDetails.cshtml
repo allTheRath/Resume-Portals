@@ -1,0 +1,37 @@
+﻿@model Resume_Portal.Models.EmployerProfile
+@{
+    Layout = null;
+}
+
+<div class="main_content">
+    <div class="main_title_container d-flex flex-column align-items-start justify-content-end">
+        <div class="main_subtitle">Student</div>
+        <div class="main_title">@Html.DisplayFor(model => model.ContactUs)</div>
+    </div>
+    <div class="main_content_scroll mCustomScrollbar" data-mcs-theme="minimal-dark">
+        <div class="about_content">
+            <div class="about_title">Description</div>
+            <div class="about_text">
+                <p>@Html.DisplayFor(model => model.AboutUs)</p>
+            </div>
+
+            <!-- Loaders -->
+            <!-- If you want addition content put it in loaders-->
+            @*<div class="loaders clearfix">
+
+                     Loader
+                    <div class="loader_container">
+                        <div class="loader" data-perc="0.75"></div>
+                        <div class="loader_content text-center">
+                            <div class="loader_title">intuition</div>
+                            <div class="loader_subtitle">Etiam nec odio vestibulum est.</div>
+                        </div>
+                    </div>
+
+
+                </div>*@
+        </div>
+    </div>
+
+</div>
+
