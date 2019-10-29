@@ -2,18 +2,26 @@
 @Styles.Render("~/Content/Site.css")
 <main>
     <div class="push-top">
-        <span>
+        <span class="float-left">
             Search for Program:
         </span>
-        <input type="text" id="search" name="ser" />
+        @{
+            Html.RenderAction("SelectProgram");
+        }
+
     </div>
+    <style>
+        .float-left {
+            float: left;
+        }
+    </style>
     <section class="section_content">
 
         <div class="main_flex">
 
             @foreach (var item in Model)
             {
-                <div id="flex-ele" class="main_content @(@item.Name.ToString())">
+                <div id="flex-ele" class="main_content">
                     <div>
                         <h4>
                             @Html.DisplayFor(modelItem => item.Name)
@@ -40,7 +48,7 @@
         </div>
     </section>
 </main>
-<script>
+@*<script>
     var n = document.querySelector("#search");
     n.addEventListener("change", function (e) {
         var x = document.querySelector("#search").value;
@@ -57,7 +65,7 @@
         }
     });
 
-</script>
+</script>*@
 
 <style>
     img {
