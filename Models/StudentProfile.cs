@@ -100,7 +100,45 @@ namespace Resume_Portal.Models
 
     }
 
+    public class CompleteStudentInfo
+    {
+        public int ProfileId { get; set; }
 
+        public string StudentId { get; set; }
+
+        public string SortDiscription { get; set; }
+
+        public string ProfilePicUrl { get; set; }
+
+        public string MyName { get; set; }
+
+        public string OccupationName { get; set; }
+
+        public string AboutMe { get; set; }
+
+        public string ContactInfo { get; set; }
+
+        public string ProfessionalEmail { get; set; }
+
+        public int SemesterNumber { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public List<Skill> Skills { get; set; }
+
+        public List<Education> Educations { get; set; }
+
+        public List<Experiance> Experiances { get; set; }
+
+        public List<Activity> Activities { get; set; }
+        // All activities related to student.
+        public List<Attachment> Attachments { get; set; }
+
+        public List<Event> Volenteering { get; set; }
+
+    }
 
 
     // Partial student profile view mode for list.

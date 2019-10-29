@@ -207,6 +207,8 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
+
+        [ActionName("InstructorDetails")]
         public ActionResult InstructorProfile()
         {
             if (!User.IsInRole("Instructor"))
@@ -217,6 +219,8 @@ namespace Resume_Portal.Controllers
             InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
             ViewBag.Role = "Instructor";
             ViewBag.ProfilePic = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault().ProfilePic;
+            instructorProfile.AboutMe = "Jay Patel is computer engineer with bachelor’s degree. He studied in Gujarat Technical University in Gujarat, India, from a well-known institute called GCET. He is currently studying Software Developer Diploma course in Manitoba Institute of Trades and Technology, which is in Winnipeg city of Manitoba province of Canada. He was a scholar in mathematics and science from his primary school and wanted to learn how things works in real time. That’s why he chose computer field for the study of interest after his Higher Secondary education. As he learned the basics of Programming and Computational Numeracy, he become more focused on writing amazing software which have good social usage in everyday life. The step by step development of personal and professional attitude help him in becoming a successful individual. He is creative problem solver and excellent colleague. ";
+            db.SaveChanges();
             return View(instructorProfile);
         }
 

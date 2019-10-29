@@ -1,0 +1,118 @@
+﻿@model Resume_Portal.Models.CompleteStudentInfo
+
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/bootstrap-4.1.2/bootstrap.min.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Scripts/plugins/mCustomScrollbar/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/styles/responsive.css">
+}
+
+<div class="content_container">
+    <div class="main_content_outer d-flex flex-xl-row flex-column align-items-start justify-content-start">
+
+        <!-- General Information -->
+        <div>
+            <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
+                <div class="image-ctn">
+                    <div class="general_info_image">
+                        <div class="background_image" style="background-image:url(@Model.ProfilePicUrl)"></div>
+                        @*<div class="header_button_2">
+                                <a href="#">Available for freelance work</a>
+                                <div class="d-flex flex-column align-items-center justify-content-center"><img src="images/download.png" alt=""></div>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="general_info_content">
+                    <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+                        <div class="general_info_title">General Information</div>
+                        <ul class="general_info_list">
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_1.png" alt=""></div>
+                                <div class="general_info_text">Name: <span>@Html.DisplayFor(model => Model.MyName)</span></div>
+                            </li>
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_2.png" alt=""></div>
+                                <div class="general_info_text">Description: <span>@Html.DisplayFor(model => Model.SortDiscription)</span></div>
+                            </li>
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
+                                <div class="general_info_text"><a href="mailto:@Model.ProfessionalEmail?subject=Job_Inquiry">@Model.ProfessionalEmail</a></div>
+                            </li>
+                            <li class="d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
+                                <div class="general_info_text"></div>
+                            </li>
+                        </ul>
+
+                        <!-- Social -->
+                        @*<div class="social_container">
+                                <ul class="d-flex flex-row align-items-start justify-content-start">
+                                    <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Main Content -->
+
+        <div class="main_content">
+            <div class="main_title_container d-flex flex-column align-items-start justify-content-end">
+                <div class="main_subtitle">Student</div>
+                <div class="main_title">@Html.DisplayFor(model => model.MyName)</div>
+            </div>
+            <div class="main_content_scroll mCustomScrollbar" data-mcs-theme="minimal-dark">
+                <div class="about_content">
+                    <div class="about_title">Description</div>
+                    <div class="about_text">
+                        <p>I am currently in @Html.DisplayFor(model => model.SemesterNumber) .</p>
+                        <p>My program will end on @Html.DisplayFor(model => model.EndDate) .</p>
+                        <p>@Html.DisplayFor(model => model.AboutMe)</p>
+                    </div>
+
+                    <!-- Loaders -->
+                    <!-- If you want addition content put it in loaders-->
+                    <div class="loaders clearfix">
+                        <h3>Skills</h3>
+                        @foreach (var s in Model.Skills)
+                        {
+                            <div class="loader_container">
+                                <div class="loader"></div>
+                                <div class="loader_content text-center">
+                                    <div class="loader_title"></div>
+                                    <div class="loader_subtitle">
+                                        <span>@s ,</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="~/Scripts/js/jquery-3.2.1.min.js"></script>
+<script src="~/Content/styles/bootstrap-4.1.2/popper.js"></script>
+<script src="~/Content/styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+<script src="~/Scripts/plugins/greensock/TweenMax.min.js"></script>
+<script src="~/Scripts/plugins/greensock/TimelineMax.min.js"></script>
+<script src="~/Scripts/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="~/Scripts/plugins/greensock/animation.gsap.min.js"></script>
+<script src="~/Scripts/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="~/Scripts/plugins/progressbar/progressbar.js"></script>
+<script src="~/Scripts/plugins/mCustomScrollbar/jquery.mCustomScrollbar.js"></script>
+<script src="~/Scripts/plugins/easing/easing.js"></script>
+<script src="~/Scripts/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="~/Scripts/js/custom.js"></script>

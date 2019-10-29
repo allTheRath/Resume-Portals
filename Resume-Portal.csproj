@@ -566,6 +566,7 @@
     <Content Include="Views\Student\StudentDetails.cshtml" />
     <Content Include="Views\Instructor\ProfileView.cshtml" />
     <Content Include="Views\Employer\ProfileView.cshtml" />
+    <Content Include="Views\Home\StudentProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
