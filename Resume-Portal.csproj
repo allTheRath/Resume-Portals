@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201910231911037_addedskillscontrollers.Designer.cs">
       <DependentUpon>201910231911037_addedskillscontrollers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910281730374_programimageurladded.cs" />
+    <Compile Include="Migrations\201910281730374_programimageurladded.Designer.cs">
+      <DependentUpon>201910281730374_programimageurladded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -516,6 +520,11 @@
     <Content Include="Views\Student\MyActivities.cshtml" />
     <Content Include="Views\Employer\EditProfile.cshtml" />
     <Content Include="Views\Employer\MyPostedJobs.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Home\AllInstructors.cshtml" />
+    <Content Include="Views\Home\AllEmployers.cshtml" />
+    <Content Include="Views\Home\AllJobs.cshtml" />
+=======
     <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
     <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
     <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
@@ -559,6 +568,7 @@
     <Content Include="Views\Student\StudentDetails.cshtml" />
     <Content Include="Views\Instructor\ProfileView.cshtml" />
     <Content Include="Views\Employer\ProfileView.cshtml" />
+>>>>>>> 87433a91fbfa920a0656f2a5c7acd30831ebf9c5
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
@@ -624,6 +634,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231911037_addedskillscontrollers.resx">
       <DependentUpon>201910231911037_addedskillscontrollers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910281730374_programimageurladded.resx">
+      <DependentUpon>201910281730374_programimageurladded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

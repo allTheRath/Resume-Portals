@@ -60,6 +60,7 @@
 
                         <li>@Html.ActionLink("Approve User", "AssignUsers", "Admin")</li>
                         <li>@Html.ActionLink("Unapprove User", "UnAssignUsers", "Admin")</li>
+                        <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
@@ -82,7 +83,8 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
-                        <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
+                        <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                        <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                         <li>@Html.ActionLink("Posted-Jobs", "MyPostedJobs", "Employer")</li>
                         <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
                     </ul>
@@ -109,6 +111,8 @@
                         <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
                         <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
                         <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                        <li>@Html.ActionLink("Instructors", "AllInstructors", "Home")</li>
+                        <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                         <li>@Html.ActionLink("My Profile", "StudentProfile", "Student")</li>
                     </ul>
                     @Html.Partial("_LoginPartial")
@@ -132,7 +136,9 @@
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
-                            <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
+                            <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
+                            <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
+                            <li>@Html.ActionLink("Instructors", "AllInstructors", "Home")</li>
                             <li>@Html.ActionLink("My Profile", "InstructorProfile", "Instructor")</li>
                         </ul>
                         @Html.Partial("_LoginPartial")
@@ -326,6 +332,11 @@
         .mittlogo {
             width: 135px !important;
             margin-top: 10px;
+        }
+
+        .body-content {
+            width: 100%;
+            margin: auto;
         }
     </style>
 

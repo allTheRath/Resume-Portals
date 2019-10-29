@@ -83,7 +83,7 @@ span > img {
 }
 
 .span_img {
-    text-align: right;
+    text-align: left;
 }
 
 @media screen and (min-width: 880px) {
@@ -314,9 +314,9 @@ h2 {
         font-size: 68%;
     }
 
-    
-    .footerSocialLinks{
-        padding-left:0px;
+
+    .footerSocialLinks {
+        padding-left: 0px;
     }
 
     #gray {
@@ -395,37 +395,95 @@ h2 {
         padding-bottom: 28px;
     }
 }
+
 a svg {
     margin-top: -11px !important;
     margin-left: -11px !important;
 }
-@media screen and (max-width: 880px) {
-    
-    
-    .green {
-        font-size: 98%;
+
+.navbar-nav > li > a {
+    color: #00a88d !important;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 800px) {
+    #flex-ele {
+        margin-left: 105px;
+        width: 100vw !important;
+        font-size: x-large;
     }
 
-    h2 {
-        font-size: 1.4em;
+    .span_img {
+        width: 165vw !important;
     }
 
-    .section2 > div + #button {
-        font-size: 88%;
-        width: 155px;
-        margin: auto;
-        height: 41px;
-        margin-bottom: 25px;
+    .navbar-nav > li > a {
+        font-size: 20px !important;
+    }
+
+    .container {
+        margin-left: 0px !important;
     }
 }
 
-a {
-    color: forestgreen;
-    font-size: 100%;
+.body-content {
+    padding-top: 45vh !important;
 }
 
-.pageFooter {
-    width: 138vh;
-    margin: auto !important;
-    text-align: center;
+
+@media screen and (max-width: 500px) {
+    .body-content {
+        padding-top: 25vh !important;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+        .push-top {
+            margin-top: 60px !important;
+        }
+    }
+@media screen and (max-width: 800px) {
+    .push-top {
+        margin-top: 120px !important;
+        font-size:x-large;
+        }
+}
+
+    @media screen and (max-width: 600px) {
+        .push-top {
+            margin-top: -61px !important;
+        }
+    }
+
+    @media screen and (max-width: 880px) {
+        .green {
+            font-size: 98%;
+        }
+
+        h2 {
+            font-size: 1.4em;
+        }
+
+        .section2 > div + #button {
+            font-size: 88%;
+            width: 155px;
+            margin: auto;
+            height: 41px;
+            margin-bottom: 25px;
+        }
+    }
+
+    a {
+        color: forestgreen;
+        font-size: 100%;
+    }
+
+    .pageFooter {
+        width: 138vh;
+        margin: auto !important;
+        text-align: center;
+    }
+#flex-ele {
+    margin-top: 0px !important;
 }
