@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Glimpse.AspNet, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.AspNet.1.9.2\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -174,6 +180,7 @@
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,6 +270,25 @@
     <Content Include="Content\ListProfile.css" />
     <Content Include="Content\Profile.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\styles\bootstrap-4.1.2\bootstrap.min.css" />
+    <Content Include="Content\styles\bootstrap-4.1.2\bootstrap.min.js" />
+    <Content Include="Content\styles\bootstrap-4.1.2\popper.js" />
+    <Content Include="Content\styles\contact.css" />
+    <Content Include="Content\styles\contact_responsive.css" />
+    <Content Include="Content\styles\education.css" />
+    <Content Include="Content\styles\education_responsive.css" />
+    <Content Include="Content\styles\experience.css" />
+    <Content Include="Content\styles\experience_responsive.css" />
+    <Content Include="Content\styles\main_styles.css" />
+    <Content Include="Content\styles\portfolio.css" />
+    <Content Include="Content\styles\portfolio_responsive.css" />
+    <Content Include="Content\styles\responsive.css" />
+    <Content Include="Content\styles\services.css" />
+    <Content Include="Content\styles\services_responsive.css" />
+    <Content Include="Content\styles\skills.css" />
+    <Content Include="Content\styles\skills_responsive.css" />
+    <Content Include="Content\styles\testimonials.css" />
+    <Content Include="Content\styles\testimonials_responsive.css" />
     <Content Include="font-awesome\css\font-awesome.css" />
     <Content Include="font-awesome\css\font-awesome.min.css" />
     <Content Include="font-awesome\fonts\fontawesome-webfont.svg" />
@@ -362,7 +388,39 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\contact.js" />
+    <Content Include="Scripts\js\custom.js" />
+    <Content Include="Scripts\js\education.js" />
+    <Content Include="Scripts\js\experience.js" />
+    <Content Include="Scripts\js\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\js\portfolio.js" />
+    <Content Include="Scripts\js\services.js" />
+    <Content Include="Scripts\js\skills.js" />
+    <Content Include="Scripts\js\testimonials.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\plugins\easing\easing.js" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Scripts\plugins\greensock\animation.gsap.min.js" />
+    <Content Include="Scripts\plugins\greensock\ScrollToPlugin.min.js" />
+    <Content Include="Scripts\plugins\greensock\TimelineMax.min.js" />
+    <Content Include="Scripts\plugins\greensock\TweenMax.min.js" />
+    <Content Include="Scripts\plugins\Isotope\fitcolumns.js" />
+    <Content Include="Scripts\plugins\Isotope\isotope.pkgd.min.js" />
+    <Content Include="Scripts\plugins\mCustomScrollbar\jquery.mCustomScrollbar.css" />
+    <Content Include="Scripts\plugins\mCustomScrollbar\jquery.mCustomScrollbar.js" />
+    <Content Include="Scripts\plugins\OwlCarousel2-2.2.1\ajax-loader.gif" />
+    <Content Include="Scripts\plugins\OwlCarousel2-2.2.1\animate.css" />
+    <Content Include="Scripts\plugins\OwlCarousel2-2.2.1\owl.carousel.css" />
+    <Content Include="Scripts\plugins\OwlCarousel2-2.2.1\owl.carousel.js" />
+    <Content Include="Scripts\plugins\OwlCarousel2-2.2.1\owl.theme.default.css" />
+    <Content Include="Scripts\plugins\OwlCarousel2-2.2.1\owl.video.play.png" />
+    <Content Include="Scripts\plugins\parallax-js-master\parallax.min.js" />
+    <Content Include="Scripts\plugins\progressbar\progressbar.js" />
+    <Content Include="Scripts\plugins\progressbar\progressbar.min.js" />
+    <Content Include="Scripts\plugins\scrollmagic\ScrollMagic.min.js" />
     <Content Include="User-Profile-Pic\blank\blankProfile.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -462,9 +520,55 @@
     <Content Include="Views\Student\MyActivities.cshtml" />
     <Content Include="Views\Employer\EditProfile.cshtml" />
     <Content Include="Views\Employer\MyPostedJobs.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Home\AllInstructors.cshtml" />
     <Content Include="Views\Home\AllEmployers.cshtml" />
     <Content Include="Views\Home\AllJobs.cshtml" />
+=======
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Scripts\plugins\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Views\Shared\ProfilePage.cshtml" />
+    <Content Include="Views\Student\About.cshtml" />
+    <Content Include="Views\Admin\AdminNav.cshtml" />
+    <Content Include="Views\Home\NavBar.cshtml" />
+    <Content Include="Views\Student\ProfileView.cshtml" />
+    <Content Include="Views\Employer\EmployerDetails.cshtml" />
+    <Content Include="Views\Instructor\InstructorDetails.cshtml" />
+    <Content Include="Views\Student\StudentDetails.cshtml" />
+    <Content Include="Views\Instructor\ProfileView.cshtml" />
+    <Content Include="Views\Employer\ProfileView.cshtml" />
+>>>>>>> 87433a91fbfa920a0656f2a5c7acd30831ebf9c5
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

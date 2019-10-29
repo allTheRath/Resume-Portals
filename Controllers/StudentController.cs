@@ -18,10 +18,10 @@ namespace Resume_Portal.Controllers
 
 
 
-        //public ActionResult StudentNav()
-        //{
-        //    return View();
-        //}
+        public ActionResult StudentNav()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Student Home page
@@ -144,11 +144,15 @@ namespace Resume_Portal.Controllers
             return View(studentProfile);
         }
 
-
         /// <summary>
         /// Each student profile consist of only their details.
         /// </summary>
         /// <returns></returns>
+        public ActionResult ProfileView()
+        {
+            return View();
+        }
+        [ActionName("StudentDetails")]
         public ActionResult StudentProfile()
         {
             if (!User.Identity.IsAuthenticated)
@@ -174,7 +178,6 @@ namespace Resume_Portal.Controllers
 
 
         }
-
 
         public ActionResult ViewExperience()
         {

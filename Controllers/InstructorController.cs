@@ -17,10 +17,10 @@ namespace Resume_Portal.Controllers
         private protected RoleHandler RoleHandler = new RoleHandler();
 
 
-        //public ActionResult InstructorNav()
-        //{
-        //    return View();
-        //}
+        public ActionResult InstructorNav()
+        {
+            return View();
+        }
         /// <summary>
         /// Instructor home page
         /// </summary>
@@ -203,6 +203,10 @@ namespace Resume_Portal.Controllers
         /// Instructor profile view ... Instructor can edit the profile.  
         /// </summary>
         /// <returns></returns>
+        public ActionResult ProfileView()
+        {
+            return View();
+        }
         public ActionResult InstructorProfile()
         {
             if (!User.IsInRole("Instructor"))

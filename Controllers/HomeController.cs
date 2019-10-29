@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Resume_Portal.Models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,8 +16,7 @@ namespace Resume_Portal.Controllers
     {
         private protected ApplicationDbContext db = new ApplicationDbContext();
         private protected RoleHandler RoleHandler = new RoleHandler();
-
-
+        private protected UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -53,7 +52,7 @@ namespace Resume_Portal.Controllers
             }
             if (User.IsInRole("Admin"))
             {
-                return RedirectToAction("Admin", "Admin");
+                return RedirectToAction("Admin","Admin");
             }
             else if (User.IsInRole("Employer"))
             {
@@ -61,20 +60,98 @@ namespace Resume_Portal.Controllers
             }
             else if (User.IsInRole("Instructor"))
             {
-                return RedirectToAction("Instructor", "Instructor");
+                return RedirectToAction("Instructor","Instructor");
             }
             else if (User.IsInRole("Student"))
             {
-                return RedirectToAction("Student", "Student");
+                return RedirectToAction("Student","Student");
             }
 
             return View();
         }
 
         // Below are the navigation bar for individual users.
+        //Profile Card controller code.
+        public ActionResult ProfileCard()
+        {
+            string userId = User.Identity.GetUserId();
+            var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProfilePic = profile.ProfilePic;
+            return View(profile);
+        }
 
+        public ActionResult SelectNavBar()
+        {
+            string userId = User.Identity.GetUserId();
+            var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
+            if(profile.Role == "Admin")
+            {
+                ViewBag.Role = "Admin";
+            }
+            else if (profile.Role == "Student")
+            {
+                ViewBag.Role = "Student";
+            }
+            else if (profile.Role == "Instructor")
+            {
+                ViewBag.Role = "Instructor";
+            }
+            else if (profile.Role == "Employer")
+            {
+                ViewBag.Role = "Employer";
+            }
+            else
+            {
+                ViewBag.Role = null;
+            }
+            return View();
+        }
 
+        public ActionResult SelectProfile(string selectedUserId)
+        {
+            string userId = User.Identity.GetUserId();
+            if (!string.IsNullOrEmpty(selectedUserId))
+            {
+                userId = selectedUserId;
+            }
+            if(userManager.IsInRole(userId,"Student"))
+            {
+                var profile = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
+                if(profile == null)
+                {
+                    return HttpNotFound();
+                }
+                return RedirectToAction("StudentDetails", "Student", new { userId = userId });
+            }
+            else if(userManager.IsInRole(userId, "Instructor"))
+            {
+                var profile = db.InstructorProfiles.FirstOrDefault(s => s.UserId == userId);
+                if (profile == null)
+                {
+                    return HttpNotFound();
+                }
+                return RedirectToAction("StudentDetails", "Student", new { userId = userId });
+            }
+            else if(userManager.IsInRole(userId, "Employer"))
+            {
+                var profile = db.EmployerProfiles.FirstOrDefault(s => s.UserId == userId);
+                if (profile == null)
+                {
+                    return HttpNotFound();
+                }
+                return RedirectToAction("EmployerDetails", "Employer", new { userId = userId });
+            }
+            return View();
+        }
 
+        public ActionResult NavBar()
+        {
+            return View();
+        }
 
 
         public ActionResult ProfilePic()
@@ -102,10 +179,10 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
+        
+        
 
-
-
-
+        
 
         public class ProgramSelect
         {
@@ -160,11 +237,13 @@ namespace Resume_Portal.Controllers
             {
                 return HttpNotFound();
             }
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
-
             return View(job);
         }
+
+
+
+
+        
 
 
         // Below Views are common for more then one role.
@@ -178,9 +257,6 @@ namespace Resume_Portal.Controllers
         public ActionResult AllEmployers()
         {
             var allEmployerProfiles = db.Profiles.ToList().Where(x => x.Role == "Employer").ToList();
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
-
             return View(allEmployerProfiles);
         }
 
@@ -190,11 +266,7 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllInstructors()
         {
-            string uid = User.Identity.GetUserId();
-
             var allInstructors = db.Profiles.ToList().Where(x => x.Role == "Instructor").ToList();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
-                        
             return View(allInstructors);
         }
 
@@ -204,7 +276,6 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllStudents(int? Id)
         {
-            string uid = User.Identity.GetUserId();
 
             if (Id == null)
             {
@@ -212,24 +283,7 @@ namespace Resume_Portal.Controllers
             }
             var allUserOfProgram = db.ProgramUsers.ToList().Where(x => x.ProgramId == Id).Select(x => x.UserId);
             var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student" && allUserOfProgram.Contains(x.UserId)).ToList();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
-
-            foreach (var i in allStudents)
-            {
-                if (i.ProfilePic == null || i.ProfilePic == "")
-                {
-                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
-                }
-            }
-            db.SaveChanges();
-
             return View(allStudents);
-        }
-        //Profiles have a virtual card
-        public ActionResult ProfileCard()
-        {
-            var profiles = db.Profiles.ToList();
-            return View(profiles);
         }
 
 
@@ -240,44 +294,19 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult AllPrograms()
         {
-            string uid = User.Identity.GetUserId();
             var allPrograms = db.Programs.ToList();
 
             allPrograms.ForEach(p =>
             {
-
-                if (System.IO.File.Exists(Server.MapPath("~/program-images/" + p.Name + "/pic/logo.jpg")))
-                {
-                    p.ImageUrl = "/program-images/" + p.Name + "/pic/logo.jpg";
-                }
-                else
-                {
-                    p.ImageUrl = "/program-images/" + "Hospitality Management Diploma" + "/pic/logo.jpg";
-                }
-                p.Discription = p.Discription.Substring(0, 450);
+                p.Discription = p.Discription.Substring(0, 210) + "...";
             });
-            db.SaveChanges();
             if (allPrograms.Count() == 0)
             {
                 allPrograms = new List<Program>();
             }
 
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             return View(allPrograms);
         }
-
-        public ActionResult AllJobs(string id)
-        {
-            if (id == null || id == "")
-            {
-                return HttpNotFound();
-            }
-
-            var jobs = db.Jobs.Where(x => x.EmployerId == id).ToList();
-            return View(jobs);
-        }
-
-
 
         /// <summary>
         /// Program discription based on program id // A below view will be list of users/Instructors/Students/Employers in this program 
@@ -291,8 +320,6 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             Program program = db.Programs.Find(id);
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             return View(program);
         }
 
@@ -318,8 +345,6 @@ namespace Resume_Portal.Controllers
                     allStudents.Add(student);
                 }
             });
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             // all students in given program are retrived as list of profiles.
             return View(allStudents);
         }
@@ -341,15 +366,11 @@ namespace Resume_Portal.Controllers
             {
                 job.Employer = db.EmployerProfiles.Find(job.EmployerId);
             }
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             return View(jobs);
         }
 
         public ActionResult UploadResume()
         {
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             return View();
         }
 
@@ -383,8 +404,7 @@ namespace Resume_Portal.Controllers
 
             }
 
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
+
             return View();
         }
 
@@ -394,8 +414,6 @@ namespace Resume_Portal.Controllers
             public string fileUrl { get; set; }
         }
 
-
-        
         public ActionResult AllResumeForJob(int? id)
         {
             if (id == null)
@@ -417,15 +435,11 @@ namespace Resume_Portal.Controllers
                 filewithpathinstance.FileName = Path.GetFileName(path);
                 FileWithPath.Add(filewithpathinstance);
             }
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             return View(FileWithPath);
         }
 
         public ActionResult DownloadPostedResume(string fileName)
         {
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             if (Directory.Exists(fileName))
             {
                 byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(fileName));
@@ -445,8 +459,6 @@ namespace Resume_Portal.Controllers
 
         public ActionResult Download(string uid)
         {
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
             bool exist = Directory.Exists(Server.MapPath("~/student-resume/" + uid + "/"));
             if (exist != false)
             {
@@ -474,8 +486,6 @@ namespace Resume_Portal.Controllers
 
         public ActionResult AddAttachment()
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             return View();
         }
         [HttpPost]
@@ -529,8 +539,8 @@ namespace Resume_Portal.Controllers
 
                 }
             }
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
+
+
             return View();
         }
 
@@ -543,16 +553,14 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult ResumeHelp()
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
+
             return View();
         }
 
         [HttpPost]
         public ActionResult ResumeHelp(HttpPostedFileBase file)
         {
-            string userId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userId);
+
             if (file.ContentLength > 0)
             {
                 var fileextention = Path.GetExtension(file.FileName).ToLower();
@@ -584,8 +592,6 @@ namespace Resume_Portal.Controllers
 
         public ActionResult AllResumeForHelp()
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             var allFileNames = Directory.GetFiles(Server.MapPath("~/Resume-Help/"));
             List<FileWithPath> FileWithPath = new List<FileWithPath>();
             foreach (var path in allFileNames)
@@ -606,15 +612,11 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult PostEvent()
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             return View();
         }
 
         public ActionResult PostEvent([Bind(Include = "Id,EventDiscription,Date,StartTime,EndTime,Location")] Event Event)
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             if (ModelState.IsValid)
             {
                 db.Events.Add(Event);
@@ -625,8 +627,6 @@ namespace Resume_Portal.Controllers
 
         public ActionResult AllEvents()
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             var events = db.Events.ToList().OrderByDescending(x => x.Date).ToList();
             if (events == null)
             {
@@ -637,7 +637,6 @@ namespace Resume_Portal.Controllers
 
         public ActionResult Participate(int? eventId)
         {
-
             if (eventId == null)
             {
                 return HttpNotFound();
@@ -649,8 +648,6 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             string uId = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uId);
-
             if (uId == "")
             {
                 return HttpNotFound();
@@ -677,8 +674,6 @@ namespace Resume_Portal.Controllers
         /// 
         public ActionResult StudentParticipation(int? id)
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
             // Based on student profile id all event participated will be added.
             StudentProfile studentProfile = db.StudentProfiles.Find(id);
             if (studentProfile == null)
@@ -697,15 +692,14 @@ namespace Resume_Portal.Controllers
         }
 
 
+
+
         /// <summary>
         /// A list of student partial profiles who matches any skills selected or searched. This will only sear in studentprofile skills properties. Not in resume.
         /// </summary>
         /// <returns></returns>
         public ActionResult FindBySkills()
         {
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
-
             return View();
         }
 
