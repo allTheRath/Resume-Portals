@@ -269,6 +269,7 @@
     </Content>
     <Content Include="Content\ListProfile.css" />
     <Content Include="Content\Profile.css" />
+    <Content Include="Content\profileStyle.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\styles\bootstrap-4.1.2\bootstrap.min.css" />
     <Content Include="Content\styles\bootstrap-4.1.2\bootstrap.min.js" />
@@ -560,13 +561,14 @@
     <Content Include="Views\Student\About.cshtml" />
     <Content Include="Views\Admin\AdminNav.cshtml" />
     <Content Include="Views\Home\NavBar.cshtml" />
-    <Content Include="Views\Student\ProfileView.cshtml" />
     <Content Include="Views\Employer\EmployerDetails.cshtml" />
     <Content Include="Views\Instructor\InstructorDetails.cshtml" />
     <Content Include="Views\Student\StudentDetails.cshtml" />
     <Content Include="Views\Instructor\ProfileView.cshtml" />
     <Content Include="Views\Employer\ProfileView.cshtml" />
     <Content Include="Views\Home\StudentProfile.cshtml" />
+    <Content Include="Views\Student\ProfileView.cshtml" />
+    <Content Include="Views\Student\KeeganProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
