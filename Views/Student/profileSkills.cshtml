@@ -4,24 +4,33 @@
 <p>
     @Html.ActionLink("Add Skill", "AddSkill")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Skill Name")
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.Skills)
-    {
+@if (Model.Skills.Count > 0)
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SkillName)
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "DeleteSkill", new { id = item.Id })
-            </td>
+            <th>
+                @Html.DisplayName("Skill Name")
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model.Skills)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SkillName)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "DeleteSkill", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <div class="empty_Sub">
+        <p>User has not selected any skills</p>
+    </div>
+}
