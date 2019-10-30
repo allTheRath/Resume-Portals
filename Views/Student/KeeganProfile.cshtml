@@ -6,7 +6,9 @@
 }
 
 <main class="profile_container">
-    <h3 class="description_title">Description</h3>
+    <h3 class="Email_title">
+        @Html.DisplayFor(model => model.ProfessionalEmail)
+    </h3>
     <div class="Card">
         <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
             <div class="image-ctn">
@@ -57,14 +59,24 @@
 
 
     <section class="content">
-        <h3 class="Email_title">
-            @Html.DisplayFor(model => model.ProfessionalEmail)
-        </h3>
         <div class="description">
-
+            <h3 class="description_title">Description</h3>
             <div>
                 @Html.DisplayFor(model => Model.AboutMe)
             </div>
+        </div>
+        <div class="sub_Content">
+            <ul class="links">
+                <li class="@ViewBag.Skills">@Html.ActionLink("Skills", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileSkills" })</li>
+                <li class="@ViewBag.Education">@Html.ActionLink("Education", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileEducation" })</li>
+                <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileExperince" })</li>
+            </ul>
+            @if (ViewBag.url != null)
+            {
+                <div class="Sub_ctn">
+                    @Html.Partial((string)ViewBag.url, Model)
+                </div>
+            }
         </div>
     </section>
 

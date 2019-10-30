@@ -1,11 +1,13 @@
 ﻿@model Resume_Portal.Models.CompleteStudentInfo
+
 @{
     Layout = null;
 }
 
-<h3>
-    @Html.ActionLink("Add Experience", "AddExperience")
-</h3>
+
+<p>
+    @Html.ActionLink("Add Education", "AddEducation")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -15,15 +17,15 @@
             @Html.DisplayName("Discription")
         </th>
         <th>
-            @Html.DisplayNameFor("Start")
+            @Html.DisplayName("Start")
         </th>
         <th>
-            @Html.DisplayNameFor("End")
+            @Html.DisplayName("End")
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Educations)
     {
         <tr>
             <td>
@@ -39,9 +41,11 @@
                 @Html.DisplayFor(modelItem => item.End)
             </td>
             <td>
-                @Html.ActionLink("Delete", "DeleteExperience", new { id = item.Id })
+                @Html.ActionLink("Delete", "DeleteEducation", new { id = item.Id })
             </td>
         </tr>
     }
 
 </table>
+</body>
+</html>
