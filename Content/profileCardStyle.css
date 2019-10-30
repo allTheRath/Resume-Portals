@@ -1,12 +1,11 @@
-.general_info
-{
-	width: 473px;
-	height: 100%;
-  background: #100f3a;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #a5a5a5;
+.general_info {
+    width: 473px;
+    height: 100%;
+    background-color: #005e5d;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #a5a5a5;
 }
 .general_info_image
 {
