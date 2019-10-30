@@ -1,4 +1,4 @@
-﻿@model Resume_Portal.Models.CompleteStudentInfo
+﻿@model Resume_Portal.Models.EmployerProfileViewModels
 @section Styles
     {
     <link rel="stylesheet" type="text/css" href="~/Content/profileCardStyle.css" />
@@ -7,13 +7,13 @@
 
 <main class="profile_container">
     <h3 class="Email_title">
-        @Html.DisplayFor(model => model.ProfessionalEmail)
+        @Html.DisplayFor(model => model.EmployerProfile.ContactUs)
     </h3>
     <div class="Card">
         <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
             <div class="image-ctn">
                 <div class="general_info_image">
-                    <div class="background_image" style="background-image:url(@Model.ProfilePicUrl)"></div>
+                    <div class="background_image" style="background-image:url(@Model.profile.ProfilePic)"></div>
                     <div class="header_button_2">
                         <a href="#">Available for freelance work</a>
                         <div class="d-flex flex-column align-items-center justify-content-center"><img src="images/download.png" alt=""></div>
@@ -26,19 +26,19 @@
                     <ul class="general_info_list">
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_1.png" alt=""></div>
-                            <div class="general_info_text">Name: <span>@Html.DisplayFor(model => Model.MyName)</span></div>
+                            <div class="general_info_text">Name: <span>@Html.DisplayFor(model => Model.profile.UserName)</span></div>
                         </li>
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_2.png" alt=""></div>
-                            <div class="general_info_text">Description: <span>@Html.DisplayFor(model => Model.SortDiscription)</span></div>
+                            <div class="general_info_text">Description: <span>@Html.DisplayFor(model => Model.profile.ShortDiscription)</span></div>
                         </li>
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
-                            <div class="general_info_text"><a href="mailto:@Model.ProfessionalEmail?subject=Job_Inquiry">@Model.ProfessionalEmail</a></div>
+                            <div class="general_info_text"><a href="mailto:@Model.profile.Email?subject=Job_Inquiry">@Model.profile.Email</a></div>
                         </li>
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
-                            <div class="general_info_text"></div>
+                            <div class="general_info_text">@Html.ActionLink("Profile", "instructorProfile", new { userId = Model.EmployerProfile.UserId })</div>
                         </li>
                     </ul>
                     <!-- Social -->
@@ -58,14 +58,14 @@
         <div class="description">
             <h3 class="description_title">Description</h3>
             <div>
-                @Html.DisplayFor(model => Model.AboutMe)
+                @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
             </div>
         </div>
         <div class="sub_Content">
             <ul class="links">
-                <li class="@ViewBag.Skills">@Html.ActionLink("Skills", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileSkills" })</li>
-                <li class="@ViewBag.Education">@Html.ActionLink("Education", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileEducation" })</li>
-                <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileExperince" })</li>
+                <li class="@ViewBag.Skills">@Html.ActionLink("skills", "KeeganProfile", new { userId = Model.EmployerProfile.UserId, subContentUrl = "profileSkills" })</li>
+                <li class="@ViewBag.Education">@Html.ActionLink("Education", "KeeganProfile", new { userId = Model.EmployerProfile.UserId, subContentUrl = "profileEducation" })</li>
+                <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "KeeganProfile", new { userId = Model.EmployerProfile.UserId, subContentUrl = "profileExperince" })</li>
             </ul>
             @if (ViewBag.url != null)
             {
