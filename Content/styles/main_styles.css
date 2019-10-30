@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 /******************************
@@ -571,7 +571,7 @@ section
 .loader_container
 {
 	width: 25%;
-	height: 265px;
+	/*height: 265px;*/
 	float: left;
 	padding-bottom: 70px;
 }

@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /* CSS Document */
 
 /******************************
@@ -36,7 +36,7 @@
 	}
 	.loader_container
 	{
-		width: 50%;
+		/*width: 50%;*/
 		margin-bottom: 60px;
 	}
 }
