@@ -122,7 +122,18 @@ namespace Resume_Portal.Controllers
             ViewBag.Role = "Employer";
             return RedirectToAction("Employer");
         }
-
+        public ActionResult KeeganEmployer(string id)
+        {
+            string uid = User.Identity.GetUserId();
+            if (!string.IsNullOrEmpty(id) && !string.IsNullOrWhiteSpace(id))
+            {
+                uid = id;
+            }
+            EmployerProfile employerProfile = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            Profile profile = db.Profiles.FirstOrDefault(p => p.UserId == uid);
+            EmployerProfileViewModels profileViewModel = new EmployerProfileViewModels { profile = profile, EmployerProfile = employerProfile };
+            return View(profileViewModel);
+        }
 
         /// <summary>
         /// Employer profile view ... Employer can edit the profile.  
