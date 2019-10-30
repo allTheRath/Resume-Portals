@@ -126,18 +126,7 @@ namespace Resume_Portal.Models
 
         public DateTime EndDate { get; set; }
 
-        public List<Skill> Skills { get; set; }
-
-        public List<Education> Educations { get; set; }
-
-        public List<Experiance> Experiances { get; set; }
-
-        public List<Activity> Activities { get; set; }
-        // All activities related to student.
-        public List<Attachment> Attachments { get; set; }
-
-        public List<Event> Volenteering { get; set; }
-
+       
     }
 
 

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Resume_Portal.Models.Experiance>
+@{
+    Layout = null;
+}
+
+
+@foreach (var item in Model)
+{
+    <div id="flex-ele" class="main_content">
+        <h4>
+            @Html.DisplayFor(modelItem => item.InstituteName)
+        </h4>
+        <h6>
+            @Html.DisplayFor(modelItem => item.Discription)
+        </h6>
+        <span>
+            Start Date @Html.DisplayFor(modelItem => item.Start)
+        </span>
+        <span>
+            End Date @Html.DisplayFor(modelItem => item.End)
+        </span>
+    </div>
+}

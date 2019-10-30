@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Resume_Portal.Models.Education>
+@{
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+    <div id="flex-ele" class="main_content">
+        <span class="span_img">
+            <h5>
+                @Html.DisplayFor(modelItem => item.InstituteName)
+            </h5>
+            <span>
+                @Html.DisplayFor(modelItem => item.Discription)
+            </span>
+        </span>
+        <span>
+            Started on @Html.DisplayFor(modelItem => item.Start)
+            till @Html.DisplayFor(modelItem => item.End).
+        </span>
+    </div>
+
+}

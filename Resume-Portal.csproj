@@ -240,6 +240,10 @@
     <Compile Include="Migrations\201910281730374_programimageurladded.Designer.cs">
       <DependentUpon>201910281730374_programimageurladded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910300248379_updatedNotifications.cs" />
+    <Compile Include="Migrations\201910300248379_updatedNotifications.Designer.cs">
+      <DependentUpon>201910300248379_updatedNotifications.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -567,6 +571,12 @@
     <Content Include="Views\Instructor\ProfileView.cshtml" />
     <Content Include="Views\Employer\ProfileView.cshtml" />
     <Content Include="Views\Home\StudentProfile.cshtml" />
+    <Content Include="Views\Home\RequestResume.cshtml" />
+    <Content Include="Views\Home\ViewExperience.cshtml" />
+    <Content Include="Views\Home\ViewSkills.cshtml" />
+    <Content Include="Views\Home\ViewEducation.cshtml" />
+    <Content Include="Views\Home\ViewActivities.cshtml" />
+    <Content Include="Views\Home\SelectProgramForAccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
@@ -635,6 +645,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910281730374_programimageurladded.resx">
       <DependentUpon>201910281730374_programimageurladded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910300248379_updatedNotifications.resx">
+      <DependentUpon>201910300248379_updatedNotifications.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

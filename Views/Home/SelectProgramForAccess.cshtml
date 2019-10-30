@@ -1,0 +1,23 @@
+﻿
+    <h4>@ViewBag.Message </h4>
+@using (Html.BeginForm("SelectProgramForAccess", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <span class="form-horizontal">
+        <span class="form-group">
+            <span class="col-md-10">
+                @Html.DropDownList("Id", new SelectList(@ViewBag.ProgramId, "Id", "Name"), htmlAttributes: new { @class = "form-control inlineBlock" })
+                <input type="submit" value="Students" class="leftfloat btn btn-default" />
+            </span>
+        </span>
+    </span>
+}
+
+<style>
+    .inlineBlock {
+        display: inline-block !important;
+    }
+</style>
+
+

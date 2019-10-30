@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Resume_Portal.Models.Skill>
+@{
+    Layout = null;
+}
+
+<div id="flex-ele" class="main_content">
+    <div>
+        <span>
+            My Skills
+
+        </span>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <span>
+            @Html.DisplayFor(modelItem => item.SkillName)
+        </span>
+    }
+</div>
+

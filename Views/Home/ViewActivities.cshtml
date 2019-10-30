@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Resume_Portal.Models.Activity>
+@{
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+    <div id="flex-ele" class="main_content">
+        <span class="span_img">
+            <h5>
+                @Html.DisplayFor(modelItem => item.ActivityType)
+            </h5>
+            <span>
+                @Html.DisplayFor(modelItem => item.Discription)
+            </span>
+        </span>
+        <img class="img wd" src="@item.ImageUrl" />
+    </div>
+}

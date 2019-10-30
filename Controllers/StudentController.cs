@@ -152,7 +152,7 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
-        [ActionName("StudentDetails")]
+
         public ActionResult StudentProfile()
         {
             if (!User.Identity.IsAuthenticated)
@@ -477,7 +477,7 @@ namespace Resume_Portal.Controllers
             db.Educations.Remove(education);
             db.SaveChanges();
             ViewBag.Role = "Student";
-            return RedirectToAction("Student");
+            return RedirectToAction("StudentProfile");
         }
 
 

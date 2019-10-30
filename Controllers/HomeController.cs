@@ -71,69 +71,69 @@ namespace Resume_Portal.Controllers
         }
 
 
-        public ActionResult SelectNavBar()
-        {
-            string userId = User.Identity.GetUserId();
-            var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
-            if (profile.Role == "Admin")
-            {
-                ViewBag.Role = "Admin";
-            }
-            else if (profile.Role == "Student")
-            {
-                ViewBag.Role = "Student";
-            }
-            else if (profile.Role == "Instructor")
-            {
-                ViewBag.Role = "Instructor";
-            }
-            else if (profile.Role == "Employer")
-            {
-                ViewBag.Role = "Employer";
-            }
-            else
-            {
-                ViewBag.Role = null;
-            }
-            return View();
-        }
+        //public ActionResult SelectNavBar()
+        //{
+        //    string userId = User.Identity.GetUserId();
+        //    var profile = db.Profiles.Where(p => p.UserId == userId).FirstOrDefault();
+        //    if (profile.Role == "Admin")
+        //    {
+        //        ViewBag.Role = "Admin";
+        //    }
+        //    else if (profile.Role == "Student")
+        //    {
+        //        ViewBag.Role = "Student";
+        //    }
+        //    else if (profile.Role == "Instructor")
+        //    {
+        //        ViewBag.Role = "Instructor";
+        //    }
+        //    else if (profile.Role == "Employer")
+        //    {
+        //        ViewBag.Role = "Employer";
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Role = null;
+        //    }
+        //    return View();
+        //}
 
-        public ActionResult SelectProfile(string selectedUserId)
-        {
-            string userId = User.Identity.GetUserId();
-            if (!string.IsNullOrEmpty(selectedUserId))
-            {
-                userId = selectedUserId;
-            }
-            if (userManager.IsInRole(userId, "Student"))
-            {
-                var profile = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
-                if (profile == null)
-                {
-                    return HttpNotFound();
-                }
-                return RedirectToAction("StudentDetails", "Student", new { userId = userId });
-            }
-            else if (userManager.IsInRole(userId, "Instructor"))
-            {
-                var profile = db.InstructorProfiles.FirstOrDefault(s => s.UserId == userId);
-                if (profile == null)
-                {
-                    return HttpNotFound();
-                }
-                return RedirectToAction("StudentDetails", "Student", new { userId = userId });
-            }
-            else if (userManager.IsInRole(userId, "Employer"))
-            {
-                var profile = db.EmployerProfiles.FirstOrDefault(s => s.UserId == userId);
-                if (profile == null)
-                {
-                    return HttpNotFound();
-                }
-                return RedirectToAction("EmployerDetails", "Employer", new { userId = userId });
-            }
-            return View();
-        }
+        //public ActionResult SelectProfile(string selectedUserId)
+        //{
+        //    string userId = User.Identity.GetUserId();
+        //    if (!string.IsNullOrEmpty(selectedUserId))
+        //    {
+        //        userId = selectedUserId;
+        //    }
+        //    if (userManager.IsInRole(userId, "Student"))
+        //    {
+        //        var profile = db.StudentProfiles.FirstOrDefault(s => s.UserId == userId);
+        //        if (profile == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        return RedirectToAction("StudentDetails", "Student", new { userId = userId });
+        //    }
+        //    else if (userManager.IsInRole(userId, "Instructor"))
+        //    {
+        //        var profile = db.InstructorProfiles.FirstOrDefault(s => s.UserId == userId);
+        //        if (profile == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        return RedirectToAction("StudentDetails", "Student", new { userId = userId });
+        //    }
+        //    else if (userManager.IsInRole(userId, "Employer"))
+        //    {
+        //        var profile = db.EmployerProfiles.FirstOrDefault(s => s.UserId == userId);
+        //        if (profile == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+        //        return RedirectToAction("EmployerDetails", "Employer", new { userId = userId });
+        //    }
+        //    return View();
+        //}
 
         public ActionResult NavBar()
         {
@@ -170,7 +170,6 @@ namespace Resume_Portal.Controllers
 
 
 
-
         public class ProgramSelect
         {
             public int Id { get; set; }
@@ -190,6 +189,7 @@ namespace Resume_Portal.Controllers
             ViewBag.ProgramId = programSelects;
 
             string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
 
             return View();
         }
@@ -214,70 +214,145 @@ namespace Resume_Portal.Controllers
             }
 
             string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
 
             return RedirectToAction("AllStudents", new { Id = Id });
         }
 
-
-        public ActionResult StudentProfile(string id)
+        public ActionResult SelectProgramForAccess()
         {
-            var profile = db.Profiles.Where(p => p.UserId == id).FirstOrDefault();
+            var allProgramNameId = db.Programs.ToList();
+            List<ProgramSelect> programSelects = new List<ProgramSelect>();
+            foreach (var p in allProgramNameId)
+            {
+                ProgramSelect programSelect = new ProgramSelect();
+                programSelect.Id = p.Id;
+                programSelect.Name = p.Name;
+                programSelects.Add(programSelect);
+            }
+            ViewBag.ProgramId = programSelects;
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SelectProgramForAccess(int Id)
+        {
+
+
+            string userid = User.Identity.GetUserId();
+
+            var allProgramNameId = db.Programs.ToList();
+            List<ProgramSelect> programSelects = new List<ProgramSelect>();
+            foreach (var p in allProgramNameId)
+            {
+                ProgramSelect programSelect = new ProgramSelect();
+                programSelect.Id = p.Id;
+                programSelect.Name = p.Name;
+                programSelects.Add(programSelect);
+            }
+            ViewBag.ProgramId = programSelects;
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+
+            var isUserExist = db.ProgramUsers.Where(x => x.UserId == userid).FirstOrDefault();
+            if (isUserExist != null)
+            {
+                ViewBag.Message = "You are already in a program. Contact authority for change.";
+                return View();
+            }
+
+            Program prog = db.Programs.Find(Id);
+            ProgramUsers programUser = new ProgramUsers();
+            programUser.UserId = userid;
+            programUser.ProgramId = Id;
+            db.ProgramUsers.Add(programUser);
+            db.SaveChanges();
+            ViewBag.Message = "You have been added to " + prog.Name;
+            return View();
+        }
+
+
+
+        public ActionResult StudentProfile(int? id)
+        {
+            var profile = db.Profiles.Find(id);
             if (profile == null)
             {
                 return HttpNotFound();
             }
-            var CompleteProfile = db.StudentProfiles.Where(x => x.UserId == id).FirstOrDefault();
+            var CompleteProfile = db.StudentProfiles.Where(x => x.UserId == profile.UserId).FirstOrDefault();
 
             CompleteStudentInfo completeStudent = new CompleteStudentInfo();
             completeStudent.AboutMe = CompleteProfile.AboutMe;
-            completeStudent.Activities = db.Activities.Where(x => x.UserId == id).ToList();
-            if (completeStudent.Activities == null)
-            {
-                completeStudent.Activities = new List<Activity>();
-            }
-            completeStudent.Attachments = db.Attachments.Where(x => x.StudentId == id).ToList();
-            if (completeStudent.Attachments == null)
-            {
-                completeStudent.Attachments = new List<Attachment>();
-            }
             completeStudent.ContactInfo = CompleteProfile.ContactInfo;
-            completeStudent.Educations = db.Educations.Where(x => x.UserId == id).ToList();
-            if (completeStudent.Educations == null)
-            {
-                completeStudent.Educations = new List<Education>();
-            }
             completeStudent.EndDate = CompleteProfile.EndDate;
-            completeStudent.Experiances = db.Experiances.Where(x => x.UserId == id).ToList();
-            if (completeStudent.Experiances == null)
-            {
-                completeStudent.Experiances = new List<Experiance>();
-            }
-            completeStudent.Skills = db.Skills.Where(x => x.UserId == id).ToList();
-            if (completeStudent.Skills == null)
-            {
-                completeStudent.Skills = new List<Skill>();
-            }
             completeStudent.ProfileId = CompleteProfile.Id;
             completeStudent.MyName = CompleteProfile.MyName;
             completeStudent.OccupationName = CompleteProfile.OccupationName;
             completeStudent.ProfessionalEmail = CompleteProfile.ProfessionalEmail;
             completeStudent.ProfilePicUrl = profile.ProfilePic;
             completeStudent.SemesterNumber = CompleteProfile.SemesterNumber;
-            List<Event> Valentearings = new List<Event>();
-            var eventIds = db.EventParticipatedStudents.Where(x => x.Student_profileId == CompleteProfile.Id).ToList().Select(x => x.Event_Id);
-            if (eventIds != null)
-            {
-                foreach (var eId in eventIds)
-                {
-                    Event e = db.Events.Find(eId);
-                    Valentearings.Add(e);
-                }
-            }
-            completeStudent.Volenteering = Valentearings;
             completeStudent.SortDiscription = profile.ShortDiscription;
-            completeStudent.StudentId = id;
+            completeStudent.StudentId = profile.UserId;
 
             return View(completeStudent);
+        }
+
+        public ActionResult ViewExperience(int? id)
+        {
+            string userid = db.StudentProfiles.Find(id).UserId;
+
+            var experiances = db.Experiances.ToList().Where(x => x.UserId == userid).ToList();
+            if (experiances == null)
+            {
+                experiances = new List<Experiance>();
+            }
+
+            return View(experiances);
+        }
+
+        public ActionResult ViewSkills(int? id)
+        {
+            string userid = db.StudentProfiles.Find(id).UserId;
+
+            var skills = db.Skills.ToList().Where(x => x.UserId == userid).ToList();
+            if (skills == null)
+            {
+                skills = new List<Skill>();
+            }
+
+            return View(skills);
+        }
+
+        public ActionResult ViewEducation(int? id)
+        {
+            string userid = db.StudentProfiles.Find(id).UserId;
+
+            var educations = db.Educations.ToList().Where(x => x.UserId == userid).ToList();
+            if (educations == null)
+            {
+                educations = new List<Education>();
+            }
+
+            return View(educations);
+        }
+
+        public ActionResult ViewActivities(int? id)
+        {
+            string userid = db.StudentProfiles.Find(id).UserId;
+
+            var activities = db.Activities.ToList().Where(x => x.UserId == userid).ToList();
+            if (activities == null)
+            {
+                activities = new List<Activity>();
+            }
+
+            return View(activities);
         }
 
         // Below are the navigation bar for individual users.
@@ -312,12 +387,6 @@ namespace Resume_Portal.Controllers
 
             return View(job);
         }
-
-
-
-
-
-
 
         // Below Views are common for more then one role.
         //Ex: Admin ,instructor and Employer can see list of student with few details of students. 
@@ -483,6 +552,16 @@ namespace Resume_Portal.Controllers
             ViewBag.Role = RoleHandler.GetUserRole(userid);
 
             return View(jobs);
+        }
+
+        public ActionResult RequestResume(string id)
+        {
+            NotifyStudent notifyStudent = new NotifyStudent();
+            notifyStudent.studentId = id;
+            notifyStudent.EmployerProfileId = User.Identity.GetUserId();
+            notifyStudent.RequestedOn = DateTime.Now;
+            db.NotifyStudents.Add(notifyStudent);
+            return View();
         }
 
         public ActionResult UploadResume()
@@ -846,18 +925,6 @@ namespace Resume_Portal.Controllers
             ViewBag.Role = RoleHandler.GetUserRole(uid);
 
             return View(allEventsParticipated);
-        }
-
-
-
-
-        /// <summary>
-        /// A list of student partial profiles who matches any skills selected or searched. This will only sear in studentprofile skills properties. Not in resume.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult FindBySkills()
-        {
-            return View();
         }
 
 

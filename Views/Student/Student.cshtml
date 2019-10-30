@@ -1,7 +1,10 @@
 ﻿@model Resume_Portal.Models.Profile
 <img src="@ViewBag.ProfilePic" class="profilepic" />
 <span>
-    @Html.ActionLink("Update Pic","UpdateProfilePic")
+    @Html.ActionLink("Update Pic", "UpdateProfilePic")
+</span>
+<span>
+    @Html.ActionLink("Register in Program", "SelectProgramForAccess", "Home")
 </span>
 <div>
     <dl class="dl-horizontal">
@@ -41,5 +44,5 @@
     @Html.ActionLink("Update Resume", "UploadMyResume")
 </span>
 <span>
-    @Html.ActionLink("Download Resume", "Download",new { target = "_blank" })
+    @Html.ActionLink("Download Resume", "Download", new { target = "_blank" })
 </span>

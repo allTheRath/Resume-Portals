@@ -18,6 +18,8 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
+
+
         /// <summary>
         /// Admin Home Page
         /// </summary>
