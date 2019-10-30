@@ -8,9 +8,8 @@
 <main class="profile_container">
     <h3 class="Email_title">
         @Html.DisplayFor(model => model.ProfessionalEmail)
-        Keegan Hasbeek
     </h3>
-    <div class="ProfileCard">
+    <div class="Card">
         <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
             <div class="image-ctn">
                 <div class="general_info_image">
@@ -59,42 +58,27 @@
 
 
 
-    <section class="Profilecontent">
-        <div class="Profiledescription">
-            <h3 class="Profiledescription_title">Description</h3>
+    <section class="content">
+        <div class="description">
+            <h3 class="description_title">Description</h3>
             <div>
                 @Html.DisplayFor(model => Model.AboutMe)
             </div>
-            <div class="end-description">
-                ksfjskldhfslkjbfskalbfLJBFlu aslifasdliufdSLIUFALFJBALF ASDIKFGA SIFJBASD IKUGFA IULFASKUDIFGKADGFKAI GAFIKGF KIJSDGF KIASG FKSIG KJH BFASDHJK GFSDHJ FSHJKFBASKDJHF AKSHJDFBASDKHFASDKFHGSD KFJHASBDF YKHSB H
-                SD HFISAD FHKIAUSDHF KUISDAFH KASFD HKFH BASKDI GASKHJFBASDKHJFBSDJHKFAFKASHD BKYSFA BASDFKJHHBSDJKHBASDKHFJBASDHJKFA BHJDSBF KHJSDAFBSDHJFBADSKHFBweoufgaweliugbewlkfbsdljkfbsdfliuasbdfljsetaewlkrnaljk kej gwekj bf
-                ASiku aGIKSDBFKjlewf nljHR JKFNFKJWGT JKAEWBGFEWIKHGDAKHJASBRIKAVHSFhkqwvfiqeWHVFKAshvrQHSDVaHIHRWGwqajkfbL KfasfkjhsfijbSf,kjEbfkjBfjikesbfgjkbsedgfkjbSDlgzbeslk;jvbeiluvgfbEWjvb;ewoUFHewlkFHIEWOHFNKLSDHFOIHZSDNGL
-                KJZSHPDGLHBGHAEW;KLGBwe;op8fheWLKFHWEOIFHLKSDHGOI
-            </div>
         </div>
-        <div class="sub-content">
+        <div class="sub_Content">
             <ul class="links">
-                <li>
-                    <a href="#">Suck</a>
-                </li>
-                <li>
-                    <a href="#">My</a>
-                </li>
-                <li>
-                    <a href="#">Dick</a>
-                </li>
+                <li class="@ViewBag.Skills">@Html.ActionLink("Skills", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileSkills" })</li>
+                <li class="@ViewBag.Education">@Html.ActionLink("Education", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileEducation" })</li>
+                <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileExperince" })</li>
             </ul>
-            <div class="Sub_ctn">
-                <div class="skill-ctn">
-                    <h4 class="skills"><strong>Suck</strong></h4>
+            @if (ViewBag.url != null)
+            {
+                <div class="Sub_ctn">
+                    @Html.Partial((string)ViewBag.url, Model)
                 </div>
-                <div class="skill-ctn">
-                    <h4 class="skills"><strong>My</strong></h4>
-                </div>
-                <div class="skill-ctn">
-                    <h4 class="skills"><strong>Dick</strong></h4>
-                </div>
-            </div>
+            }
         </div>
     </section>
+
+
 </main>
