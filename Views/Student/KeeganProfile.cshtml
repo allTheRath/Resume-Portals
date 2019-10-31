@@ -47,6 +47,8 @@
                             </li>
                         }
                     </ul>
+                    
+
                     <!-- Social -->
                     @*<div class="social_container">
             <ul class="d-flex flex-row align-items-start justify-content-start">
@@ -61,24 +63,155 @@
         </div>
     </div>
     <section class="content">
-        <div class="description">
-            <h3 class="description_title">Description</h3>
-            <div>
-                @Html.DisplayFor(model => Model.AboutMe)
-            </div>
-        </div>
-        <div class="sub_Content">
-            <ul class="links">
-                <li class="@ViewBag.Skills">@Html.ActionLink("Skills", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileSkills" })</li>
-                <li class="@ViewBag.Education">@Html.ActionLink("Education", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileEducation" })</li>
-                <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileExperince" })</li>
-            </ul>
-            @if (ViewBag.url != null)
-            {
-                <div class="Sub_ctn">
-                    @Html.Partial((string)ViewBag.url, Model)
+        
+        <div class="scroll_controller">
+            <div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
                 </div>
-            }
+            </div>
+            <div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div>
+            <div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div>
+            <div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div>
+            <div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div><div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div>
+            <div class="sub_Content">
+                <ul class="links">
+                    <li class="@ViewBag.Skills">@Html.ActionLink("Skills", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileSkills" })</li>
+                    <li class="@ViewBag.Education">@Html.ActionLink("Education", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileEducation" })</li>
+                    <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "KeeganProfile", new { userId = Model.StudentId, subContentUrl = "profileExperince" })</li>
+                </ul>
+                @if (ViewBag.url != null)
+                {
+                    <div class="Sub_ctn">
+
+                        @Html.Partial((string)ViewBag.url, Model)
+                    </div>
+                }
+            </div>
+
         </div>
+
+            
     </section>
 </main>

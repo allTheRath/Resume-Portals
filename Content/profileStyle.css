@@ -50,6 +50,7 @@
     flex-flow: column wrap;
     justify-content: space-around;
     width: 50%;
+    
 }
 
 .links {
@@ -66,3 +67,12 @@
         background: darkseagreen;
         border-radius: 10px
     }
+
+
+.scroll_controller {
+    
+    overflow: auto;
+    overflow-x: hidden;
+    border: 1px black;
+    background-color: #0000;
+}

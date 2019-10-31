@@ -139,6 +139,10 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
+        public ActionResult ScrollBar()
+        {
+            return View();
+        }
 
 
         public ActionResult ProfilePic()
