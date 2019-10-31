@@ -1,65 +1,50 @@
 ﻿@model IEnumerable<Resume_Portal.Models.Job>
 @Styles.Render("~/Content/Site.css")
+
 <main>
-    <div class="push-top">
-        <span>
-            Search for Company:
-        </span>
-        <input type="text" id="search" name="ser" />
-    </div>
-    <section class="section_content">
+    @if (ViewBag.Content == true)
+    {
+        <section class="section_content">
 
-        <div class="main_flex">
+            <div class="main_flex">
 
-            @foreach (var item in Model)
-            {
-                <div id="flex-ele" class="main_content @(@item.CompanyName.ToString())">
-                    <div>
-                        <h4>
-                            @Html.DisplayFor(modelItem => item.CompanyName)
-                        </h4>
-                        
-                    </div>
-                    <span class="img">
-                        @Html.DisplayFor(modelItem => item.PostedOn)
-                    </span>
-                    <h5>
-                        <span>
-                            For Students of @Html.DisplayFor(modelItem => item.Program.Name)
-                        </span> <span>
-                            @Html.ActionLink("JobDetails", "JobDetails", "Home", new { id = item.Id })
+                @foreach (var item in Model)
+                {
+                    <div id="flex-ele" class="main_content">
+                        <div>
+                            <h4>
+                                @Html.DisplayFor(modelItem => item.CompanyName)
+                            </h4>
+
+                        </div>
+                        <span class="img">
+                            @Html.DisplayFor(modelItem => item.PostedOn)
                         </span>
-                    </h5>
-                    <span class="span_img">
-                        @Html.DisplayFor(modelItem => item.JobDiscription)
-                    </span>
+                        <h5>
+                            <span>
+                                For Students of @Html.DisplayFor(modelItem => item.Program.Name)
+                            </span> <span>
+                                @Html.ActionLink("JobDetails", "JobDetails", new { jobId = @item.Id })
+                            </span>
+                            <span>@Html.ActionLink("Upload-Resume", "UploadResume", new { id = @item.Id })</span>
+                        </h5>
+                        <span class="span_img">
+                            @Html.DisplayFor(modelItem => item.JobDiscription)
+                        </span>
 
 
-                </div>
-            }
-
-        </div>
-    </section>
-</main>
-<script>
-    var n = document.querySelector("#search");
-    n.addEventListener("change", function (e) {
-        var x = document.querySelector("#search").value;
-        console.log(x);
-        var allPosibles = document.querySelectorAll("#flex-ele");
-        if (allPosibles != undefined) {
-            for (i = allPosibles.length - 1; i >= 0; i--) {
-                if (allPosibles[i].className.includes(x)) {
-                    console.log(allPosibles[i].className);
-                    allPosibles[i].scrollIntoView();
-                    break;
+                    </div>
                 }
-            }
-        }
-    });
 
-</script>
+            </div>
+        </section>
+    }
+    else
+    {
+        <h4>No jobs Posted.</h4>
+    }
 
+</main>
 <style>
     img {
         width: 20vw;

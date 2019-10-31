@@ -3,6 +3,7 @@
 <div>
     <h4>Job</h4>
     <hr />
+    <h4>@Html.ActionLink("Upload-Resume","UploadResume",new { id = Model.Id})</h4>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Program.Name)
@@ -27,8 +28,7 @@
         <dd>
             @Html.DisplayFor(model => model.JobDiscription)
         </dd>
-
-
+        
     </dl>
 </div>
 

@@ -1,47 +1,58 @@
 ﻿@model IEnumerable<Resume_Portal.Models.Job>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Program.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JobDiscription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Employer.ContactUs)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+@if (ViewBag.Jobs == true)
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Program.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobDiscription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employer.ContactUs)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Program.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobDiscription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employer.ContactUs)
+            </th>
+            <th> Apply! </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Program.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobDiscription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employer.ContactUs)
+                </td>
+                <td>@Html.ActionLink("Upload-Resume", "UploadResume", new { id = @item.Id })</td>
+
+            </tr>
+        }
+
+    </table>
+
+}
+else
+{
+    <h4>
+        There are no posted jobs for this program.
+    </h4>
+}

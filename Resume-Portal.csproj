@@ -178,6 +178,7 @@
     <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -243,6 +244,10 @@
     <Compile Include="Migrations\201910300248379_updatedNotifications.cs" />
     <Compile Include="Migrations\201910300248379_updatedNotifications.Designer.cs">
       <DependentUpon>201910300248379_updatedNotifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910302237353_boolForConfirmation.cs" />
+    <Compile Include="Migrations\201910302237353_boolForConfirmation.Designer.cs">
+      <DependentUpon>201910302237353_boolForConfirmation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -495,7 +500,7 @@
     <Content Include="Views\Home\ProgramDetails.cshtml" />
     <Content Include="Views\Home\AllPostedJobOfProgram.cshtml" />
     <Content Include="Views\Home\UploadResume.cshtml" />
-    <Content Include="Views\Home\AllResumeForJob.cshtml" />
+    <Content Include="Views\Employer\AllResumeForJob.cshtml" />
     <Content Include="Views\Home\ResumeHelp.cshtml" />
     <Content Include="Views\Home\AllResumeForHelp.cshtml" />
     <Content Include="Views\Student\AddActivity.cshtml" />
@@ -577,6 +582,15 @@
     <Content Include="Views\Home\ViewEducation.cshtml" />
     <Content Include="Views\Home\ViewActivities.cshtml" />
     <Content Include="Views\Home\SelectProgramForAccess.cshtml" />
+    <Content Include="Views\Employer\EditJob.cshtml" />
+    <Content Include="Views\Employer\DeleteJob.cshtml" />
+    <Content Include="Views\Home\EmployerProfile.cshtml" />
+    <Content Include="Views\Home\InstructorProfile.cshtml" />
+    <Content Include="Views\Home\StudentNotifications.cshtml" />
+    <Content Include="Views\Home\ApplyToRequestForResume.cshtml" />
+    <Content Include="Views\Home\ProcessResumeUpload.cshtml" />
+    <Content Include="Views\Employer\DownloadPostedResume.cshtml" />
+    <Content Include="Views\Employer\AllRequestedResume.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
@@ -586,6 +600,7 @@
     <Folder Include="Activity-Data\" />
     <Folder Include="bin\" />
     <Folder Include="Content\images\" />
+    <Folder Include="Employer-Requestd-Resume\" />
     <Folder Include="Posted-Job-Resume\" />
     <Folder Include="Resume-Help\" />
     <Folder Include="student-resume\" />
@@ -648,6 +663,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910300248379_updatedNotifications.resx">
       <DependentUpon>201910300248379_updatedNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910302237353_boolForConfirmation.resx">
+      <DependentUpon>201910302237353_boolForConfirmation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

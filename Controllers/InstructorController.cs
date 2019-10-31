@@ -208,7 +208,6 @@ namespace Resume_Portal.Controllers
             return View();
         }
 
-        [ActionName("InstructorDetails")]
         public ActionResult InstructorProfile()
         {
             if (!User.IsInRole("Instructor"))

@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Resume_Portal.Models.Profile>
+@Styles.Render("~/Content/Site.css")
+<main>
+    <section class="section_content">
+
+        <div class="main_flex">
+
+            @foreach (var item in Model)
+            {
+                <div id="flex-ele" class="main_content @(@item.UserName.ToString())">
+                    <div>
+                        <h4>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </h4>
+                    </div>
+                    <span>
+                        <img class="img wd" src="@item.ProfilePic" />
+                    </span>
+                    <h5>
+                        <span>
+                            @Html.ActionLink("Details", "EmployerProfile", new { id = @item.Id })
+                        </span><span>
+                            @Html.ActionLink("Posted-Jobs", "AllJobs", new { id = @item.Id })
+                        </span>
+                        <span>
+                            @Html.ActionLink("Apply!", "ApplyToRequestForResume", new { id = @item.Id })
+                        </span>
+                    </h5>
+                    <span class="span_img">
+                        @Html.DisplayFor(modelItem => item.ShortDiscription)
+                    </span>
+
+
+                </div>
+            }
+
+        </div>
+    </section>
+</main>
+
+<style>
+    img {
+        width: 20vw;
+    }
+
+    h5 {
+        color: forestgreen;
+    }
+
+    .push-top {
+        margin-top: 17%;
+        /* margin-left: 100px; */
+        text-align: end;
+        font-size: 100px;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        width: 100%;
+        color: #00a88d;
+        font-size: 20px;
+        font-weight: lighter;
+        letter-spacing: .06em;
+        margin-bottom: .5em;
+    }
+</style>
+
+<style>
+    .main-flex {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+    }
+
+    #flex-ele {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: 40%;
+        justify-content: space-evenly;
+    }
+
+    .img-container {
+        margin-right: 7px;
+        display: inline;
+    }
+
+    .img {
+        float: left;
+        margin-right: 4%;
+        border-radius: 70%;
+        overflow: hidden;
+        display: inline;
+        /*max-width: 100%;
+
+            overflow: hidden;
+            position: relative;*/
+        width: 100%;
+    }
+
+    .second {
+        float: left;
+        width: 40%;
+        display: inline;
+        margin-top: 2em;
+    }
+
+    .name {
+        color: #00a88d;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: .06em;
+        margin-bottom: .5em;
+        display: inline;
+    }
+
+    .discription {
+        margin-bottom: 1em;
+        text-align: start;
+        width: 200px;
+        display: inline;
+    }
+
+    .button {
+        position: relative;
+        /*padding: 9px 30px 8px 20px;*/
+        border: none;
+        border-width: 2px;
+        border-color: #bbd876;
+        border-style: solid;
+        border-width: 0 0 0 2px;
+        letter-spacing: .05em;
+        overflow: hidden;
+        transition: border-color .2s;
+        z-index: 0;
+        text-align: center;
+        font-size: 1.8vw;
+        background-color: beige;
+        color: forestgreen;
+        display: inline;
+    }
+</style>
+
+

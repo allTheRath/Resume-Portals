@@ -38,6 +38,14 @@ namespace Resume_Portal.Controllers
             }
             ViewBag.Role = "Student";
             ViewBag.ProfilePic = student.ProfilePic;
+            
+            //below is boiler plate for checking notifications.
+            var notifications = db.NotifyStudents.Where(x => x.studentId == userId).ToList();
+            if(notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
             //list of programs
             return View(student);
         }
@@ -51,6 +59,13 @@ namespace Resume_Portal.Controllers
 
             Profile profile = db.Profiles.Find(id);
 
+            //below is boiler plate for checking notifications.
+            var notifications = db.NotifyStudents.Where(x => x.studentId == profile.UserId && x.confirmed == false).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
             ViewBag.Role = "Student";
             return View(profile);
         }
@@ -119,6 +134,14 @@ namespace Resume_Portal.Controllers
             StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
             ViewBag.Role = "Student";
 
+            //below is boiler plate for checking notifications.
+            var notifications = db.NotifyStudents.Where(x => x.studentId == uid && x.confirmed == false).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(studentProfile);
         }
 
@@ -173,6 +196,14 @@ namespace Resume_Portal.Controllers
             {
                 ViewBag.ImageUrl = "/User-Profile-Pic/" + "blank" + "/" + "blankProfile" + ".png";
             }
+            //below is boiler plate for checking notifications.
+            var notifications = db.NotifyStudents.Where(x => x.studentId == uid && x.confirmed == false).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             ViewBag.Role = "Student";
             return View(studentProfile);
 

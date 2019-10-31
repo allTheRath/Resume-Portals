@@ -2,6 +2,7 @@
 using Resume_Portal.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -272,8 +273,149 @@ namespace Resume_Portal.Controllers
             {
                 jobs = new List<Job>();
             }
+            ViewBag.Role = "Employer";
 
             return View(jobs);
         }
+
+        // GET: Jobs/Edit/5
+        public ActionResult EditJob(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name", job.ProgramId);
+            return View(job);
+        }
+
+        // POST: Jobs/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditJob([Bind(Include = "Id,CompanyName,PostedOn,JobDiscription,ProgramId")] Job job)
+        {
+            job.EmployerId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                db.Entry(job).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("MyPostedJobs");
+            }
+            ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name", job.ProgramId);
+            return View(job);
+        }
+
+        // GET: Jobs/Delete/5
+        public ActionResult DeleteJob(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
+        public class FileWithPath
+        {
+            public string FileName { get; set; }
+            public string fileUrl { get; set; }
+        }
+
+        public ActionResult AllRequestedResume()
+        {
+            var profile = db.Profiles.Where(x => x.UserId == User.Identity.GetUserId()).FirstOrDefault();
+            bool exists = Directory.Exists(Server.MapPath("~/Employer-Requestd-Resume/" + profile.Id.ToString() + "/"));
+            if (exists == false)
+            {
+                return HttpNotFound();
+            }
+
+            var allFileNames = Directory.GetFiles(Server.MapPath("~/Employer-Requestd-Resume/" + profile.Id.ToString() + "/"));
+            List<FileWithPath> FileWithPath = new List<FileWithPath>();
+            foreach (var path in allFileNames)
+            {
+                FileWithPath filewithpathinstance = new FileWithPath();
+                filewithpathinstance.fileUrl = path;
+                filewithpathinstance.FileName = Path.GetFileName(path);
+                FileWithPath.Add(filewithpathinstance);
+            }
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(FileWithPath);
+        }
+
+        public ActionResult AllResumeForJob(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + id + "/"));
+            if (exists == false)
+            {
+                return HttpNotFound();
+            }
+
+            var allFileNames = Directory.GetFiles(Server.MapPath("~/Posted-Job-Resume/" + id + "/"));
+            List<FileWithPath> FileWithPath = new List<FileWithPath>();
+            foreach (var path in allFileNames)
+            {
+                FileWithPath filewithpathinstance = new FileWithPath();
+                filewithpathinstance.fileUrl = path;
+                filewithpathinstance.FileName = Path.GetFileName(path);
+                FileWithPath.Add(filewithpathinstance);
+            }
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(FileWithPath);
+        }
+
+        public ActionResult DownloadPostedResume(string fileName)
+        {
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+
+            if (Directory.Exists(fileName))
+            {
+                byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(fileName));
+                return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
+        }
+
+
+
+        // POST: Jobs/Delete/5
+        [HttpPost, ActionName("DeleteJob")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteJobConfirmed(int id)
+        {
+            Job job = db.Jobs.Find(id);
+            db.Jobs.Remove(job);
+            db.SaveChanges();
+            return RedirectToAction("MyPostedJobs");
+        }
+
+
     }
 }

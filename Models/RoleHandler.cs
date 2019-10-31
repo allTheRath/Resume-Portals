@@ -36,11 +36,67 @@ namespace Resume_Portal.Models
         public string GetUserRole(string userId)
         {
             var roles = userManager.GetRoles(userId);
-            if(roles == null)
+            if (roles == null)
             {
                 return "";
             }
             return roles[0];
+        }
+
+        public void RemoveUserFromProgram(int programId, string userId)
+        {
+            var programUser = db.ProgramUsers.Where(x => x.UserId == userId && x.ProgramId == programId).FirstOrDefault();
+            if (programUser != null)
+            {
+                db.ProgramUsers.Remove(programUser);
+                db.SaveChanges();
+            }
+        }
+
+        public void AddUserFromProgram(int programId, string userId)
+        {
+            var programUser = db.ProgramUsers.Where(x => x.UserId == userId && x.ProgramId == programId).FirstOrDefault();
+            if (programUser == null)
+            {
+                ProgramUsers newprogramUser = new ProgramUsers();
+                newprogramUser.UserId = userId;
+                newprogramUser.ProgramId = programId;
+                db.ProgramUsers.Add(newprogramUser);
+                db.SaveChanges();
+            }
+
+        }
+
+        public string GetAdminEmail()
+        {
+            string user = null;
+            foreach (var u in db.Users)
+            {
+                if (userManager.IsInRole(u.Id, "Admin"))
+                {
+                    user = u.Email;
+                }
+            }
+
+            return user;
+
+        }
+
+        public List<string> GetProgramInstuctorId(string studentId)
+        {
+            var program = db.ProgramUsers.Where(x => x.UserId == studentId).FirstOrDefault();
+            var allProgramUsers = db.ProgramUsers.Where(x => x.ProgramId == program.ProgramId).ToList();
+            List<string> instructorids = new List<string>();
+            foreach (var programuser in allProgramUsers)
+            {
+                if (userManager.IsInRole(programuser.UserId, "Instructor"))
+                {
+                    instructorids.Add(programuser.UserId);
+                }
+
+            }
+
+            return instructorids;
         }
 
         public void CreateFile(string filename)
@@ -148,7 +204,7 @@ namespace Resume_Portal.Models
             if (flag == true)
             {
                 NotifyAdmin notifyAdmin = db.NotifyAdmins.Where(x => x.UserId == userId).FirstOrDefault();
-                if(notifyAdmin != null)
+                if (notifyAdmin != null)
                 {
                     notifyAdmin.Resolved = true;
                     db.SaveChanges();

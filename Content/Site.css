@@ -499,3 +499,20 @@ a {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    color: #00a88d !important;
+    letter-spacing: .06em;
+    margin-bottom: .5em;
+    font-family: 'Roboto', sans-serif;
+}
+
+div, p, span, a {
+    font-family: 'Roboto', sans-serif;
+    color: #5b6770 !important;
+}
+
+a {
+    font-size: 1.2vw;
+    color: #00a88e !important;
+}

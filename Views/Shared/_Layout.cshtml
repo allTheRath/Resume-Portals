@@ -57,7 +57,11 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-
+                        @if (ViewBag.Notification != null && ViewBag.Notification == true)
+                        {
+                            <li>(@ViewBag.NotificationCount) @Html.ActionLink("Notification(+)", "AdminNotifications", "Home")</li>
+                        }
+                        <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
                         <li>@Html.ActionLink("Approve User", "AssignUsers", "Admin")</li>
                         <li>@Html.ActionLink("Unapprove User", "UnAssignUsers", "Admin")</li>
                         <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
@@ -82,9 +86,12 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        @if (ViewBag.Notification != null && ViewBag.Notification == true)
+                        {
+                        <li>@Html.ActionLink("Notification(+)", "EmployerNotifications", "Home") (@ViewBag.NotificationCount) </li>
+                        }
                         <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
                         <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
-                        <li>@Html.ActionLink("Students", "AllStudents", "Home")</li>
                         <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                         <li>@Html.ActionLink("Posted-Jobs", "MyPostedJobs", "Employer")</li>
                         <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
@@ -109,6 +116,11 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+                        @if (ViewBag.Notification != null && ViewBag.Notification == true)
+                        {
+                        <li>@Html.ActionLink("Notification(+)", "StudentNotifications", "Home") (@ViewBag.NotificationCount)</li>
+                        }
+                        <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
                         <li>@Html.ActionLink("Activities", "MyActivities", "Student")</li>
                         <li>@Html.ActionLink("ResumeHelp", "ResumeHelp", "Student")</li>
                         <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
@@ -136,6 +148,10 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
+                            @if (ViewBag.Notification != null && ViewBag.Notification == true)
+                            {
+                            <li>@Html.ActionLink("Notification(+)", "InstructorNotifications", "Home") (@ViewBag.NotificationCount)</li>
+                            }
                             <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
                             <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
                             <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>

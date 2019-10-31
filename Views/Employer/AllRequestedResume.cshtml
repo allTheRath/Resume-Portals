@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Resume_Portal.Controllers.EmployerController.FileWithPath>
+
+@foreach (var item in Model)
+{
+    <div>
+        <span>
+            @item.FileName
+        </span>
+        <span>
+            @Html.ActionLink("Download", "DownloadPostedResume", new { fileName = item.fileUrl }, new { target = "_blank" })
+        </span>
+
+    </div>
+}

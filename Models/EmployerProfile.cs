@@ -29,4 +29,16 @@ namespace Resume_Portal.Models
 
         public virtual ICollection<Job> PostedJobs { get; set; }
     }
+
+    public class RequestResumeUploadViewModel
+    {
+        public int EmployerId { get; set; }
+        [Required]
+        public string StudentEmail { get; set; }
+        public string CVFileName { get; set; }
+        [Required]
+        public string ResumeFileName { get; set; }
+        public DateTime UploadedOn { get; set; }
+    }
+
 }

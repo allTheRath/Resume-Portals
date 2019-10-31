@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -193,6 +191,7 @@ namespace Resume_Portal.Controllers
 
             return View();
         }
+        //done
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -218,7 +217,7 @@ namespace Resume_Portal.Controllers
 
             return RedirectToAction("AllStudents", new { Id = Id });
         }
-
+        //done
         public ActionResult SelectProgramForAccess()
         {
             var allProgramNameId = db.Programs.ToList();
@@ -237,13 +236,12 @@ namespace Resume_Portal.Controllers
 
             return View();
         }
+        //done Student needs to select a program only one program is available for student..
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SelectProgramForAccess(int Id)
         {
-
-
             string userid = User.Identity.GetUserId();
 
             var allProgramNameId = db.Programs.ToList();
@@ -262,7 +260,17 @@ namespace Resume_Portal.Controllers
             var isUserExist = db.ProgramUsers.Where(x => x.UserId == userid).FirstOrDefault();
             if (isUserExist != null)
             {
-                ViewBag.Message = "You are already in a program. Contact authority for change.";
+                var mail = RoleHandler.GetAdminEmail();
+                if (mail != null)
+                {
+                    ViewBag.Message = "You are already in a program. Contact " + mail + " for change.";
+
+                }
+                else
+                {
+                    ViewBag.Message = "You are already in a program. Contact an instructor for change.";
+
+                }
                 return View();
             }
 
@@ -275,7 +283,7 @@ namespace Resume_Portal.Controllers
             ViewBag.Message = "You have been added to " + prog.Name;
             return View();
         }
-
+        //done
 
 
         public ActionResult StudentProfile(int? id)
@@ -302,7 +310,35 @@ namespace Resume_Portal.Controllers
 
             return View(completeStudent);
         }
+        //done
 
+
+        public ActionResult EmployerProfile(int? id)
+        {
+            var profile = db.Profiles.Find(id);
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+
+            var employerProfile = db.EmployerProfiles.Where(x => x.UserId == profile.UserId).FirstOrDefault();
+            return View(employerProfile);
+        }
+        //done
+
+        public ActionResult InstructorProfile(int? id)
+        {
+            var profile = db.Profiles.Find(id);
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+            var instructorProfile = db.InstructorProfiles.Where(x => x.UserId == profile.UserId).FirstOrDefault();
+            return View(instructorProfile);
+        }
+        //done
+
+        //done css needed.
         public ActionResult ViewExperience(int? id)
         {
             string userid = db.StudentProfiles.Find(id).UserId;
@@ -315,6 +351,7 @@ namespace Resume_Portal.Controllers
 
             return View(experiances);
         }
+        //done
 
         public ActionResult ViewSkills(int? id)
         {
@@ -328,6 +365,7 @@ namespace Resume_Portal.Controllers
 
             return View(skills);
         }
+        //done
 
         public ActionResult ViewEducation(int? id)
         {
@@ -341,6 +379,7 @@ namespace Resume_Portal.Controllers
 
             return View(educations);
         }
+        //done
 
         public ActionResult ViewActivities(int? id)
         {
@@ -354,7 +393,225 @@ namespace Resume_Portal.Controllers
 
             return View(activities);
         }
+        //done
 
+
+        // Below Views are common for more then one role.
+        //Ex: Admin ,instructor and Employer can see list of student with few details of students. 
+        // Employer , admin and instructors can see this.
+
+        /// <summary>
+        /// List of all Employers 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllEmployers()
+        {
+            var allEmployerProfiles = db.Profiles.ToList().Where(x => x.Role == "Employer").ToList();
+
+            foreach (var i in allEmployerProfiles)
+            {
+                if (i.ProfilePic == null || i.ProfilePic == "")
+                {
+                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                }
+            }
+            db.SaveChanges();
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(allEmployerProfiles);
+        }
+        //done
+
+
+        /// <summary>
+        ///   List of all instructors
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllInstructors()
+        {
+            var allInstructors = db.Profiles.ToList().Where(x => x.Role == "Instructor").ToList();
+            string uid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(uid);
+            foreach (var i in allInstructors)
+            {
+                if (i.ProfilePic == null || i.ProfilePic == "")
+                {
+                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
+                }
+            }
+            db.SaveChanges();
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(allInstructors);
+        }
+        //done
+
+
+        /// <summary>
+        /// All students in College ,Seperated by programs.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllStudents(int? Id)
+        {
+
+            if (Id == null)
+            {
+                return HttpNotFound();
+            }
+            var allUserOfProgram = db.ProgramUsers.ToList().Where(x => x.ProgramId == Id).Select(x => x.UserId);
+            var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student" && allUserOfProgram.Contains(x.UserId)).ToList();
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(allStudents);
+        }
+        //done
+
+
+        /// <summary>
+        /// All programs offered :: List with images and headers. A link to program discription.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllPrograms()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var allPrograms = db.Programs.ToList();
+            if (allPrograms.Count() == 0)
+            {
+                allPrograms = new List<Program>();
+            }
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(allPrograms);
+        }
+
+        //done
+
+
+
+        /// <summary>
+        /// Program discription based on program id // A below view will be list of users/Instructors/Students/Employers in this program 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ProgramDetails(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Program program = db.Programs.Find(id);
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(program);
+        }
+        //done
+        /// <summary>
+        /// Student list by program id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult StudentInProgram(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Program program = db.Programs.Find(id);
+            var allProgramUsers = db.ProgramUsers.Where(x => x.ProgramId == id);
+            List<Profile> allStudents = new List<Profile>();
+            allProgramUsers.ToList().ForEach(user =>
+            {
+                var student = db.Profiles.Where(x => x.UserId == user.UserId && x.Role == "Student").FirstOrDefault();
+                if (student != null)
+                {
+                    allStudents.Add(student);
+                }
+            });
+            // all students in given program are retrived as list of profiles.
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+            ViewBag.Students = true;
+            if (allStudents.Count() == 0)
+            {
+                ViewBag.Students = false;
+            }
+            return View(allStudents);
+        }
+        //done
+
+        public ActionResult AllJobs(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var profile = db.Profiles.Find(id);
+            if (profile == null)
+            {
+                ViewBag.Content = false;
+            }
+            else
+            {
+
+                var jobs = db.Jobs.Where(x => x.EmployerId == profile.UserId).ToList();
+                if (jobs.Count > 0)
+                {
+                    ViewBag.Content = true;
+                }
+                else
+                {
+                    ViewBag.Content = false;
+                }
+                return View(jobs);
+            }
+
+            return View();
+        }
+        //done
+
+        public ActionResult AllPostedJobOfProgram(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var jobs = db.Jobs.ToList().Where(x => x.ProgramId == id);
+            if (jobs == null)
+            {
+                jobs = new List<Job>();
+            }
+
+            foreach (var job in jobs)
+            {
+                job.Employer = db.EmployerProfiles.Where(x => x.UserId == job.EmployerId).FirstOrDefault();
+            }
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+            ViewBag.Jobs = true;
+            if (jobs.Count() == 0)
+            {
+                ViewBag.Jobs = false;
+            }
+            return View(jobs);
+        }
+        //done
+
+        //MyPostedJobs needs header and delete option done
         // Below are the navigation bar for individual users.
         //Profile Card controller code.
         public ActionResult ProfileCard()
@@ -387,172 +644,8 @@ namespace Resume_Portal.Controllers
 
             return View(job);
         }
+        //done
 
-        // Below Views are common for more then one role.
-        //Ex: Admin ,instructor and Employer can see list of student with few details of students. 
-        // Employer , admin and instructors can see this.
-
-        /// <summary>
-        /// List of all Employers 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AllEmployers()
-        {
-            var allEmployerProfiles = db.Profiles.ToList().Where(x => x.Role == "Employer").ToList();
-
-            foreach (var i in allEmployerProfiles)
-            {
-                if (i.ProfilePic == null || i.ProfilePic == "")
-                {
-                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
-                }
-            }
-            db.SaveChanges();
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(allEmployerProfiles);
-        }
-
-        /// <summary>
-        ///   List of all instructors
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AllInstructors()
-        {
-            var allInstructors = db.Profiles.ToList().Where(x => x.Role == "Instructor").ToList();
-            string uid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(uid);
-            foreach (var i in allInstructors)
-            {
-                if (i.ProfilePic == null || i.ProfilePic == "")
-                {
-                    i.ProfilePic = "/User-Profile-Pic/blank/blankProfile.png";
-                }
-            }
-            db.SaveChanges();
-
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(allInstructors);
-        }
-
-        /// <summary>
-        /// All students in College ,Seperated by programs.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AllStudents(int? Id)
-        {
-
-            if (Id == null)
-            {
-                return HttpNotFound();
-            }
-            var allUserOfProgram = db.ProgramUsers.ToList().Where(x => x.ProgramId == Id).Select(x => x.UserId);
-            var allStudents = db.Profiles.ToList().Where(x => x.Role == "Student" && allUserOfProgram.Contains(x.UserId)).ToList();
-
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(allStudents);
-        }
-
-
-
-        /// <summary>
-        /// All programs offered :: List with images and headers. A link to program discription.
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult AllPrograms()
-        {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            var allPrograms = db.Programs.ToList();
-            if (allPrograms.Count() == 0)
-            {
-                allPrograms = new List<Program>();
-            }
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(allPrograms);
-        }
-
-        /// <summary>
-        /// Program discription based on program id // A below view will be list of users/Instructors/Students/Employers in this program 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult ProgramDetails(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-            Program program = db.Programs.Find(id);
-
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(program);
-        }
-
-        /// <summary>
-        /// Student list by program id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult StudentInProgram(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-            Program program = db.Programs.Find(id);
-            var allProgramUsers = db.ProgramUsers.Where(x => x.ProgramId == id);
-            List<Profile> allStudents = new List<Profile>();
-            allProgramUsers.ToList().ForEach(user =>
-            {
-                var student = db.Profiles.Where(x => x.UserId == user.UserId && x.Role == "Student").FirstOrDefault();
-                if (student != null)
-                {
-                    allStudents.Add(student);
-                }
-            });
-            // all students in given program are retrived as list of profiles.
-
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(allStudents);
-        }
-
-        public ActionResult AllPostedJobOfProgram(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            var jobs = db.Jobs.ToList().Where(x => x.ProgramId == id);
-            if (jobs == null)
-            {
-                jobs = new List<Job>();
-            }
-
-            foreach (var job in jobs)
-            {
-                job.Employer = db.EmployerProfiles.Find(job.EmployerId);
-            }
-
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
-            return View(jobs);
-        }
 
         public ActionResult RequestResume(string id)
         {
@@ -560,27 +653,166 @@ namespace Resume_Portal.Controllers
             notifyStudent.studentId = id;
             notifyStudent.EmployerProfileId = User.Identity.GetUserId();
             notifyStudent.RequestedOn = DateTime.Now;
+            notifyStudent.confirmed = false;
             db.NotifyStudents.Add(notifyStudent);
-            return View();
-        }
-
-        public ActionResult UploadResume()
-        {
+            db.SaveChanges();
+            var requestedStudentProfile = db.Profiles.Where(x => x.UserId == id).FirstOrDefault();
             string userid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(userid);
 
+            return View(requestedStudentProfile);
+        }
+        //done
+
+        public ActionResult StudentNotifications()
+        {
+            string userId = User.Identity.GetUserId();
+            var Employers = db.NotifyStudents.ToList().Where(x => x.studentId == userId && x.confirmed == false).ToList();
+            var EmployerIds = Employers.Select(x => x.EmployerProfileId).ToList();
+            var profilesOfEmployers = db.Profiles.Where(x => EmployerIds.Contains(x.UserId)).ToList();
+            return View(profilesOfEmployers);
+        }
+
+
+
+        public ActionResult ApplyToRequestForResume(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            //employer just Profile Id
+            TempData.Add(User.Identity.GetUserId(), id);
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProcessResumeUpload(HttpPostedFileBase resume, HttpPostedFileBase cv, string StudentEmail)
+        {
+            var employerProfileId = TempData[User.Identity.GetUserId()].ToString();
+            if (employerProfileId == null || StudentEmail == null)
+            {
+                return RedirectToAction("StudentNotifications");
+            }
+            string uploadedStatus = "";
+            NotifyEmployer notifyEmployer = new NotifyEmployer();
+            notifyEmployer.StudentProfileId = User.Identity.GetUserId();
+
+            if (resume.ContentLength > 0)
+            {
+
+                var fileextention = Path.GetExtension(resume.FileName).ToLower();
+
+                if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
+                {
+
+                    bool exists = Directory.Exists(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/"));
+                    if (!exists)
+                    {
+                        // if directory not exist then create it.
+                        Directory.CreateDirectory(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/"));
+                    }
+                    if (System.IO.File.Exists(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-resume" + fileextention)))
+                    {
+                        // if file exist then delete it.
+                        System.IO.File.Delete(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-resume" + fileextention));
+                    }
+                    var path = Path.Combine(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-resume" + fileextention));
+                    resume.SaveAs(path);
+                    uploadedStatus += "Resume Uploded";
+                    notifyEmployer.ResumeAvailable = true;
+
+                }
+
+                //Employer-Requestd-Resume
+            }
+
+            if (cv.ContentLength > 0)
+            {
+
+
+                var fileextention = Path.GetExtension(cv.FileName).ToLower();
+                if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
+                {
+
+                    bool exists = Directory.Exists(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/"));
+                    if (!exists)
+                    {
+                        // if directory not exist then create it.
+                        Directory.CreateDirectory(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/"));
+                    }
+                    if (System.IO.File.Exists(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-cv" + fileextention)))
+                    {
+                        // if file exist then delete it.
+                        System.IO.File.Delete(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-cv" + fileextention));
+                    }
+                    var path = Path.Combine(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-cv" + fileextention));
+                    cv.SaveAs(path);
+                    uploadedStatus += "and Cover letter Uploded";
+                }
+                if (uploadedStatus != "")
+                {
+
+
+                    var employerProfile = db.Profiles.Find(Convert.ToInt32(employerProfileId));
+                    uploadedStatus += "to " + employerProfile.Email;
+                    notifyEmployer.EmployerId = employerProfile.UserId;
+                    db.NotifyEmployers.Add(notifyEmployer);
+                    var instructorIds = RoleHandler.GetProgramInstuctorId(User.Identity.GetUserId());
+                    foreach (var inId in instructorIds)
+                    {
+                        NotifyInstructor notifyInstructor = new NotifyInstructor();
+                        notifyInstructor.EmployerProfileId = employerProfile.UserId;
+                        notifyInstructor.InstructorId = inId;
+                        notifyInstructor.StudentProfileId = User.Identity.GetUserId();
+                        db.NotifyInstructors.Add(notifyInstructor);
+                    }
+
+                    db.SaveChanges();
+                }
+                //Employer-Requestd-Resume
+            }
+            ViewBag.UploadedStatus = uploadedStatus;
+            ViewBag.Role = "Student";
+            return View();
+        }
+
+        public ActionResult UploadResume(int? id)
+        {
+
+            if (id == null || id < 0)
+            {
+                return HttpNotFound();
+            }
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+            TempData.Add(userid, id);
             return View();
         }
 
         [HttpPost]
-        public ActionResult UploadResume(HttpPostedFileBase file, int? jobId)
+        public ActionResult UploadResume(HttpPostedFileBase resume, HttpPostedFileBase cv, string StudentEmail)
         {
-
-            if (file.ContentLength > 0 && jobId != null)
+            int jobId = Convert.ToInt32(TempData[User.Identity.GetUserId()].ToString());
+            if (jobId < 0)
             {
-                var fileextention = Path.GetExtension(file.FileName).ToLower();
+                return RedirectToAction("StudentNotifications");
+            }
+            var jobApplynigFor = db.Jobs.Find(jobId);
+
+
+            string uploadedStatus = "";
+            NotifyEmployer notifyEmployer = new NotifyEmployer();
+            notifyEmployer.StudentProfileId = User.Identity.GetUserId();
+
+            if (resume.ContentLength > 0)
+            {
+
+                var fileextention = Path.GetExtension(resume.FileName).ToLower();
+
                 if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
                 {
+
                     string uid = User.Identity.GetUserId();
                     if (uid != "")
                     {
@@ -590,22 +822,71 @@ namespace Resume_Portal.Controllers
                             // if directory not exist then create it.
                             Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
                         }
-                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + User.Identity.Name + fileextention)))
+                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-resume" + fileextention)))
                         {
                             // if file exist then delete it.
-                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + User.Identity.Name + fileextention));
+                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-resume" + fileextention));
                         }
-                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + User.Identity.Name + fileextention));
-                        file.SaveAs(path);
+                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-resume" + fileextention));
+                        resume.SaveAs(path);
+                        uploadedStatus += "Resume Uploded";
+                        notifyEmployer.ResumeAvailable = true;
+
                     }
+
+                    //Employer-Requestd-Resume
                 }
 
+                if (cv.ContentLength > 0)
+                {
+
+
+                    var fileextention2 = Path.GetExtension(cv.FileName).ToLower();
+                    if (fileextention2 == ".pdf" || fileextention2 == ".docx" || fileextention2 == ".docm" || fileextention2 == ".dotx" || fileextention2 == ".dotm" || fileextention2 == ".docb" || fileextention2 == ".rtf")
+                    {
+
+                        bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
+                        if (!exists)
+                        {
+                            // if directory not exist then create it.
+                            Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
+                        }
+                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-cv" + fileextention)))
+                        {
+                            // if file exist then delete it.
+                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-cv" + fileextention));
+                        }
+                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-cv" + fileextention));
+                        cv.SaveAs(path);
+                        uploadedStatus += "and Cover letter Uploded";
+                    }
+                    if (uploadedStatus != "")
+                    {
+                        var eId = jobApplynigFor.EmployerId;
+                        var employerProfile = db.Profiles.Find(Convert.ToInt32(eId));
+                        uploadedStatus += "to " + employerProfile.Email;
+                        notifyEmployer.EmployerId = employerProfile.UserId;
+                        db.NotifyEmployers.Add(notifyEmployer);
+                        var instructorIds = RoleHandler.GetProgramInstuctorId(User.Identity.GetUserId());
+                        foreach (var inId in instructorIds)
+                        {
+                            NotifyInstructor notifyInstructor = new NotifyInstructor();
+                            notifyInstructor.EmployerProfileId = employerProfile.UserId;
+                            notifyInstructor.InstructorId = inId;
+                            notifyInstructor.StudentProfileId = User.Identity.GetUserId();
+                            db.NotifyInstructors.Add(notifyInstructor);
+                        }
+
+                        db.SaveChanges();
+                    }
+                    //Employer-Requestd-Resume
+                }
+                ViewBag.UploadedStatus = uploadedStatus;
+                ViewBag.Role = "Student";
             }
 
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
-
             return View();
+
         }
 
         public class FileWithPath
@@ -691,9 +972,6 @@ namespace Resume_Portal.Controllers
             }
 
         }
-
-
-
 
         public ActionResult AddAttachment()
         {
@@ -926,6 +1204,8 @@ namespace Resume_Portal.Controllers
 
             return View(allEventsParticipated);
         }
+
+
 
 
 

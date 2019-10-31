@@ -120,3 +120,4 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.dll
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.pdb
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume-Portal.csprojAssemblyReference.cache
 C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.updatedNotifications.resources
+C:\Users\jay\source\repos\Resume-Portal\obj\Debug\Resume_Portal.Migrations.boolForConfirmation.resources

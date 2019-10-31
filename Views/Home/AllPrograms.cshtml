@@ -36,6 +36,9 @@
                         </span><span>
                             @Html.ActionLink("Program Details", "ProgramDetails", new { id = item.Id })
                         </span>
+                        <span>
+                            @Html.ActionLink("Jobs", "AllPostedJobOfProgram", new { id = item.Id })
+                        </span>
                     </h5>
                     <span class="span_img">
                         @Html.DisplayFor(modelItem => item.Discription)
