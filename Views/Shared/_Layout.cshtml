@@ -88,11 +88,12 @@
                     <ul class="nav navbar-nav">
                         @if (ViewBag.Notification != null && ViewBag.Notification == true)
                         {
-                        <li>@Html.ActionLink("Notification(+)", "EmployerNotifications", "Home") (@ViewBag.NotificationCount) </li>
+                            <li>@Html.ActionLink("Notification(+)", "EmployerNotifications", "Home") (@ViewBag.NotificationCount) </li>
                         }
                         <li>@Html.ActionLink("Programs", "AllPrograms", "Home")</li>
                         <li>@Html.ActionLink("Employers", "AllEmployers", "Home")</li>
                         <li>@Html.ActionLink("Students", "SelectProgram", "Home")</li>
+                        <li>@Html.ActionLink("All Requested Resume", "AllRequestedResume", "Employer")</li>
                         <li>@Html.ActionLink("Posted-Jobs", "MyPostedJobs", "Employer")</li>
                         <li>@Html.ActionLink("My Profile", "EmployerProfile", "Employer")</li>
                     </ul>

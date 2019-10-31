@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201910302237353_boolForConfirmation.Designer.cs">
       <DependentUpon>201910302237353_boolForConfirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910310425518_NotifyEmployerAddedFieldsForFunctionalities.cs" />
+    <Compile Include="Migrations\201910310425518_NotifyEmployerAddedFieldsForFunctionalities.Designer.cs">
+      <DependentUpon>201910310425518_NotifyEmployerAddedFieldsForFunctionalities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -667,6 +671,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910302237353_boolForConfirmation.resx">
       <DependentUpon>201910302237353_boolForConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910310425518_NotifyEmployerAddedFieldsForFunctionalities.resx">
+      <DependentUpon>201910310425518_NotifyEmployerAddedFieldsForFunctionalities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,6 +9,9 @@
         <span>
             @Html.ActionLink("Download", "DownloadPostedResume", new { fileName = item.fileUrl }, new { target = "_blank" })
         </span>
+        <span>
+            @Html.ActionLink("Delete", "DeleteRequestedResume", new { fileName = item.fileUrl })
+        </span>
 
     </div>
 }

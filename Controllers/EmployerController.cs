@@ -302,6 +302,7 @@ namespace Resume_Portal.Controllers
         public ActionResult EditJob([Bind(Include = "Id,CompanyName,PostedOn,JobDiscription,ProgramId")] Job job)
         {
             job.EmployerId = User.Identity.GetUserId();
+            job.PostedOn = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Entry(job).State = EntityState.Modified;
@@ -335,7 +336,8 @@ namespace Resume_Portal.Controllers
 
         public ActionResult AllRequestedResume()
         {
-            var profile = db.Profiles.Where(x => x.UserId == User.Identity.GetUserId()).FirstOrDefault();
+            string userId = User.Identity.GetUserId();
+            var profile = db.Profiles.Where(x => x.UserId == userId).FirstOrDefault();
             bool exists = Directory.Exists(Server.MapPath("~/Employer-Requestd-Resume/" + profile.Id.ToString() + "/"));
             if (exists == false)
             {
@@ -347,7 +349,7 @@ namespace Resume_Portal.Controllers
             foreach (var path in allFileNames)
             {
                 FileWithPath filewithpathinstance = new FileWithPath();
-                filewithpathinstance.fileUrl = path;
+                filewithpathinstance.fileUrl = "~/Employer-Requestd-Resume/" + profile.Id.ToString() + "/"+Path.GetFileNameWithoutExtension(path) + Path.GetExtension(path);
                 filewithpathinstance.FileName = Path.GetFileName(path);
                 FileWithPath.Add(filewithpathinstance);
             }
@@ -374,23 +376,55 @@ namespace Resume_Portal.Controllers
             foreach (var path in allFileNames)
             {
                 FileWithPath filewithpathinstance = new FileWithPath();
-                filewithpathinstance.fileUrl = path;
+                filewithpathinstance.fileUrl = "~/Posted-Job-Resume/" + id + "/"+ Path.GetFileNameWithoutExtension(path) + Path.GetExtension(path);
                 filewithpathinstance.FileName = Path.GetFileName(path);
                 FileWithPath.Add(filewithpathinstance);
             }
             string userid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(userid);
+            if(TempData[userid] != null)
+            {
+                TempData.Remove(userid);
+            }
+            TempData.Add(userid, id);
 
             return View(FileWithPath);
         }
 
+        public ActionResult DeletePostedResume(string fileName)
+        {
+            if (System.IO.File.Exists(Server.MapPath(fileName)))
+            {
+                System.IO.File.Delete(Server.MapPath(fileName));
+
+            }
+            string uid = User.Identity.GetUserId();
+            if(TempData.ContainsKey(uid))
+            {
+                int id = Convert.ToInt32(TempData[uid]);
+                return RedirectToAction("AllResumeForJob",new { id = id});
+            }
+            return RedirectToAction("Employer");
+
+        }
+
+        public ActionResult DeleteRequestedResume(string fileName)
+        {
+            if (System.IO.File.Exists(Server.MapPath(fileName)))
+            {
+                System.IO.File.Delete(Server.MapPath(fileName));
+
+            }
+
+            return RedirectToAction("AllRequestedResume");
+
+        }
+
         public ActionResult DownloadPostedResume(string fileName)
         {
-            string userid = User.Identity.GetUserId();
-            ViewBag.Role = RoleHandler.GetUserRole(userid);
+            
 
-
-            if (Directory.Exists(fileName))
+            if (System.IO.File.Exists(Server.MapPath(fileName)))
             {
                 byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(fileName));
                 return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);

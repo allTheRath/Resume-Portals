@@ -1,14 +1,23 @@
 ﻿@model IEnumerable<Resume_Portal.Controllers.EmployerController.FileWithPath>
 
-@foreach (var item in Model)
+@if (Model != null && Model.Count() > 0)
 {
-    <div>
-        <span>
-            @item.FileName
-        </span>
-        <span>
-            @Html.ActionLink("Download", "DownloadPostedResume", new { fileName = item.fileUrl }, new {target="_blank"})
-        </span>
+    foreach (var item in Model)
+    {
+        <div>
+            <span>
+                @item.FileName
+            </span>
+            <span>
+                @Html.ActionLink("Download", "DownloadPostedResume", new { fileName = item.fileUrl }, new { target = "_blank" })
+            </span>
+            <span>
+                @Html.ActionLink("Delete", "DeletePostedResume", new { fileName = item.fileUrl })
+            </span>
 
-    </div>
+        </div>
+    }
+} else
+{
+    <h4>No resumes.</h4>
 }

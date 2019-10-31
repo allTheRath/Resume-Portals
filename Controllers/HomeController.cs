@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -706,7 +707,12 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             //employer just Profile Id
+            if (TempData[User.Identity.GetUserId()] != null)
+            {
+                TempData.Remove(User.Identity.GetUserId());
+            }
             TempData.Add(User.Identity.GetUserId(), id);
+            ViewBag.Role = "Student";
             return View();
         }
         [HttpPost]
@@ -722,7 +728,7 @@ namespace Resume_Portal.Controllers
             NotifyEmployer notifyEmployer = new NotifyEmployer();
             notifyEmployer.StudentProfileId = User.Identity.GetUserId();
 
-            if (resume.ContentLength > 0)
+            if (resume != null && resume.ContentLength > 0)
             {
 
                 var fileextention = Path.GetExtension(resume.FileName).ToLower();
@@ -751,7 +757,7 @@ namespace Resume_Portal.Controllers
                 //Employer-Requestd-Resume
             }
 
-            if (cv.ContentLength > 0)
+            if ( cv != null && cv.ContentLength > 0)
             {
 
 
@@ -770,8 +776,8 @@ namespace Resume_Portal.Controllers
                         // if file exist then delete it.
                         System.IO.File.Delete(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-cv" + fileextention));
                     }
-                    var path = Path.Combine(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-cv" + fileextention));
-                    cv.SaveAs(path);
+                    var path2 = Path.Combine(Server.MapPath("~/Employer-Requestd-Resume/" + employerProfileId + "/" + StudentEmail + "-cv" + fileextention));
+                    cv.SaveAs(path2);
                     uploadedStatus += "and Cover letter Uploded";
                 }
                 if (uploadedStatus != "")
@@ -811,6 +817,11 @@ namespace Resume_Portal.Controllers
             }
             string userid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(userid);
+            if (TempData[userid] != null)
+            {
+                TempData.Remove(userid);
+            }
+            ViewBag.UploadedStatus = "";
             TempData.Add(userid, id);
             return View();
         }
@@ -818,6 +829,7 @@ namespace Resume_Portal.Controllers
         [HttpPost]
         public ActionResult UploadResume(HttpPostedFileBase resume, HttpPostedFileBase cv, string StudentEmail)
         {
+            StringBuilder uploadedStatus = new StringBuilder();
             int jobId = Convert.ToInt32(TempData[User.Identity.GetUserId()].ToString());
             if (jobId < 0)
             {
@@ -826,11 +838,11 @@ namespace Resume_Portal.Controllers
             var jobApplynigFor = db.Jobs.Find(jobId);
 
 
-            string uploadedStatus = "";
+
             NotifyEmployer notifyEmployer = new NotifyEmployer();
             notifyEmployer.StudentProfileId = User.Identity.GetUserId();
 
-            if (resume.ContentLength > 0)
+            if (resume != null && resume.ContentLength > 0)
             {
 
                 var fileextention = Path.GetExtension(resume.FileName).ToLower();
@@ -841,76 +853,89 @@ namespace Resume_Portal.Controllers
                     string uid = User.Identity.GetUserId();
                     if (uid != "")
                     {
-                        bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
+                        bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/"));
                         if (!exists)
                         {
                             // if directory not exist then create it.
-                            Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
+                            Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/"));
                         }
-                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-resume" + fileextention)))
+                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-resume" + fileextention)))
                         {
                             // if file exist then delete it.
-                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-resume" + fileextention));
+                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-resume" + fileextention));
                         }
-                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-resume" + fileextention));
+                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-resume" + fileextention));
                         resume.SaveAs(path);
-                        uploadedStatus += "Resume Uploded";
+                        uploadedStatus.Append("Resume Uploded ");
                         notifyEmployer.ResumeAvailable = true;
 
                     }
 
                     //Employer-Requestd-Resume
                 }
+            }
+            bool flag = false;
+            if (cv != null && cv.ContentLength > 0)
+            {
 
-                if (cv.ContentLength > 0)
+
+                var fileextention2 = Path.GetExtension(cv.FileName).ToLower();
+                if (fileextention2 == ".pdf" || fileextention2 == ".docx" || fileextention2 == ".docm" || fileextention2 == ".dotx" || fileextention2 == ".dotm" || fileextention2 == ".docb" || fileextention2 == ".rtf")
                 {
 
-
-                    var fileextention2 = Path.GetExtension(cv.FileName).ToLower();
-                    if (fileextention2 == ".pdf" || fileextention2 == ".docx" || fileextention2 == ".docm" || fileextention2 == ".dotx" || fileextention2 == ".dotm" || fileextention2 == ".docb" || fileextention2 == ".rtf")
+                    bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/"));
+                    if (!exists)
                     {
-
-                        bool exists = Directory.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
-                        if (!exists)
-                        {
-                            // if directory not exist then create it.
-                            Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/"));
-                        }
-                        if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-cv" + fileextention)))
-                        {
-                            // if file exist then delete it.
-                            System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-cv" + fileextention));
-                        }
-                        var path = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId + "/" + StudentEmail + "-cv" + fileextention));
-                        cv.SaveAs(path);
-                        uploadedStatus += "and Cover letter Uploded";
+                        // if directory not exist then create it.
+                        Directory.CreateDirectory(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/"));
                     }
-                    if (uploadedStatus != "")
+                    if (System.IO.File.Exists(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-cv" + fileextention2)))
                     {
-                        var eId = jobApplynigFor.EmployerId;
-                        var employerProfile = db.Profiles.Find(Convert.ToInt32(eId));
-                        uploadedStatus += "to " + employerProfile.Email;
-                        notifyEmployer.EmployerId = employerProfile.UserId;
-                        notifyEmployer.jobResponse = true;
-                        notifyEmployer.JobId = jobId;
-                        db.NotifyEmployers.Add(notifyEmployer);
-                        var instructorIds = RoleHandler.GetProgramInstuctorId(User.Identity.GetUserId());
-                        foreach (var inId in instructorIds)
-                        {
-                            NotifyInstructor notifyInstructor = new NotifyInstructor();
-                            notifyInstructor.EmployerProfileId = employerProfile.UserId;
-                            notifyInstructor.InstructorId = inId;
-                            notifyInstructor.StudentProfileId = User.Identity.GetUserId();
-                            db.NotifyInstructors.Add(notifyInstructor);
-                        }
-
-                        db.SaveChanges();
+                        // if file exist then delete it.
+                        System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-cv" + fileextention2));
                     }
-                    //Employer-Requestd-Resume
+                    var path2 = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-cv" + fileextention2));
+                    flag = true;
+
+                    cv.SaveAs(path2);
+
+
                 }
-                ViewBag.UploadedStatus = uploadedStatus;
-                ViewBag.Role = "Student";
             }
+            if (uploadedStatus.ToString() != "")
+            {
+                var eId = jobApplynigFor.EmployerId;
+                var employerProfile = db.Profiles.Find(Convert.ToInt32(eId));
+                uploadedStatus.Append("to " + employerProfile.Email);
+                notifyEmployer.EmployerId = employerProfile.UserId;
+                notifyEmployer.jobResponse = true;
+                notifyEmployer.JobId = jobId;
+                db.NotifyEmployers.Add(notifyEmployer);
+                var instructorIds = RoleHandler.GetProgramInstuctorId(User.Identity.GetUserId());
+                foreach (var inId in instructorIds)
+                {
+                    NotifyInstructor notifyInstructor = new NotifyInstructor();
+                    notifyInstructor.EmployerProfileId = employerProfile.UserId;
+                    notifyInstructor.InstructorId = inId;
+                    notifyInstructor.StudentProfileId = User.Identity.GetUserId();
+                    db.NotifyInstructors.Add(notifyInstructor);
+                }
+
+                db.SaveChanges();
+            }
+            //Employer-Requestd-Resume
+
+            if (flag == true)
+            {
+                ViewBag.UploadedStatus = "Resume and Cover letter is uploded.!";
+
+            }
+            else
+            {
+                ViewBag.UploadedStatus = uploadedStatus.ToString();
+
+            }
+            ViewBag.Role = "Student";
 
             return View();
 
@@ -1011,7 +1036,7 @@ namespace Resume_Portal.Controllers
         public ActionResult AddAttachment(HttpPostedFileBase file)
         {
 
-            if (file.ContentLength > 0)
+            if (file != null && file.ContentLength > 0)
             {
                 var fileextention = Path.GetExtension(file.FileName).ToLower();
                 if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
@@ -1084,7 +1109,7 @@ namespace Resume_Portal.Controllers
         public ActionResult ResumeHelp(HttpPostedFileBase file)
         {
 
-            if (file.ContentLength > 0)
+            if (file != null && file.ContentLength > 0)
             {
                 var fileextention = Path.GetExtension(file.FileName).ToLower();
                 if (fileextention == ".pdf" || fileextention == ".docx" || fileextention == ".docm" || fileextention == ".dotx" || fileextention == ".dotm" || fileextention == ".docb" || fileextention == ".rtf")
@@ -1244,5 +1269,6 @@ namespace Resume_Portal.Controllers
             }
             base.Dispose(disposing);
         }
+        
     }
 }
