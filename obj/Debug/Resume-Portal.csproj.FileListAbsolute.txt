@@ -361,4 +361,3 @@ C:\Users\Justin\Desktop\Group Project\obj\Debug\Resume-Portal.csproj.CoreCompile
 C:\Users\Justin\Desktop\Group Project\obj\Debug\Resume-Portal.csproj.CopyComplete
 C:\Users\Justin\Desktop\Group Project\obj\Debug\Resume-Portal.dll
 C:\Users\Justin\Desktop\Group Project\obj\Debug\Resume-Portal.pdb
-C:\Users\Justin\Desktop\Group Project\obj\Debug\Resume-Portal.csprojAssemblyReference.cache

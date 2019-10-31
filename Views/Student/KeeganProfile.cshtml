@@ -22,34 +22,40 @@
             </div>
             <div class="general_info_content">
                 <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+                    <span>
+                        @Html.ActionLink("Update Pic", "UpdateProfilePic", null, new { @class = "updateLinks" })
+                    </span>
                     <div class="general_info_title">General Information</div>
                     <ul class="general_info_list">
-                        <li class="d-flex flex-row align-items-center justify-content-start">
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_1.png" alt=""></div>
                             <div class="general_info_text">Name: <span>@Html.DisplayFor(model => Model.MyName)</span></div>
                         </li>
-                        <li class="d-flex flex-row align-items-center justify-content-start">
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_2.png" alt=""></div>
                             <div class="general_info_text">Description: <span>@Html.DisplayFor(model => Model.SortDiscription)</span></div>
                         </li>
-                        <li class="d-flex flex-row align-items-center justify-content-start">
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
-                            <div class="general_info_text"><a href="mailto:@Model.ProfessionalEmail?subject=Job_Inquiry">@Model.ProfessionalEmail</a></div>
+                            <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.ProfessionalEmail?subject=Job_Inquiry">@Model.ProfessionalEmail</a></div>
                         </li>
-                        <li class="d-flex flex-row align-items-center justify-content-start">
-                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
-                            <div class="general_info_text"></div>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
+                                <div class="general_info_text">@Html.ActionLink("Edit", "EditProfile", new { id = Model.ProfileId }, new { @class = "profileLinks" })</div>
+                            </li>
+                        }
                     </ul>
                     <!-- Social -->
                     @*<div class="social_container">
-                            <ul class="d-flex flex-row align-items-start justify-content-start">
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>*@
+            <ul class="d-flex flex-row align-items-start justify-content-start">
+                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>*@
                 </div>
             </div>
         </div>

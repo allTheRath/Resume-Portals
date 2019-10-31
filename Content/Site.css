@@ -481,7 +481,7 @@ a svg {
     }
 
     .pageFooter {
-        width: 138vh;
+        /*width: 138vh;*/
         margin: auto !important;
         text-align: center;
     }
