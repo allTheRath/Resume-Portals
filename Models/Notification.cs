@@ -22,7 +22,8 @@ namespace Resume_Portal.Models
         public string EmployerId { get; set; }
         public bool ResumeAvailable { get; set; }
         public bool confirmed { get; set; }
-
+        public bool jobResponse { get; set; }
+        public int? JobId { get; set; }
     }
 
     public class NotifyInstructor
@@ -34,5 +35,13 @@ namespace Resume_Portal.Models
         public bool confirmed { get; set; }
 
     }
+
+    public class ResponseResume
+    {
+        public Profile Profile { get; set; }
+        public bool JobResponse { get; set; }
+        public int JobId { get; set; }
+    }
+
 
 }

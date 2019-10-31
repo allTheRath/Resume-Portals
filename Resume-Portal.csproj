@@ -591,6 +591,7 @@
     <Content Include="Views\Home\ProcessResumeUpload.cshtml" />
     <Content Include="Views\Employer\DownloadPostedResume.cshtml" />
     <Content Include="Views\Employer\AllRequestedResume.cshtml" />
+    <Content Include="Views\Home\EmployerNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />

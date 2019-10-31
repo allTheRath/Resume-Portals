@@ -674,6 +674,30 @@ namespace Resume_Portal.Controllers
         }
 
 
+        public ActionResult EmployerNotifications()
+        {
+            string userId = User.Identity.GetUserId();
+            List<NotifyEmployer> notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId && x.confirmed == false).ToList();
+            var StudentIds = notifications.Select(x => x.StudentProfileId).ToList();
+            var IsJobResponse = notifications.Select(x => x.jobResponse).ToList();
+            var profileOfStudents = db.Profiles.Where(x => StudentIds.Contains(x.UserId)).ToList();
+            List<ResponseResume> ResponseResumes = new List<ResponseResume>();
+            int i = 0;
+            foreach (var p in profileOfStudents)
+            {
+                ResponseResume responseResume = new ResponseResume();
+                responseResume.Profile = p;
+                responseResume.JobResponse = IsJobResponse[i];
+                if (IsJobResponse[i] == true)
+                {
+                    var n = notifications.ElementAt(i);
+                    responseResume.JobId = Convert.ToInt32(n.JobId);
+                }
+                ResponseResumes.Add(responseResume);
+                i++;
+            }
+            return View(ResponseResumes);
+        }
 
         public ActionResult ApplyToRequestForResume(int? id)
         {
@@ -757,6 +781,7 @@ namespace Resume_Portal.Controllers
                     var employerProfile = db.Profiles.Find(Convert.ToInt32(employerProfileId));
                     uploadedStatus += "to " + employerProfile.Email;
                     notifyEmployer.EmployerId = employerProfile.UserId;
+                    notifyEmployer.jobResponse = false;
                     db.NotifyEmployers.Add(notifyEmployer);
                     var instructorIds = RoleHandler.GetProgramInstuctorId(User.Identity.GetUserId());
                     foreach (var inId in instructorIds)
@@ -866,6 +891,8 @@ namespace Resume_Portal.Controllers
                         var employerProfile = db.Profiles.Find(Convert.ToInt32(eId));
                         uploadedStatus += "to " + employerProfile.Email;
                         notifyEmployer.EmployerId = employerProfile.UserId;
+                        notifyEmployer.jobResponse = true;
+                        notifyEmployer.JobId = jobId;
                         db.NotifyEmployers.Add(notifyEmployer);
                         var instructorIds = RoleHandler.GetProgramInstuctorId(User.Identity.GetUserId());
                         foreach (var inId in instructorIds)
