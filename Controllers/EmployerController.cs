@@ -129,6 +129,11 @@ namespace Resume_Portal.Controllers
             {
                 uid = id;
             }
+            var role = RoleHandler.GetUserRole(uid);
+            if (!string.IsNullOrWhiteSpace(role) && !string.IsNullOrEmpty(id))
+            {
+                ViewBag.Role = role;
+            }
             EmployerProfile employerProfile = db.EmployerProfiles.Where(x => x.UserId == uid).FirstOrDefault();
             Profile profile = db.Profiles.FirstOrDefault(p => p.UserId == uid);
             EmployerProfileViewModels profileViewModel = new EmployerProfileViewModels { profile = profile, EmployerProfile = employerProfile };

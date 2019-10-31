@@ -259,7 +259,7 @@ namespace Resume_Portal.Controllers
         [ActionName("KeeganProfile")]
         public ActionResult StudentProfile(string id, string subContentUrl)
         {
-            if(!string.IsNullOrEmpty(subContentUrl) && !string.IsNullOrWhiteSpace(subContentUrl))
+            if (!string.IsNullOrEmpty(subContentUrl) && !string.IsNullOrWhiteSpace(subContentUrl))
             {
                 ViewBag.url = subContentUrl;
                 switch (subContentUrl)
@@ -281,11 +281,15 @@ namespace Resume_Portal.Controllers
                 ViewBag.url = "profileSkills";
                 ViewBag.skills = "active";
             }
-            var profile = db.Profiles.Where(p => p.UserId == id).FirstOrDefault();
             if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
             {
                 id = User.Identity.GetUserId();
-                profile = db.Profiles.FirstOrDefault(p => p.UserId == id);
+            }
+            var profile = db.Profiles.Where(p => p.UserId == id).FirstOrDefault();
+            var role = RoleHandler.GetUserRole(id);
+            if(!string.IsNullOrWhiteSpace(role) && !string.IsNullOrEmpty(id))
+            {
+                ViewBag.Role = role;
             }
             if (profile == null)
             {
