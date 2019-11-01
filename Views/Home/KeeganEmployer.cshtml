@@ -1,4 +1,4 @@
-﻿@model Resume_Portal.Models.InstructorProfileViewModels
+﻿@model Resume_Portal.Models.EmployerProfileViewModels
 @section Styles
     {
     <link rel="stylesheet" type="text/css" href="~/Content/profileCardStyle.css" />
@@ -7,7 +7,7 @@
 
 <main class="profile_container">
     <h3 class="Email_title">
-        @Html.DisplayFor(model => model.instructorProfile.ProfetionalEmail)
+        @Html.DisplayFor(model => model.EmployerProfile.ContactUs)
     </h3>
     <div class="Card">
         <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
@@ -22,6 +22,9 @@
             </div>
             <div class="general_info_content">
                 <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+                    <span>
+                        @Html.ActionLink("Update Pic", "UpdateProfilePic")
+                    </span>
                     <div class="general_info_title">General Information</div>
                     <ul class="general_info_list">
                         <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
@@ -34,41 +37,41 @@
                         </li>
                         <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
-                            <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.instructorProfile.ProfetionalEmail?subject=Job_Inquiry">@Model.instructorProfile.ProfetionalEmail</a></div>
+                            <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.profile.Email?subject=Job_Inquiry">@Model.profile.Email</a></div>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
+                                <div class="general_info_text">@Html.ActionLink("Edit", "EditProfile", new { id = Model.profile.Id }, new { @class = "profileLinks" })</div>
+                            </li>
+                        }
                     </ul>
                     <!-- Social -->
                     @*<div class="social_container">
-                            <ul class="d-flex flex-row align-items-start justify-content-start">
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>*@
+            <ul class="d-flex flex-row align-items-start justify-content-start">
+                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>*@
                 </div>
             </div>
         </div>
     </div>
     <section class="content">
         <div class="description">
+            @Html.ActionLink("Update Profile", "EditEmployer")
             <h3 class="description_title">Description</h3>
             <div>
-                @Html.DisplayFor(model => Model.instructorProfile.AboutMe)
+                @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
             </div>
         </div>
-        <div class="description">
-            <h3 class="description_title">Experience</h3>
-            <div>
-                @Html.DisplayFor(model => Model.instructorProfile.Experience)
-            </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title"><hr /></h3>
-            <div>
-                JoinedMitt : @Html.DisplayFor(model => Model.instructorProfile.JoinedMitt)
-                ProfetionalEmail : @Html.DisplayFor(model => Model.instructorProfile.ProfetionalEmail)
-            </div>
+        <div class="sub_Content">
+                <div class="Sub_ctn">
+                    @Html.Partial("MyPostedJobs")
+                </div>
         </div>
     </section>
 </main>

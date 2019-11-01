@@ -1,0 +1,61 @@
+﻿@model Resume_Portal.Models.CompleteStudentInfo
+
+@{
+    Layout = null;
+}
+
+
+<p>
+    @Html.ActionLink("Add Education", "AddEducation")
+</p>
+@if (Model.Educations.Count > 0 )
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("InstituteName")
+            </th>
+            <th>
+                @Html.DisplayName("Discription")
+            </th>
+            <th>
+                @Html.DisplayName("Start")
+            </th>
+            <th>
+                @Html.DisplayName("End")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Educations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InstituteName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "DeleteEducation", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+else
+{
+    <div>
+        <p>
+            No Education has been uploaded.
+        </p>
+    </div>
+}

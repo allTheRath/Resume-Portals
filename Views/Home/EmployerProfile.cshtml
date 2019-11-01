@@ -22,9 +22,6 @@
             </div>
             <div class="general_info_content">
                 <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
-                    <span>
-                        @Html.ActionLink("Update Pic", "UpdateProfilePic")
-                    </span>
                     <div class="general_info_title">General Information</div>
                     <ul class="general_info_list">
                         <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
@@ -39,13 +36,6 @@
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
                             <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.profile.Email?subject=Job_Inquiry">@Model.profile.Email</a></div>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
-                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
-                                <div class="general_info_text">@Html.ActionLink("Edit", "EditProfile", new { id = Model.profile.Id }, new { @class = "profileLinks" })</div>
-                            </li>
-                        }
                     </ul>
                     <!-- Social -->
                     @*<div class="social_container">
@@ -61,18 +51,29 @@
         </div>
     </div>
     <section class="content">
-        <div class="scroll_Controller">
-            <div class="description">
-                @Html.ActionLink("Update Profile", "EditEmployer")
-                <h3 class="description_title">Description</h3>
-                <div>
-                    @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
-                </div>
+        <div class="description">
+            <h3 class="description_title">Description</h3>
+            <div>
+                @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
             </div>
-            <div class="sub_Content">
-                <div class="Sub_ctn">
-                    @Html.Partial("MyPostedJobs", Model.EmployerProfile.PostedJobs)
-                </div>
+        </div>
+        <div class="description">
+            <h3 class="description_title">History Of Company</h3>
+            <div>
+                @Html.DisplayFor(model => Model.EmployerProfile.HistoryOfCompany)
+            </div>
+        </div>
+        <div class="description">
+            <h3 class="description_title">Looking For Skills</h3>
+            <div>
+                @Html.DisplayFor(model => Model.EmployerProfile.LookingForSkills)
+            </div>
+        </div>
+        <div class="sub_Content">
+            <div class="Sub_ctn">
+                @{
+                    Html.RenderAction("MyPostedJobs", new { id = @Model.profile.Id});
+                }
             </div>
         </div>
     </section>

@@ -516,3 +516,15 @@ a {
     font-size: 1.2vw;
     color: #00a88e !important;
 }
+
+body{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content:center;
+    align-items: center;
+}
+
+.profile_container {
+    margin-top: 3% !important;
+}

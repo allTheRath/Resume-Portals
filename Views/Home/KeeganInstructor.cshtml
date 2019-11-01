@@ -22,6 +22,9 @@
             </div>
             <div class="general_info_content">
                 <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+                    <span>
+                        @Html.ActionLink("Update Pic", "UpdateProfilePic", null, new { @class="updateLinks" })
+                    </span>
                     <div class="general_info_title">General Information</div>
                     <ul class="general_info_list">
                         <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
@@ -36,16 +39,23 @@
                             <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
                             <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.instructorProfile.ProfetionalEmail?subject=Job_Inquiry">@Model.instructorProfile.ProfetionalEmail</a></div>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
+                                <div class="general_info_text">@Html.ActionLink("Edit", "EditProfile", new { id = Model.profile.Id }, new { @class="profileLinks"  })</div>
+                            </li>
+                        }
                     </ul>
                     <!-- Social -->
                     @*<div class="social_container">
-                            <ul class="d-flex flex-row align-items-start justify-content-start">
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>*@
+            <ul class="d-flex flex-row align-items-start justify-content-start">
+                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>*@
                 </div>
             </div>
         </div>
@@ -55,19 +65,6 @@
             <h3 class="description_title">Description</h3>
             <div>
                 @Html.DisplayFor(model => Model.instructorProfile.AboutMe)
-            </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title">Experience</h3>
-            <div>
-                @Html.DisplayFor(model => Model.instructorProfile.Experience)
-            </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title"><hr /></h3>
-            <div>
-                JoinedMitt : @Html.DisplayFor(model => Model.instructorProfile.JoinedMitt)
-                ProfetionalEmail : @Html.DisplayFor(model => Model.instructorProfile.ProfetionalEmail)
             </div>
         </div>
     </section>

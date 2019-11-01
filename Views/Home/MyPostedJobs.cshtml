@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Resume_Portal.Models.Job>
+@{
+    Layout = null;
+}
 
-<p>
-    @Html.ActionLink("Post New Job","PostJob", "employer" )
-</p>
 <table class="table">
     <tr>
         <th>
@@ -17,34 +17,25 @@
         <th>
             @Html.DisplayNameFor(model => model.JobDiscription)
         </th>
-        <th>Edit | Delete</th>
-        <th>All Responses</th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Program.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobDiscription)
-        </td>
-        <td>
-            @Html.ActionLink("All Resumes", "AllResumeForJob",new {id = item.Id })
-        </td>
-        <td>
-            @Html.ActionLink("Edit-Job", "EditJob","employer", new { id = item.Id }, null) | 
-            @Html.ActionLink("Delete-Job","DeleteJob","employer", new { id = item.Id }, null)
-
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Program.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobDiscription)
+            </td>
+        </tr>
+    }
 
 </table>
+

@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace Resume_Portal.Models
 {
-    interface ViewModels
-    {
-    }
-    public class ProgramViewModels : ViewModels
+    public class ProgramViewModels
     {
         public string ProgramImagePath { get; set; }
         public Program program { get; set; }
     }
-    public class StudentProfileViewModels : ViewModels
+    public class InstructorProfileViewModels
     {
-        public StudentProfile studentProfile { get; set; }
+        public InstructorProfile instructorProfile { get; set; }
+        public Profile profile { get; set; }
+    }
+    public class EmployerProfileViewModels
+    {
+        public EmployerProfile EmployerProfile { get; set; }
         public Profile profile { get; set; }
     }
     public class InstructorProfileViewModels
