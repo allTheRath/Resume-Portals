@@ -121,3 +121,4 @@ C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.csproj.Generat
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.csproj.CopyComplete
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.dll
 C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.pdb
+C:\Users\jay\source\repos\Resume-Portal\obj\Release\Resume-Portal.csprojAssemblyReference.cache

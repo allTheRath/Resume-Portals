@@ -700,6 +700,23 @@ namespace Resume_Portal.Controllers
             return View(ResponseResumes);
         }
 
+        public ActionResult InstructorNotifications()
+        {
+            string userId = User.Identity.GetUserId();
+            List<NotifyInstructor> notifications = db.NotifyInstructors.Where(x => x.InstructorId == userId && x.confirmed == false).ToList();
+            List<InstructorNotifyViewModel> displayObjs = new List<InstructorNotifyViewModel>();
+            foreach (var notifyIn in notifications)
+            {
+                InstructorNotifyViewModel instructorNotifyViewModel = new InstructorNotifyViewModel();
+                instructorNotifyViewModel.Employer = db.Profiles.Where(x => x.UserId == notifyIn.EmployerProfileId).FirstOrDefault();
+                instructorNotifyViewModel.Student = db.Profiles.Where(x => x.UserId == notifyIn.StudentProfileId).FirstOrDefault();
+
+                displayObjs.Add(instructorNotifyViewModel);
+            }
+
+            return View(displayObjs);
+        }
+
         public ActionResult ApplyToRequestForResume(int? id)
         {
             if (id == null)
@@ -757,7 +774,7 @@ namespace Resume_Portal.Controllers
                 //Employer-Requestd-Resume
             }
 
-            if ( cv != null && cv.ContentLength > 0)
+            if (cv != null && cv.ContentLength > 0)
             {
 
 
@@ -827,6 +844,7 @@ namespace Resume_Portal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UploadResume(HttpPostedFileBase resume, HttpPostedFileBase cv, string StudentEmail)
         {
             StringBuilder uploadedStatus = new StringBuilder();
@@ -874,6 +892,10 @@ namespace Resume_Portal.Controllers
                     //Employer-Requestd-Resume
                 }
             }
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+            ViewBag.UploadedStatus = "";
+
             bool flag = false;
             if (cv != null && cv.ContentLength > 0)
             {
@@ -896,16 +918,14 @@ namespace Resume_Portal.Controllers
                     }
                     var path2 = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-cv" + fileextention2));
                     flag = true;
-
                     cv.SaveAs(path2);
-
 
                 }
             }
             if (uploadedStatus.ToString() != "")
             {
                 var eId = jobApplynigFor.EmployerId;
-                var employerProfile = db.Profiles.Find(Convert.ToInt32(eId));
+                var employerProfile = db.Profiles.Where(x => x.UserId == eId).FirstOrDefault();
                 uploadedStatus.Append("to " + employerProfile.Email);
                 notifyEmployer.EmployerId = employerProfile.UserId;
                 notifyEmployer.jobResponse = true;
@@ -921,21 +941,19 @@ namespace Resume_Portal.Controllers
                     db.NotifyInstructors.Add(notifyInstructor);
                 }
 
+                ViewBag.UploadedStatus = uploadedStatus.ToString();
                 db.SaveChanges();
-            }
-            //Employer-Requestd-Resume
-
-            if (flag == true)
-            {
-                ViewBag.UploadedStatus = "Resume and Cover letter is uploded.!";
-
             }
             else
             {
-                ViewBag.UploadedStatus = uploadedStatus.ToString();
+                ViewBag.UploadedStatus = "Could not upload it.!";
 
             }
+            //Employer-Requestd-Resume
+
+
             ViewBag.Role = "Student";
+
 
             return View();
 
@@ -1269,6 +1287,6 @@ namespace Resume_Portal.Controllers
             }
             base.Dispose(disposing);
         }
-        
+
     }
 }

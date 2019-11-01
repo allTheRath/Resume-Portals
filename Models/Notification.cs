@@ -43,5 +43,9 @@ namespace Resume_Portal.Models
         public int JobId { get; set; }
     }
 
-
+    public class InstructorNotifyViewModel
+    {
+        public Profile Student { get; set; }
+        public Profile Employer { get; set; }
+    }
 }

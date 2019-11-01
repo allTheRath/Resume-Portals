@@ -47,6 +47,13 @@ namespace Resume_Portal.Controllers
                 db.SaveChanges();
             }
 
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             ViewBag.ProfilePic = employer.ProfilePic;
             return View(employer);
         }
@@ -59,6 +66,14 @@ namespace Resume_Portal.Controllers
             }
 
             Profile profile = db.Profiles.Find(id);
+
+            string userId = User.Identity.GetUserId();
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
 
             ViewBag.Role = "Employer";
             return View(profile);
@@ -81,6 +96,14 @@ namespace Resume_Portal.Controllers
         public ActionResult UpdateProfilePic()
         {
             ViewBag.Role = "Employer";
+            string userId = User.Identity.GetUserId();
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View();
         }
         [HttpPost]
@@ -146,6 +169,15 @@ namespace Resume_Portal.Controllers
             string extention = Path.GetExtension(Server.MapPath(p.ProfilePic));
             string directoryName = db.Users.Find(uid).UserName;
             ViewBag.ProfilePic = "/User-Profile-Pic/" + directoryName + "/profilepic" + extention;
+
+
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == uid).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(employerProfile);
         }
 
@@ -161,6 +193,14 @@ namespace Resume_Portal.Controllers
             string extention = Path.GetExtension(Server.MapPath(p.ProfilePic));
             string directoryName = db.Users.Find(uid).UserName;
             ViewBag.ProfilePic = "/User-Profile-Pic/" + directoryName + "/profilepic" + extention;
+
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == uid).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(employerProfile);
         }
 
@@ -242,6 +282,15 @@ namespace Resume_Portal.Controllers
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name");
             ViewBag.Role = "Employer";
 
+            string userId = User.Identity.GetUserId();
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
+
             return View();
         }
         [HttpPost, ActionName("PostJob")]
@@ -275,6 +324,15 @@ namespace Resume_Portal.Controllers
             }
             ViewBag.Role = "Employer";
 
+
+            string userId = User.Identity.GetUserId();
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(jobs);
         }
 
@@ -291,6 +349,17 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name", job.ProgramId);
+
+
+
+            string userId = User.Identity.GetUserId();
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(job);
         }
 
@@ -302,7 +371,7 @@ namespace Resume_Portal.Controllers
         public ActionResult EditJob([Bind(Include = "Id,CompanyName,PostedOn,JobDiscription,ProgramId")] Job job)
         {
             job.EmployerId = User.Identity.GetUserId();
-            job.PostedOn = DateTime.Now;
+            job.PostedOn = DateTime.Now;   
             if (ModelState.IsValid)
             {
                 db.Entry(job).State = EntityState.Modified;
@@ -310,6 +379,16 @@ namespace Resume_Portal.Controllers
                 return RedirectToAction("MyPostedJobs");
             }
             ViewBag.ProgramId = new SelectList(db.Programs, "Id", "Name", job.ProgramId);
+
+
+            string userId = User.Identity.GetUserId();
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userId).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(job);
         }
 
@@ -356,6 +435,15 @@ namespace Resume_Portal.Controllers
             string userid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(userid);
 
+
+
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userid).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(FileWithPath);
         }
 
@@ -388,6 +476,15 @@ namespace Resume_Portal.Controllers
             }
             TempData.Add(userid, id);
 
+
+
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == userid).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return View(FileWithPath);
         }
 
@@ -404,6 +501,15 @@ namespace Resume_Portal.Controllers
                 int id = Convert.ToInt32(TempData[uid]);
                 return RedirectToAction("AllResumeForJob",new { id = id});
             }
+
+
+            var notifications = db.NotifyEmployers.Where(x => x.EmployerId == uid).ToList();
+            if (notifications.Count() > 0)
+            {
+                ViewBag.Notification = true;
+                ViewBag.NotificationCount = notifications.Count();
+            }
+
             return RedirectToAction("Employer");
 
         }
