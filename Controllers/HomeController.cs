@@ -309,6 +309,10 @@ namespace Resume_Portal.Controllers
             completeStudent.SortDiscription = profile.ShortDiscription;
             completeStudent.StudentId = profile.UserId;
 
+
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
             return View(completeStudent);
         }
         //done
@@ -328,6 +332,9 @@ namespace Resume_Portal.Controllers
             employerProfileViewModels.EmployerProfile = employerProfile;
             employerProfileViewModels.profile = profile;
 
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
             return View(employerProfileViewModels);
         }
         //done
@@ -342,6 +349,7 @@ namespace Resume_Portal.Controllers
             }
             string userid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(userid);
+
 
             return View(jobs);
 
@@ -360,6 +368,9 @@ namespace Resume_Portal.Controllers
             instructorProfileViewModels.profile = profile;
             instructorProfileViewModels.instructorProfile = instructorProfile;
 
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
             return View(instructorProfileViewModels);
         }
         //done
@@ -375,6 +386,7 @@ namespace Resume_Portal.Controllers
             {
                 experiances = new List<Experiance>();
             }
+
 
             return View(experiances);
         }
@@ -607,6 +619,9 @@ namespace Resume_Portal.Controllers
                 return View(jobs);
             }
 
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
             return View();
         }
         //done
@@ -636,6 +651,7 @@ namespace Resume_Portal.Controllers
             {
                 ViewBag.Jobs = false;
             }
+
             return View(jobs);
         }
         //done
@@ -1208,6 +1224,10 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult PostEvent()
         {
+            if (!User.IsInRole("Instructor"))
+            {
+                return HttpNotFound();
+            }
             string uid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(uid);
 

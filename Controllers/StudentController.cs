@@ -38,10 +38,10 @@ namespace Resume_Portal.Controllers
             }
             ViewBag.Role = "Student";
             ViewBag.ProfilePic = student.ProfilePic;
-            
+
             //below is boiler plate for checking notifications.
             var notifications = db.NotifyStudents.Where(x => x.studentId == userId).ToList();
-            if(notifications.Count() > 0)
+            if (notifications.Count() > 0)
             {
                 ViewBag.Notification = true;
                 ViewBag.NotificationCount = notifications.Count();
@@ -585,7 +585,7 @@ namespace Resume_Portal.Controllers
             }
 
             ViewBag.Role = "Student";
-            if(TempData.ContainsKey(uid))
+            if (TempData.ContainsKey(uid))
             {
                 TempData.Remove(uid);
             }
@@ -600,7 +600,7 @@ namespace Resume_Portal.Controllers
             string uid = User.Identity.GetUserId();
             activity.UserId = uid;
 
-            
+
             if (file.ContentLength > 0)
             {
                 var fileextention = Path.GetExtension(file.FileName).ToLower();
@@ -652,5 +652,25 @@ namespace Resume_Portal.Controllers
             return RedirectToAction("MyActivities");
         }
 
+        public ActionResult MyParticipation()
+        {
+            string id = User.Identity.GetUserId();
+            StudentProfile studentProfile = db.StudentProfiles.Where(x => x.UserId == id).FirstOrDefault();
+            if (studentProfile == null)
+            {
+                return View();
+            }
+            var allEventsParticipatedId = db.EventParticipatedStudents.ToList().Where(x => x.Student_profileId == studentProfile.Id).Select(x => x.Event_Id).ToList().Distinct();
+            List<Event> allEventsParticipated = new List<Event>();
+            foreach (var eid in allEventsParticipatedId)
+            {
+                Event e = db.Events.Find(eid);
+                allEventsParticipated.Add(e);
+            }
+            ViewBag.Role = RoleHandler.GetUserRole(id);
+
+            return View(allEventsParticipated);
+
+        }
     }
 }
