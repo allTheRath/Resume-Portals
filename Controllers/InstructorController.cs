@@ -265,7 +265,12 @@ namespace Resume_Portal.Controllers
                 ViewBag.NotificationCount = notifications.Count();
             }
 
-            return View(instructorProfile);
+            var profile = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault();
+            InstructorProfileViewModels instructorProfileViewModels = new InstructorProfileViewModels();
+            instructorProfileViewModels.profile = profile;
+            instructorProfileViewModels.instructorProfile = instructorProfile;
+
+            return View(instructorProfileViewModels);
         }
 
     }

@@ -323,9 +323,29 @@ namespace Resume_Portal.Controllers
             }
 
             var employerProfile = db.EmployerProfiles.Where(x => x.UserId == profile.UserId).FirstOrDefault();
-            return View(employerProfile);
+
+            EmployerProfileViewModels employerProfileViewModels = new EmployerProfileViewModels();
+            employerProfileViewModels.EmployerProfile = employerProfile;
+            employerProfileViewModels.profile = profile;
+
+            return View(employerProfileViewModels);
         }
         //done
+
+        public ActionResult MyPostedJobs(int? id)
+        {
+            var eid = db.Profiles.Find(id);
+            var jobs = db.Jobs.ToList().Where(x => x.EmployerId == eid.UserId);
+            if (jobs == null)
+            {
+                jobs = new List<Job>();
+            }
+            string userid = User.Identity.GetUserId();
+            ViewBag.Role = RoleHandler.GetUserRole(userid);
+
+            return View(jobs);
+
+        }
 
         public ActionResult InstructorProfile(int? id)
         {
@@ -335,14 +355,20 @@ namespace Resume_Portal.Controllers
                 return HttpNotFound();
             }
             var instructorProfile = db.InstructorProfiles.Where(x => x.UserId == profile.UserId).FirstOrDefault();
-            return View(instructorProfile);
+
+            InstructorProfileViewModels instructorProfileViewModels = new InstructorProfileViewModels();
+            instructorProfileViewModels.profile = profile;
+            instructorProfileViewModels.instructorProfile = instructorProfile;
+
+            return View(instructorProfileViewModels);
         }
         //done
 
         //done css needed.
         public ActionResult ViewExperience(int? id)
         {
-            string userid = db.StudentProfiles.Find(id).UserId;
+            StudentProfile user = db.StudentProfiles.Find(id);
+            string userid = user.UserId;
 
             var experiances = db.Experiances.ToList().Where(x => x.UserId == userid).ToList();
             if (experiances == null)
@@ -356,7 +382,8 @@ namespace Resume_Portal.Controllers
 
         public ActionResult ViewSkills(int? id)
         {
-            string userid = db.StudentProfiles.Find(id).UserId;
+            StudentProfile user = db.StudentProfiles.Find(id);
+            string userid = user.UserId;
 
             var skills = db.Skills.ToList().Where(x => x.UserId == userid).ToList();
             if (skills == null)
@@ -370,7 +397,8 @@ namespace Resume_Portal.Controllers
 
         public ActionResult ViewEducation(int? id)
         {
-            string userid = db.StudentProfiles.Find(id).UserId;
+            StudentProfile user = db.StudentProfiles.Find(id);
+            string userid = user.UserId;
 
             var educations = db.Educations.ToList().Where(x => x.UserId == userid).ToList();
             if (educations == null)
@@ -384,8 +412,8 @@ namespace Resume_Portal.Controllers
 
         public ActionResult ViewActivities(int? id)
         {
-            string userid = db.StudentProfiles.Find(id).UserId;
-
+            StudentProfile user = db.StudentProfiles.Find(id);
+            string userid = user.UserId;
             var activities = db.Activities.ToList().Where(x => x.UserId == userid).ToList();
             if (activities == null)
             {
@@ -671,6 +699,8 @@ namespace Resume_Portal.Controllers
             var Employers = db.NotifyStudents.ToList().Where(x => x.studentId == userId && x.confirmed == false).ToList();
             var EmployerIds = Employers.Select(x => x.EmployerProfileId).ToList();
             var profilesOfEmployers = db.Profiles.Where(x => EmployerIds.Contains(x.UserId)).ToList();
+            ViewBag.Role = "Student";
+
             return View(profilesOfEmployers);
         }
 
@@ -947,9 +977,9 @@ namespace Resume_Portal.Controllers
                 ViewBag.UploadedStatus = "Could not upload it.!";
 
             }
-            
+
             ViewBag.Role = "Student";
-            
+
             return View();
 
         }

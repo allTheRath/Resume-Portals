@@ -184,7 +184,21 @@ namespace Resume_Portal.Controllers
             }
 
             string uid = User.Identity.GetUserId();
-            StudentProfile studentProfile = db.StudentProfiles.ToList().Where(x => x.UserId == uid).FirstOrDefault();
+            var CompleteProfile = db.StudentProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            var profile = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault();
+            CompleteStudentInfo completeStudent = new CompleteStudentInfo();
+            completeStudent.AboutMe = CompleteProfile.AboutMe;
+            completeStudent.ContactInfo = CompleteProfile.ContactInfo;
+            completeStudent.EndDate = CompleteProfile.EndDate;
+            completeStudent.ProfileId = CompleteProfile.Id;
+            completeStudent.MyName = CompleteProfile.MyName;
+            completeStudent.OccupationName = CompleteProfile.OccupationName;
+            completeStudent.ProfessionalEmail = CompleteProfile.ProfessionalEmail;
+            completeStudent.ProfilePicUrl = profile.ProfilePic;
+            completeStudent.SemesterNumber = CompleteProfile.SemesterNumber;
+            completeStudent.SortDiscription = profile.ShortDiscription;
+            completeStudent.StudentId = uid;
+
             bool exists = Directory.Exists(Server.MapPath("~/User-Profile-Pic/" + User.Identity.Name));
             if (exists && User.Identity.Name != "")
             {
@@ -205,7 +219,7 @@ namespace Resume_Portal.Controllers
             }
 
             ViewBag.Role = "Student";
-            return View(studentProfile);
+            return View(completeStudent);
 
 
         }
@@ -571,6 +585,10 @@ namespace Resume_Portal.Controllers
             }
 
             ViewBag.Role = "Student";
+            if(TempData.ContainsKey(uid))
+            {
+                TempData.Remove(uid);
+            }
             TempData.Add(uid, url);
             return View();
         }

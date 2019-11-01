@@ -1,59 +1,80 @@
-﻿@model Resume_Portal.Models.EmployerProfile
+﻿@model Resume_Portal.Models.EmployerProfileViewModels
+@section Styles
+    {
+    <link rel="stylesheet" type="text/css" href="~/Content/profileCardStyle.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/profileStyle.css" />
+}
 
-    <div>
-        <img src="@ViewBag.ProfilePic" class="profilepic" />
-        <span>
-            @Html.ActionLink("Update Pic", "UpdateProfilePic")
-        </span>
-        <h4>
-            @Html.ActionLink("Update Profile", "EditEmployer")
-        </h4>
-        <h4>
-            @Html.ActionLink("Post Job", "PostJob")
-        </h4>
-        <hr />
-        <dl class="dl-horizontal">
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AboutUs)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AboutUs)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.HistoryOfCompany)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.HistoryOfCompany)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ContactUs)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ContactUs)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNo)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNo)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.LookingForSkills)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.LookingForSkills)
-            </dd>
-
-        </dl>
+<main class="profile_container">
+    <h3 class="Email_title">
+        @Html.DisplayFor(model => model.EmployerProfile.ContactUs)
+    </h3>
+    <div class="Card">
+        <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
+            <div class="image-ctn">
+                <div class="general_info_image">
+                    <div class="background_image" style="background-image:url(@Model.profile.ProfilePic)"></div>
+                    <div class="header_button_2">
+                        <a href="#">Available for freelance work</a>
+                        <div class="d-flex flex-column align-items-center justify-content-center"><img src="images/download.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+            <div class="general_info_content">
+                <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+                    <span>
+                        @Html.ActionLink("Update Pic", "UpdateProfilePic")
+                    </span>
+                    <div class="general_info_title">General Information</div>
+                    <ul class="general_info_list">
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_1.png" alt=""></div>
+                            <div class="general_info_text">Name: <span>@Html.DisplayFor(model => Model.profile.UserName)</span></div>
+                        </li>
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_2.png" alt=""></div>
+                            <div class="general_info_text">Description: <span>@Html.DisplayFor(model => Model.profile.ShortDiscription)</span></div>
+                        </li>
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
+                            <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.profile.Email?subject=Job_Inquiry">@Model.profile.Email</a></div>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
+                                <div class="general_info_text">@Html.ActionLink("Edit", "EditProfile", new { id = Model.profile.Id }, new { @class = "profileLinks" })</div>
+                            </li>
+                        }
+                    </ul>
+                    <!-- Social -->
+                    @*<div class="social_container">
+                            <ul class="d-flex flex-row align-items-start justify-content-start">
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>*@
+                </div>
+            </div>
+        </div>
     </div>
+    <section class="content">
+        <div class="description">
+            @Html.ActionLink("Update Profile", "EditEmployer")
+            <h3 class="description_title">Description</h3>
+            <div>
+                @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
+            </div>
+        </div>
+        <div class="sub_Content">
+            <div class="Sub_ctn">
 
+                @{
+                    Html.RenderAction("MyPostedJobs");
+                }
+            </div>
+        </div>
+    </section>
+</main>

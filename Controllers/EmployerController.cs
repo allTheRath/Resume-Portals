@@ -178,7 +178,13 @@ namespace Resume_Portal.Controllers
                 ViewBag.NotificationCount = notifications.Count();
             }
 
-            return View(employerProfile);
+            var profile = db.Profiles.Where(x => x.UserId == uid).FirstOrDefault();
+            EmployerProfileViewModels employerProfileViewModels = new EmployerProfileViewModels();
+            employerProfileViewModels.EmployerProfile = employerProfile;
+            employerProfileViewModels.profile = profile;
+
+
+            return View(employerProfileViewModels);
         }
 
         // Employer can see list of students or can see program home page.
@@ -371,7 +377,7 @@ namespace Resume_Portal.Controllers
         public ActionResult EditJob([Bind(Include = "Id,CompanyName,PostedOn,JobDiscription,ProgramId")] Job job)
         {
             job.EmployerId = User.Identity.GetUserId();
-            job.PostedOn = DateTime.Now;   
+            job.PostedOn = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Entry(job).State = EntityState.Modified;
@@ -428,7 +434,7 @@ namespace Resume_Portal.Controllers
             foreach (var path in allFileNames)
             {
                 FileWithPath filewithpathinstance = new FileWithPath();
-                filewithpathinstance.fileUrl = "~/Employer-Requestd-Resume/" + profile.Id.ToString() + "/"+Path.GetFileNameWithoutExtension(path) + Path.GetExtension(path);
+                filewithpathinstance.fileUrl = "~/Employer-Requestd-Resume/" + profile.Id.ToString() + "/" + Path.GetFileNameWithoutExtension(path) + Path.GetExtension(path);
                 filewithpathinstance.FileName = Path.GetFileName(path);
                 FileWithPath.Add(filewithpathinstance);
             }
@@ -464,13 +470,13 @@ namespace Resume_Portal.Controllers
             foreach (var path in allFileNames)
             {
                 FileWithPath filewithpathinstance = new FileWithPath();
-                filewithpathinstance.fileUrl = "~/Posted-Job-Resume/" + id + "/"+ Path.GetFileNameWithoutExtension(path) + Path.GetExtension(path);
+                filewithpathinstance.fileUrl = "~/Posted-Job-Resume/" + id + "/" + Path.GetFileNameWithoutExtension(path) + Path.GetExtension(path);
                 filewithpathinstance.FileName = Path.GetFileName(path);
                 FileWithPath.Add(filewithpathinstance);
             }
             string userid = User.Identity.GetUserId();
             ViewBag.Role = RoleHandler.GetUserRole(userid);
-            if(TempData[userid] != null)
+            if (TempData[userid] != null)
             {
                 TempData.Remove(userid);
             }
@@ -496,10 +502,10 @@ namespace Resume_Portal.Controllers
 
             }
             string uid = User.Identity.GetUserId();
-            if(TempData.ContainsKey(uid))
+            if (TempData.ContainsKey(uid))
             {
                 int id = Convert.ToInt32(TempData[uid]);
-                return RedirectToAction("AllResumeForJob",new { id = id});
+                return RedirectToAction("AllResumeForJob", new { id = id });
             }
 
 
@@ -528,7 +534,7 @@ namespace Resume_Portal.Controllers
 
         public ActionResult DownloadPostedResume(string fileName)
         {
-            
+
 
             if (System.IO.File.Exists(Server.MapPath(fileName)))
             {

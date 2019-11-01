@@ -598,6 +598,7 @@
     <Content Include="Views\Employer\AllRequestedResume.cshtml" />
     <Content Include="Views\Home\EmployerNotifications.cshtml" />
     <Content Include="Views\Home\InstructorNotifications.cshtml" />
+    <Content Include="Views\Home\MyPostedJobs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\AllStudents.cshtml" />
