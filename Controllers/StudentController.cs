@@ -209,6 +209,176 @@ namespace Resume_Portal.Controllers
 
 
         }
+        //[ActionName("KeeganProfile")]
+        //public ActionResult StudentProfile(string id)
+        //{
+        //    var profile = db.Profiles.Where(p => p.UserId == id).FirstOrDefault();
+        //    if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+        //    {
+        //        id = User.Identity.GetUserId();
+        //        profile = db.Profiles.FirstOrDefault(p => p.UserId == id);
+        //    }
+        //    if (profile == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    var CompleteProfile = db.StudentProfiles.Where(x => x.UserId == id).FirstOrDefault();
+
+        //    CompleteStudentInfo completeStudent = new CompleteStudentInfo();
+        //    completeStudent.AboutMe = CompleteProfile.AboutMe;
+        //    completeStudent.Activities = db.Activities.Where(x => x.UserId == id).ToList();
+        //    if (completeStudent.Activities == null)
+        //    {
+        //        completeStudent.Activities = new List<Activity>();
+        //    }
+        //    completeStudent.Attachments = db.Attachments.Where(x => x.StudentId == id).ToList();
+        //    if (completeStudent.Attachments == null)
+        //    {
+        //        completeStudent.Attachments = new List<Attachment>();
+        //    }
+        //    completeStudent.ContactInfo = CompleteProfile.ContactInfo;
+        //    completeStudent.Educations = db.Educations.Where(x => x.UserId == id).ToList();
+        //    if (completeStudent.Educations == null)
+        //    {
+        //        completeStudent.Educations = new List<Education>();
+        //    }
+        //    completeStudent.EndDate = CompleteProfile.EndDate;
+        //    completeStudent.Experiances = db.Experiances.Where(x => x.UserId == id).ToList();
+        //    if (completeStudent.Experiances == null)
+        //    {
+        //        completeStudent.Experiances = new List<Experiance>();
+        //    }
+        //    completeStudent.Skills = db.Skills.Where(x => x.UserId == id).ToList();
+        //    if (completeStudent.Skills == null)
+        //    {
+        //        completeStudent.Skills = new List<Skill>();
+        //    }
+        //    completeStudent.ProfileId = CompleteProfile.Id;
+        //    completeStudent.MyName = CompleteProfile.MyName;
+        //    completeStudent.OccupationName = CompleteProfile.OccupationName;
+        //    completeStudent.ProfessionalEmail = CompleteProfile.ProfessionalEmail;
+        //    completeStudent.ProfilePicUrl = profile.ProfilePic;
+        //    completeStudent.SemesterNumber = CompleteProfile.SemesterNumber;
+        //    List<Event> Valentearings = new List<Event>();
+        //    var eventIds = db.EventParticipatedStudents.Where(x => x.Student_profileId == CompleteProfile.Id).ToList().Select(x => x.Event_Id);
+        //    if (eventIds != null)
+        //    {
+        //        foreach (var eId in eventIds)
+        //        {
+        //            Event e = db.Events.Find(eId);
+        //            Valentearings.Add(e);
+        //        }
+        //    }
+        //    completeStudent.Volenteering = Valentearings;
+        //    completeStudent.SortDiscription = profile.ShortDiscription;
+        //    completeStudent.StudentId = id;
+
+        //    return View(completeStudent);
+        //}
+        public ActionResult profileExperince(CompleteStudentInfo studentInfo)
+        {
+            return View(studentInfo);
+        }
+        public ActionResult profileEducation(CompleteStudentInfo studentInfo)
+        {
+            return View(studentInfo);
+        }
+        public ActionResult profileSkills(CompleteStudentInfo studentInfo)
+        {
+            return View(studentInfo);
+        }
+        [ActionName("KeeganProfile")]
+        public ActionResult StudentProfile(string id, string subContentUrl)
+        {
+            if (!string.IsNullOrEmpty(subContentUrl) && !string.IsNullOrWhiteSpace(subContentUrl))
+            {
+                ViewBag.url = subContentUrl;
+                switch (subContentUrl)
+                {
+                    case "profileSkills":
+                        ViewBag.skills = "active";
+                        break;
+                    case "profileEducation":
+                        ViewBag.Education = "active";
+                        break;
+                    case "profileExperince":
+                        ViewBag.Education = "active";
+                        break;
+                }
+
+            }
+            else
+            {
+                ViewBag.url = "profileSkills";
+                ViewBag.skills = "active";
+            }
+            if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+            {
+                id = User.Identity.GetUserId();
+            }
+            var profile = db.Profiles.Where(p => p.UserId == id).FirstOrDefault();
+            var role = RoleHandler.GetUserRole(id);
+            if(!string.IsNullOrWhiteSpace(role) && !string.IsNullOrEmpty(id))
+            {
+                ViewBag.Role = role;
+            }
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+            var CompleteProfile = db.StudentProfiles.Where(x => x.UserId == id).FirstOrDefault();
+
+            CompleteStudentInfo completeStudent = new CompleteStudentInfo();
+            completeStudent.AboutMe = CompleteProfile.AboutMe;
+            completeStudent.Activities = db.Activities.Where(x => x.UserId == id).ToList();
+            if (completeStudent.Activities == null)
+            {
+                completeStudent.Activities = new List<Activity>();
+            }
+            completeStudent.Attachments = db.Attachments.Where(x => x.StudentId == id).ToList();
+            if (completeStudent.Attachments == null)
+            {
+                completeStudent.Attachments = new List<Attachment>();
+            }
+            completeStudent.ContactInfo = CompleteProfile.ContactInfo;
+            completeStudent.Educations = db.Educations.Where(x => x.UserId == id).ToList();
+            if (completeStudent.Educations == null)
+            {
+                completeStudent.Educations = new List<Education>();
+            }
+            completeStudent.EndDate = CompleteProfile.EndDate;
+            completeStudent.Experiances = db.Experiances.Where(x => x.UserId == id).ToList();
+            if (completeStudent.Experiances == null)
+            {
+                completeStudent.Experiances = new List<Experiance>();
+            }
+            completeStudent.Skills = db.Skills.Where(x => x.UserId == id).ToList();
+            if (completeStudent.Skills == null)
+            {
+                completeStudent.Skills = new List<Skill>();
+            }
+            completeStudent.ProfileId = CompleteProfile.Id;
+            completeStudent.MyName = CompleteProfile.MyName;
+            completeStudent.OccupationName = CompleteProfile.OccupationName;
+            completeStudent.ProfessionalEmail = CompleteProfile.ProfessionalEmail;
+            completeStudent.ProfilePicUrl = profile.ProfilePic;
+            completeStudent.SemesterNumber = CompleteProfile.SemesterNumber;
+            List<Event> Valentearings = new List<Event>();
+            var eventIds = db.EventParticipatedStudents.Where(x => x.Student_profileId == CompleteProfile.Id).ToList().Select(x => x.Event_Id);
+            if (eventIds != null)
+            {
+                foreach (var eId in eventIds)
+                {
+                    Event e = db.Events.Find(eId);
+                    Valentearings.Add(e);
+                }
+            }
+            completeStudent.Volenteering = Valentearings;
+            completeStudent.SortDiscription = profile.ShortDiscription;
+            completeStudent.StudentId = id;
+
+            return View(completeStudent);
+        }
 
         public ActionResult ViewExperience()
         {

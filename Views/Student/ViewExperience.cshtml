@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Resume_Portal.Models.Experiance>
+﻿@model Resume_Portal.Models.CompleteStudentInfo
 @{
     Layout = null;
 }
@@ -9,16 +9,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.InstituteName)
+            @Html.DisplayName("InstituteName")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Discription)
+            @Html.DisplayName("Discription")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Start)
+            @Html.DisplayNameFor("Start")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.End)
+            @Html.DisplayNameFor("End")
         </th>
         <th></th>
     </tr>

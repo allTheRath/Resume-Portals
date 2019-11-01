@@ -301,7 +301,6 @@ namespace Resume_Portal.Models
             return result;
         }
 
-
         public void SeedPrograms()
         {
             string names = @"C:\Users\jay\source\repos\Resume-Portal\ProgramsData\programNames.txt";

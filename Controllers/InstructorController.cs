@@ -27,11 +27,11 @@ namespace Resume_Portal.Controllers
         /// <returns></returns>
         public ActionResult Instructor()
         {
+            string userId = User.Identity.GetUserId();
             if (!User.IsInRole("Instructor"))
             {
                 return HttpNotFound();
-            }
-            string userId = User.Identity.GetUserId();
+            } 
             var instructor = db.Profiles.FirstOrDefault(s => s.UserId == userId);
             if (instructor == null)
             {
@@ -207,7 +207,25 @@ namespace Resume_Portal.Controllers
         {
             return View();
         }
-
+        [Authorize]
+        public ActionResult KeeganInstructor(string id)
+        {
+            string uid = User.Identity.GetUserId();
+            if (!string.IsNullOrEmpty(id) && !string.IsNullOrWhiteSpace(id))
+            {
+                uid = id;
+            }
+            var role = RoleHandler.GetUserRole(uid);
+            if (!string.IsNullOrWhiteSpace(role) && !string.IsNullOrEmpty(id))
+            {
+                ViewBag.Role = role;
+            }
+            InstructorProfile instructorProfile = db.InstructorProfiles.Where(x => x.UserId == uid).FirstOrDefault();
+            Profile profile = db.Profiles.FirstOrDefault(p => p.UserId == uid);
+            InstructorProfileViewModels profileViewModel = new InstructorProfileViewModels { profile = profile, instructorProfile = instructorProfile };
+            return View(profileViewModel);
+        }
+        [ActionName("InstructorDetails")]
         public ActionResult InstructorProfile()
         {
             if (!User.IsInRole("Instructor"))
