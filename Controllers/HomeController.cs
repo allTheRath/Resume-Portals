@@ -896,7 +896,6 @@ namespace Resume_Portal.Controllers
             ViewBag.Role = RoleHandler.GetUserRole(userid);
             ViewBag.UploadedStatus = "";
 
-            bool flag = false;
             if (cv != null && cv.ContentLength > 0)
             {
 
@@ -917,7 +916,6 @@ namespace Resume_Portal.Controllers
                         System.IO.File.Delete(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-cv" + fileextention2));
                     }
                     var path2 = Path.Combine(Server.MapPath("~/Posted-Job-Resume/" + jobId.ToString() + "/" + StudentEmail + "-cv" + fileextention2));
-                    flag = true;
                     cv.SaveAs(path2);
 
                 }
@@ -949,12 +947,9 @@ namespace Resume_Portal.Controllers
                 ViewBag.UploadedStatus = "Could not upload it.!";
 
             }
-            //Employer-Requestd-Resume
-
-
+            
             ViewBag.Role = "Student";
-
-
+            
             return View();
 
         }
