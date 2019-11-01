@@ -61,19 +61,21 @@
         </div>
     </div>
     <section class="content">
-        <div class="description">
-            @Html.ActionLink("Update Profile", "EditEmployer")
-            <h3 class="description_title">Description</h3>
-            <div>
-                @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
+        <div class="scroll_Controller">
+            <div class="description">
+                @Html.ActionLink("Update Profile", "EditEmployer")
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
+                </div>
             </div>
-        </div>
-        <div class="sub_Content">
-            <div class="Sub_ctn">
+            <div class="sub_Content">
+                <div class="Sub_ctn">
 
-                @{
-                    Html.RenderAction("MyPostedJobs");
-                }
+                    @{
+                        Html.RenderAction("MyPostedJobs");
+                    }
+                </div>
             </div>
         </div>
     </section>

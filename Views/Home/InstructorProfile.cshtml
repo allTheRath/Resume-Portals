@@ -51,23 +51,25 @@
         </div>
     </div>
     <section class="content">
-        <div class="description">
-            <h3 class="description_title">Description</h3>
-            <div>
-                @Html.DisplayFor(model => Model.instructorProfile.AboutMe)
+        <div class="scroll_Controller">
+            <div class="description">
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.instructorProfile.AboutMe)
+                </div>
             </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title">Experience</h3>
-            <div>
-                @Html.DisplayFor(model => Model.instructorProfile.Experience)
+            <div class="description">
+                <h3 class="description_title">Experience</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.instructorProfile.Experience)
+                </div>
             </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title"><hr /></h3>
-            <div>
-                JoinedMitt : @Html.DisplayFor(model => Model.instructorProfile.JoinedMitt)
-                ProfetionalEmail : @Html.DisplayFor(model => Model.instructorProfile.ProfetionalEmail)
+            <div class="description">
+                <h3 class="description_title"><hr /></h3>
+                <div>
+                    JoinedMitt : @Html.DisplayFor(model => Model.instructorProfile.JoinedMitt)
+                    ProfetionalEmail : @Html.DisplayFor(model => Model.instructorProfile.ProfetionalEmail)
+                </div>
             </div>
         </div>
     </section>

@@ -51,30 +51,8 @@
         </div>
     </div>
     <section class="content">
-        <div class="description">
-            <h3 class="description_title">Description</h3>
-            <div>
-                @Html.DisplayFor(model => Model.EmployerProfile.AboutUs)
-            </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title">History Of Company</h3>
-            <div>
-                @Html.DisplayFor(model => Model.EmployerProfile.HistoryOfCompany)
-            </div>
-        </div>
-        <div class="description">
-            <h3 class="description_title">Looking For Skills</h3>
-            <div>
-                @Html.DisplayFor(model => Model.EmployerProfile.LookingForSkills)
-            </div>
-        </div>
-        <div class="sub_Content">
-            <div class="Sub_ctn">
-                @{
-                    Html.RenderAction("MyPostedJobs", new { id = @Model.profile.Id});
-                }
-            </div>
+        <div class="scroll_Controller">
+
         </div>
     </section>
 </main>
