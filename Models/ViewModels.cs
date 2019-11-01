@@ -19,4 +19,14 @@ namespace Resume_Portal.Models
         public StudentProfile studentProfile { get; set; }
         public Profile profile { get; set; }
     }
+    public class InstructorProfileViewModels
+    {
+        public InstructorProfile instructorProfile { get; set; }
+        public Profile profile { get; set; }
+    }
+    public class EmployerProfileViewModels
+    {
+        public EmployerProfile EmployerProfile { get; set; }
+        public Profile profile { get; set; }
+    }
 }

@@ -1,188 +1,93 @@
 ﻿@model Resume_Portal.Models.CompleteStudentInfo
-@Styles.Render("~/Content/Site.css")
-    <section>
-        <img class="profile-pic" src="@Model.ProfilePicUrl" />
-    </section>
-<main>
+@section Styles
+    {
+    <link rel="stylesheet" type="text/css" href="~/Content/profileCardStyle.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/profileStyle.css" />
+}
 
-    <div class="push-top">
-        <span>
-            @Html.DisplayFor(modelItem => modelItem.SortDiscription)
-        </span>
-        <span>
-            @Html.DisplayFor(modelItem => modelItem.ProfessionalEmail)
-        </span>
-        <span>
-            @Html.ActionLink("Request Resume", "RequestResume", "Home", new { id = Model.StudentId })
-        </span>
-    </div>
-    <section class="section_content">
-
-        <div class="profile-flex">
-
-            <div id="flex-ele" class="main_content">
-                <div>
-                    <h4>
-                        @Html.DisplayFor(modelItem => modelItem.MyName)
-                    </h4>
-                    <h4>
-                        @Html.DisplayFor(modelItem => modelItem.OccupationName)
-                    </h4>
+<main class="profile_container">
+    <h3 class="Email_title">
+        @Html.DisplayFor(model => model.ProfessionalEmail)
+    </h3>
+    <div class="Card">
+        <div class="general_info d-flex flex-xl-column flex-md-row flex-column">
+            <div class="image-ctn">
+                <div class="general_info_image">
+                    <div class="background_image" style="background-image:url(@Model.ProfilePicUrl)"></div>
+                    <div class="header_button_2">
+                        <a href="#">Available for freelance work</a>
+                        <div class="d-flex flex-column align-items-center justify-content-center"><img src="images/download.png" alt=""></div>
+                    </div>
                 </div>
-                <span class="span_img">
-                    @Html.DisplayFor(modelItem => modelItem.AboutMe)
-                </span>
-                <span>
-                    @Html.DisplayFor(modelItem => modelItem.ContactInfo)
-                </span>
-                <span>
-                    <p>
-                        I am Currently in @Html.DisplayFor(modelItem => modelItem.SemesterNumber)
-                    </p>
-                    <p>
-                        Program will end on @Html.DisplayFor(modelItem => modelItem.EndDate)
-                    </p>
-                </span>
             </div>
-            @{
-                Html.RenderAction("ViewSkills", new { id = Model.ProfileId });
-            }
-            <div>
-                <h4>
-                    Education
-                </h4>
+            <div class="general_info_content">
+                <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+                    <span>
+                        @Html.ActionLink("Update Pic", "UpdateProfilePic", null, new { @class = "updateLinks" })
+                    </span>
+                    <div class="general_info_title">General Information</div>
+                    <ul class="general_info_list">
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_1.png" alt=""></div>
+                            <div class="general_info_text">Name: <span>@Html.DisplayFor(model => Model.MyName)</span></div>
+                        </li>
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_2.png" alt=""></div>
+                            <div class="general_info_text">Description: <span>@Html.DisplayFor(model => Model.SortDiscription)</span></div>
+                        </li>
+                        <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                            <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_3.png" alt=""></div>
+                            <div class="general_info_text"><a class="profileLinks" href="mailto:@Model.ProfessionalEmail?subject=Job_Inquiry">@Model.ProfessionalEmail</a></div>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="general_profileLi d-flex flex-row align-items-center justify-content-start">
+                                <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img src="~/Content/images/icon_5.png" alt=""></div>
+                                <div class="general_info_text updateLinks">@Html.ActionLink("Edit", "EditProfile", new { id = Model.ProfileId }, new { @class = "updateLinks" })</div>
+                            </li>
+                        }
+                    </ul>
+
+
+                    <!-- Social -->
+                    @*<div class="social_container">
+                            <ul class="d-flex flex-row align-items-start justify-content-start">
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>*@
+                </div>
             </div>
-            @{
-                Html.RenderAction("ViewEducation", new { id = Model.ProfileId });
-            }
-            <div>
-                <h4>
-                    Experience
-                </h4>
-            </div>
-            @{
-                Html.RenderAction("ViewExperience", new { id = Model.ProfileId });
-            }
-            <div>
-                <h4>
-                    Past Activities
-                </h4>
-            </div>
-            @{
-                Html.RenderAction("ViewActivities", new { id = Model.ProfileId });
-            }
         </div>
+    </div>
+    <section class="content">
+
+        <div class="scroll_controller">
+            <div class="description">
+                @Html.ActionLink("Update Profile", "EditStudent")
+                <h3 class="description_title">Description</h3>
+                <div>
+                    @Html.DisplayFor(model => Model.AboutMe)
+                </div>
+            </div>
+            <div class="sub_Content">
+                <ul class="links">
+                    <li class="@ViewBag.Skills">@Html.ActionLink("Skills", "StudentProfile", new { userId = Model.StudentId, subContentUrl = "ViewSkills" }, new { @class=ViewBag.Skills })</li>
+                    <li class="@ViewBag.Education">@Html.ActionLink("Education", "StudentProfile", new { userId = Model.StudentId, subContentUrl = "ViewEducation" }, new { @class=ViewBag.Education })</li>
+                    <li class="@ViewBag.Experince">@Html.ActionLink("Experince", "StudentProfile", new { userId = Model.StudentId, subContentUrl = "ViewExperince" }, new { @class=ViewBag.Experince })</li>
+                </ul>
+                @if (ViewBag.url != null)
+                {
+                    <div class="Sub_ctn">
+
+                        @Html.Action((string)ViewBag.url, Model.ProfileId)
+                    </div>
+                }
+            </div>
+        </div>
+
+
     </section>
 </main>
-
-<style>
-
-
-    .img {
-        width: 20vw;
-    }
-
-    h5 {
-        color: forestgreen;
-    }
-
-    .push-top {
-        margin-top: 17%;
-        /* margin-left: 100px; */
-        text-align: end;
-        font-size: 100px;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        width: 100%;
-        color: #00a88d;
-        font-size: 20px;
-        font-weight: lighter;
-        letter-spacing: .06em;
-        margin-bottom: .5em;
-    }
-</style>
-
-<style>
-    .main-flex {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        width: 100%;
-        justify-content: space-evenly;
-        align-items: center;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 300;
-    }
-
-    #flex-ele {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        width: 40%;
-        justify-content: space-evenly;
-    }
-
-    .img-container {
-        margin-right: 7px;
-        display: inline;
-    }
-
-    .img {
-        float: left;
-        margin-right: 4%;
-        border-radius: 70%;
-        overflow: hidden;
-        display: inline;
-        /*max-width: 100%;
-
-            overflow: hidden;
-            position: relative;*/
-        width: 100%;
-    }
-
-    .second {
-        float: left;
-        width: 40%;
-        display: inline;
-        margin-top: 2em;
-    }
-
-    .name {
-        color: #00a88d;
-        font-size: 20px;
-        font-weight: bold;
-        letter-spacing: .06em;
-        margin-bottom: .5em;
-        display: inline;
-    }
-
-    .discription {
-        margin-bottom: 1em;
-        text-align: start;
-        width: 200px;
-        display: inline;
-    }
-
-    .button {
-        position: relative;
-        /*padding: 9px 30px 8px 20px;*/
-        border: none;
-        border-width: 2px;
-        border-color: #bbd876;
-        border-style: solid;
-        border-width: 0 0 0 2px;
-        letter-spacing: .05em;
-        overflow: hidden;
-        transition: border-color .2s;
-        z-index: 0;
-        text-align: center;
-        font-size: 1.8vw;
-        background-color: beige;
-        color: forestgreen;
-        display: inline;
-    }
-
-    .profile-pic {
-        width: 50% !important;
-        padding-left:10%;
-    }
-</style>
